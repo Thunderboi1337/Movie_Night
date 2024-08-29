@@ -22,24 +22,27 @@
             </div>
         </div>
     </header>
-    <div class="grid-container">
+    <ul class="grid">
         {{range .Movies}}
-
-
-        <div class="grid-item">
+        <li class="grid-item">
             <a href="#">
                 <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
             </a>
             <h2>{{.Title}}</h2>
-        </div>
+        </li>
         {{end}}
-    </div>
+    </ul>
+
     <div>
-        <form method="get" action="/">
-            <input type="text" name="search" placeholder="Search..">
-            <button type="submit">Search</button>
-        </form>
+        <button type="button" name="add" onclick="openAddMovieForm()">Add New Movies</button>
     </div>
+
+    <script>
+        function openAddMovieForm() {
+            // Your code to open a form or handle adding new movies
+            alert("Button clicked! You can now add a new movie.");
+        }
+    </script>
 
 </body>
 
