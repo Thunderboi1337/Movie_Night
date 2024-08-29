@@ -26,6 +26,7 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
+	Movies      []Movie
 	Title       string
 	Overview    string
 	PosterPath  string
@@ -85,12 +86,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	url := "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 
 	req, _ := http.NewRequest("GET", url, nil)
-
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTcwZWY0YTRiODM0MzYyYmRjNzNkNDc2YmJiYzdmMyIsIm5iZiI6MTcyNDkyMzQ1My4yMDc1NjEsInN1YiI6IjY2ZDAzYWY2Yjg4YzIxOTMyYjY2ZmZhYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.kXlGmpCLk_v1qttPHp5XFWmi4bQ3PpAI3XaS-9792wc")
 
 	res, _ := http.DefaultClient.Do(req)
-
 	defer res.Body.Close()
 
 	body, err := io.ReadAll(res.Body)
@@ -107,30 +106,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	var data TemplateData
 
 	if len(apiResponse.Results) > 0 {
-		firstMovie := apiResponse.Results[0]
 		data = TemplateData{
-			Title:       firstMovie.Title,
-			Overview:    firstMovie.Overview,
-			PosterPath:  "https://image.tmdb.org/t/p/w500" + firstMovie.PosterPath, // Full image URL
-			ReleaseDate: firstMovie.ReleaseDate,
-			VoteAverage: firstMovie.VoteAverage,
+			Movies: apiResponse.Results[:2], // Limiting to first 10 movies
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
-
-	if len(apiResponse.Results) > 0 {
-		firstMovie := apiResponse.Results[0]
-		fmt.Println("Title:", firstMovie.Title)
-		fmt.Println("Overview:", firstMovie.Overview)
-		fmt.Println("Poster Path:", firstMovie.PosterPath)
-		fmt.Println("Release Date:", firstMovie.ReleaseDate)
-		fmt.Println("Vote Average:", firstMovie.VoteAverage)
-	} else {
-		fmt.Println("No movies found in the response.")
-	}
-
-	// fmt.Println(string(body))
 
 	t, err := template.ParseFiles("index.html")
 	if err != nil {
