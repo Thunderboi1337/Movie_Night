@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/joho/godotenv"
@@ -42,11 +43,18 @@ type App struct {
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("search")
+	newMovies := r.URL.Query().Get("addmovies")
 	var url string
 
 	if searchQuery != "" {
 		// Use the search movies endpoint
-		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", searchQuery)
+		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
+		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+
+	} else if newMovies != "" {
+
+		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+
 	} else {
 		// Default to fetching favorite movies
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
@@ -85,7 +93,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
-			Movies: apiResponse.Results[:4],
+			Movies: apiResponse.Results[0:4],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
