@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVIE_NIGHT</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+
+
+<body>
+    <header>
+        <div class="header-container">
+            <nav>
+
+                <li><a href="#">Movie Night</a>
+                </li>
+
+            </nav>
+
+            <div class="topnav">
+                <input type="text" placeholder="Search..">
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="grid-container">
+        {{range .Movies}}
+        <div class="grid-item">
+
+            <div class="grid-item">
+                <a href="#">
+                    <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
+                </a>
+                <h2>{{.Title}}</h2>
+                <!-- <p>{{.Overview}}</p>
+                <p>Release Date: {{.ReleaseDate}}</p>
+                <p>Rating: {{.VoteAverage}}</p> -->
+            </div>
+
+
+        </div>
+        {{end}}
+
+
+
+</body>
+
+</html>
