@@ -92,6 +92,12 @@ nav a {
 
 }
 
+.add-movie-button {
+
+    text-align: ceneter;
+
+}
+
 ul.grid {
     list-style-type: none;
     padding: 0;
