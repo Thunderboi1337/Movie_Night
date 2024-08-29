@@ -25,6 +25,14 @@ type APIResponse struct {
 	TotalResults int     `json:"total_results"`
 }
 
+type TemplateData struct {
+	Title       string
+	Overview    string
+	PosterPath  string
+	ReleaseDate string
+	VoteAverage float64
+}
+
 type Page struct {
 	Title string
 	Body  []byte
@@ -74,7 +82,62 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
+	url := "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTcwZWY0YTRiODM0MzYyYmRjNzNkNDc2YmJiYzdmMyIsIm5iZiI6MTcyNDkyMzQ1My4yMDc1NjEsInN1YiI6IjY2ZDAzYWY2Yjg4YzIxOTMyYjY2ZmZhYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.kXlGmpCLk_v1qttPHp5XFWmi4bQ3PpAI3XaS-9792wc")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var apiResponse APIResponse
+	err = json.Unmarshal(body, &apiResponse)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var data TemplateData
+
+	if len(apiResponse.Results) > 0 {
+		firstMovie := apiResponse.Results[0]
+		data = TemplateData{
+			Title:       firstMovie.Title,
+			Overview:    firstMovie.Overview,
+			PosterPath:  "https://image.tmdb.org/t/p/w500" + firstMovie.PosterPath, // Full image URL
+			ReleaseDate: firstMovie.ReleaseDate,
+			VoteAverage: firstMovie.VoteAverage,
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	if len(apiResponse.Results) > 0 {
+		firstMovie := apiResponse.Results[0]
+		fmt.Println("Title:", firstMovie.Title)
+		fmt.Println("Overview:", firstMovie.Overview)
+		fmt.Println("Poster Path:", firstMovie.PosterPath)
+		fmt.Println("Release Date:", firstMovie.ReleaseDate)
+		fmt.Println("Vote Average:", firstMovie.VoteAverage)
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	// fmt.Println(string(body))
+
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t.Execute(w, data)
 }
 
 func main() {
@@ -110,20 +173,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Accessing the first movie's title
-	if len(apiResponse.Results) > 0 {
-		firstMovie := apiResponse.Results[0]
-		fmt.Println("Title:", firstMovie.Title)
-		fmt.Println("Overview:", firstMovie.Overview)
-		fmt.Println("Poster Path:", firstMovie.PosterPath)
-		fmt.Println("Release Date:", firstMovie.ReleaseDate)
-		fmt.Println("Vote Average:", firstMovie.VoteAverage)
-	} else {
-		fmt.Println("No movies found in the response.")
-	}
-
-	// fmt.Println(string(body))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 

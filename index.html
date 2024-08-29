@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 
+
+
 <body>
     <header>
         <div class="header-container">
@@ -20,11 +22,17 @@
         </div>
     </header>
 
+
+
     <div class="grid-container">
         <div class="grid-item">
-            <a href="https://www.youtube.com/watch?v=xU47nhruN-Q&ab_channel=AlltheAnime">
-                <img class="anime" src="static/images//Kimi-no-Na-wa.jpeg.webp" alt="Anime">
+            <a href="#">
+                <img class="anime" src="{{.PosterPath}}" alt="{{.Title}}">
             </a>
+            <h2>{{.Title}}</h2>
+            <p>{{.Overview}}</p>
+            <p>Release Date: {{.ReleaseDate}}</p>
+            <p>Rating: {{.VoteAverage}}</p>
         </div>
         <div class="grid-item">
             <a href="#">
