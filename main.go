@@ -69,7 +69,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
-			Movies: apiResponse.Results[:2],
+			Movies: apiResponse.Results[:4],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")

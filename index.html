@@ -25,8 +25,9 @@
 
 
     <div class="grid-container">
+        {{range .Movies}}
         <div class="grid-item">
-            {{range .Movies}}
+
             <div class="grid-item">
                 <a href="#">
                     <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
@@ -36,46 +37,12 @@
                 <p>Release Date: {{.ReleaseDate}}</p>
                 <p>Rating: {{.VoteAverage}}</p>
             </div>
-            {{end}}
-            <div class="grid-item">
-                <a href="#">
-                    <img class="action" src="static/images/300.png" alt="Action">
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="#">
-                    <img class="drama" src="static/images/HOLYWOOD.jpg" alt="Drama">
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="#">
-                    <img class="konstig" src="static/images/ROOM.jpeg" alt="Konstig">
-                </a>
-            </div>
 
-            <div class="grid-item">
-                <a href="#">
-                    <img class="komedi" src="static/images/FAKEROOM.jpg" alt="Komedi">
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="#">
-                    <img class="random" src="static/images/NICEGUYS.jpg" alt="Random">
-                </a>
-            </div>
-
-            <div class="grid-item">
-                <a href="#">
-                    <img class="animerad" src="static/images/PINNO.jpg" alt="Animerad">
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="#">
-                    <img class="lastweek" src="static/images/LOSTCITY.jpg" alt="Förra veckan">
-                </a>
-            </div>
 
         </div>
+        {{end}}
+
+
 
 </body>
 
