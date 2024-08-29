@@ -8,45 +8,32 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 
-
-
 <body>
     <header>
         <div class="header-container">
             <nav>
-
-                <li><a href="#">Movie Night</a>
-                </li>
-
+                <li><a href="index.html">Movie Night</a></li>
             </nav>
-
             <div class="topnav">
-                <input type="text" placeholder="Search..">
+                <form method="get" action="/">
+                    <input type="text" name="search" placeholder="Search..">
+                    <button type="submit">Search</button>
+                </form>
             </div>
         </div>
     </header>
-
-
-
     <div class="grid-container">
         {{range .Movies}}
+
+
         <div class="grid-item">
-
-            <div class="grid-item">
-                <a href="#">
-                    <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
-                </a>
-                <h2>{{.Title}}</h2>
-                <!-- <p>{{.Overview}}</p>
-                <p>Release Date: {{.ReleaseDate}}</p>
-                <p>Rating: {{.VoteAverage}}</p> -->
-            </div>
-
-
+            <a href="#">
+                <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
+            </a>
+            <h2>{{.Title}}</h2>
         </div>
         {{end}}
-
-
+    </div>
 
 </body>
 
