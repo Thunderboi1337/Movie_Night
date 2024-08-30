@@ -132,19 +132,15 @@ ul.grid {
 
 .Genre {
     background-color: #ff6f61;
-    /* A striking color to stand out */
     color: #ffffff;
-    /* White text */
     padding: 5px 10px;
     border-radius: 20px;
-    /* Rounded edges */
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
-    /* Makes genre text uppercase */
 }
 
 /* Responsive adjustments for smaller screens */

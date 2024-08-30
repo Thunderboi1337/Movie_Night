@@ -25,8 +25,8 @@
     <ul class="grid">
         {{range .Movies}}
         <li class="grid-item">
-            <div clss="Genre">
-                <h2>{{.Genre}}</h2>
+            <div class="Genre"></div>
+            <h2>{{.Genre}}</h2>
             </div>
             <a href="#">
                 <img src="{{.PosterPath}}" alt="{{.Title}}">
@@ -36,11 +36,11 @@
         {{end}}
     </ul>
 
-    <ul class="grid">
-        <li class="add-movie-button">
-            <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
-        </li>
-    </ul>
+
+    <li class="add-movie-button">
+        <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
+    </li>
+
 
     <script>
         function openAddMovieForm() {
