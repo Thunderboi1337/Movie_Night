@@ -8,45 +8,49 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 
-
-
 <body>
     <header>
         <div class="header-container">
-            <nav>
-
-                <li><a href="#">Movie Night</a>
-                </li>
-
-            </nav>
-
-            <div class="topnav">
-                <input type="text" placeholder="Search..">
+            <div class="LOGO">
+                <a class="header_movie" href="index.html">Movie Night</a>
             </div>
+            <div class="topnav">
+                <form method="get" action="/">
+                    <input type="text" name="search" placeholder="Search..">
+                </form>
+            </div>
+
         </div>
     </header>
-
-
-
-    <div class="grid-container">
+    <ul class="grid">
         {{range .Movies}}
-        <div class="grid-item">
+        <div class="grid_background">
+            <li class="grid-item">
 
-            <div class="grid-item">
+                <a class="Genre">{{.Genre}}</a>
+
+
                 <a href="#">
-                    <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
+                    <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
-                <h2>{{.Title}}</h2>
-                <!-- <p>{{.Overview}}</p>
-                <p>Release Date: {{.ReleaseDate}}</p>
-                <p>Rating: {{.VoteAverage}}</p> -->
-            </div>
-
-
+                <a class="title">{{.Title}}</a>
+            </li>
         </div>
         {{end}}
+    </ul>
 
 
+    <li class="add-movie-button">
+        <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
+    </li>
+
+
+    <script>
+        function openAddMovieForm() {
+            // Your code to open a form or handle adding new movies
+            alert("Button clicked! You can now add a new movie.");
+        }
+    </script>
 
 </body>
 

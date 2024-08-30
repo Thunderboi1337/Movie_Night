@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"text/template"
 
 	"github.com/joho/godotenv"
@@ -18,6 +19,7 @@ type Movie struct {
 	PosterPath  string  `json:"poster_path"`
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
+	Genre       string  `json:"Genre"`
 }
 
 type APIResponse struct {
@@ -28,51 +30,81 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
-	Movies      []Movie
-	Title       string
-	Overview    string
-	PosterPath  string
-	ReleaseDate string
-	VoteAverage float64
+	Movies []Movie
 }
 
-type Page struct {
-	Title string
-	Body  []byte
-}
 type App struct {
 	APIKey string
 }
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
-	url := "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+
+	searchQuery := r.URL.Query().Get("search")
+	newMovies := r.URL.Query().Get("addmovies")
+	var url string
+
+	if searchQuery != "" {
+		// Use the search movies endpoint
+		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
+		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+
+	} else if newMovies != "" {
+
+		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+
+	} else {
+		// Default to fetching favorite movies
+		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+	}
 
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
-	res, _ := http.DefaultClient.Do(req)
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+		return
+	}
 	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+		return
+	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, "Failed to read response", http.StatusInternalServerError)
+		return
 	}
 
 	var apiResponse APIResponse
 	err = json.Unmarshal(body, &apiResponse)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+		return
+	}
+
+	baseImageURL := "https://image.tmdb.org/t/p/w500"
+	for i := range apiResponse.Results {
+		apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
 	}
 
 	var data TemplateData
 
+	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Werid", "Last Weeks Winner"}
+
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
-			Movies: apiResponse.Results[:4],
+			Movies: apiResponse.Results[0:8],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
+	}
+
+	for i := range genres {
+		data.Movies[i].Genre = genres[i]
 	}
 
 	t, err := template.ParseFiles("index.html")

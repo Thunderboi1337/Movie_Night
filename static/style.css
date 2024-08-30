@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background: #222;
+    background: #1b1b1b;
     font-family: 'OCR A Extended', monospace;
     font-weight: 300;
 }
@@ -10,63 +10,164 @@ body {
     margin: 0 auto;
 }
 
-.anime,
-.drama,
-.action,
-.konstig,
-.animerad,
-.komedi,
-.lastweek,
-.random {
-    width: 250px;
+header {
+    background: rgb(214, 85, 113);
+    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
+    padding-top: 200;
+    margin-top: 200;
 }
 
-
-header {
-    background: #55d6aa;
+.LOGO {
+    padding-top: 50px;
+    margin-bottom: -40px;
 }
 
 header::after {
     content: '';
     display: table;
     clear: both;
+    float: center;
 }
 
-nav {
-    float: left;
-}
-
-nav ul {
-    margin: 0;
-    padding: 0%;
-    list-style: none;
-}
-
-nav a {
+.header_movie {
     color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 100px;
+
+
+}
+
+/* Style the search box inside the navigation bar */
+.topnav input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
 }
 
 .header-container {
 
     text-align: center;
-
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 2fr);
-    column-gap: 20px;
-    row-gap: 20px;
-    margin-top: 40px;
-    justify-content: space-between;
 
+.search_button {
+
+    align-self: auto;
+}
+
+
+
+ul.grid {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin-top: 50px;
 
 }
 
 .grid-item {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.grid-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    margin-top: -5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.grid-item h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.grid_background {
+
+    background: rgb(214, 85, 113);
+    background: linear-gradient(180deg, rgba(214, 85, 113, 1) 0%, rgba(27, 27, 27, 1) 15%);
+
+
+    padding-bottom: -100px;
+    border-radius: 10px;
+
+}
+
+.add-movie-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+
+}
+
+.add-movie-button button {
+    background-color: #d65571;
+    color: #ffffff;
+    padding: 5px 110px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+
+.Genre {
+
+    color: #ffffff;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+
+.title {
+    background-color: rgba(27, 27, 27, 1);
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    text-align: left;
+    text-transform: uppercase;
+    width: 250px;
+    overflow: hidden;
+    word-wrap: break-word;
+    line-height: 1.4;
+
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    ul.grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        /* Adjust grid item size on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    ul.grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        /* Further adjust for very small screens */
+    }
 }
