@@ -25,11 +25,6 @@ nav {
     float: center;
 }
 
-nav ul {
-    margin: 0;
-    padding: 0%;
-    list-style: none;
-}
 
 nav a {
     color: #ffffff;
@@ -40,6 +35,7 @@ nav a {
 
 .topnav {
     overflow: hidden;
+    align-self: auto;
 }
 
 /* Style the links inside the navigation bar */
@@ -79,18 +75,35 @@ nav a {
 
     text-align: center;
 
+
 }
+
+
+.search_button {
+
+    align-self: auto;
+}
+
 
 .add-movie-button {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+
 }
 
 .add-movie-button button {
-    padding: 10px 20px;
-    font-size: 16px;
+    background-color: #55d6aa;
+    color: #ffffff;
+    padding: 5px 110px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+
     cursor: pointer;
 }
 
@@ -98,14 +111,11 @@ ul.grid {
     list-style-type: none;
     padding: 0;
     margin: 0 auto;
-    /* Center the grid container */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    /* Automatically adjust the number of columns based on container width */
-    gap: 40px;
-    /* Spacing between grid items */
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 30px;
     max-width: 1200px;
-    /* Set a maximum width to prevent items from spreading too far apart */
+
 }
 
 .grid-item {
@@ -131,16 +141,20 @@ ul.grid {
 }
 
 .Genre {
-    background-color: #ff6f61;
+    background-color: #55d6aa;
     color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 10px;
+    border-radius: 15px;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 10px;
+    text-overflow: ellipsis;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
 }
 
 /* Responsive adjustments for smaller screens */

@@ -12,12 +12,13 @@
     <header>
         <div class="header-container">
             <nav>
-                <li><a href="index.html">Movie Night</a></li>
+
+                <a href="index.html">Movie Night</a>
+
             </nav>
             <div class="topnav">
                 <form method="get" action="/">
                     <input type="text" name="search" placeholder="Search..">
-                    <button type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -25,8 +26,8 @@
     <ul class="grid">
         {{range .Movies}}
         <li class="grid-item">
-            <div class="Genre"></div>
-            <h2>{{.Genre}}</h2>
+            <div></div>
+            <h2 class="Genre">{{.Genre}}</h2>
             </div>
             <a href="#">
                 <img src="{{.PosterPath}}" alt="{{.Title}}">
