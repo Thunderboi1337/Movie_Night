@@ -93,7 +93,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
 
-	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Werid", "Last Weeks Winner"}
+	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
 
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
