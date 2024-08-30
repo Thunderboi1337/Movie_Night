@@ -11,28 +11,26 @@
 <body>
     <header>
         <div class="header-container">
-            <nav>
-
-                <a href="index.html">Movie Night</a>
-
-            </nav>
+            <div class="LOGO">
+                <a class="header_movie" href="index.html">Movie Night</a>
+            </div>
             <div class="topnav">
                 <form method="get" action="/">
                     <input type="text" name="search" placeholder="Search..">
                 </form>
             </div>
+
         </div>
     </header>
     <ul class="grid">
         {{range .Movies}}
         <li class="grid-item">
-            <div></div>
-            <h2 class="Genre">{{.Genre}}</h2>
+            <a class="Genre">{{.Genre}}</a>
             </div>
             <a href="#">
                 <img src="{{.PosterPath}}" alt="{{.Title}}">
             </a>
-            <h2>{{.Title}}</h2>
+            <a class="title">{{.Title}}</a>
         </li>
         {{end}}
     </ul>

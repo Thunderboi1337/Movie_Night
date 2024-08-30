@@ -11,7 +11,15 @@ body {
 }
 
 header {
-    background: #55d6aa;
+    background: rgb(214, 85, 113);
+    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
+    padding-top: 200;
+    margin-top: 200;
+}
+
+.LOGO {
+    padding-top: 50px;
+    margin-bottom: -40px;
 }
 
 header::after {
@@ -21,44 +29,13 @@ header::after {
     float: center;
 }
 
-nav {
-    float: center;
-}
-
-
-nav a {
+.header_movie {
     color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 100px;
-}
 
-.topnav {
-    overflow: hidden;
-    align-self: auto;
-}
 
-/* Style the links inside the navigation bar */
-.topnav a {
-    float: left;
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Style the "active" element to highlight the current page */
-.topnav a.active {
-    background-color: #2196F3;
-    color: white;
 }
 
 /* Style the search box inside the navigation bar */
@@ -74,8 +51,6 @@ nav a {
 .header-container {
 
     text-align: center;
-
-
 }
 
 
@@ -85,36 +60,16 @@ nav a {
 }
 
 
-.add-movie-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-
-}
-
-.add-movie-button button {
-    background-color: #55d6aa;
-    color: #ffffff;
-    padding: 5px 110px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-
-    cursor: pointer;
-}
 
 ul.grid {
     list-style-type: none;
     padding: 0;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
     gap: 30px;
     max-width: 1200px;
+    margin-top: 50px;
 
 }
 
@@ -140,8 +95,31 @@ ul.grid {
     color: #333;
 }
 
+.add-movie-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+
+}
+
+.add-movie-button button {
+    background-color: #d65571;
+    color: #ffffff;
+    padding: 5px 110px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+
 .Genre {
-    background-color: #55d6aa;
+    background-color: #d65571;
     color: #ffffff;
     padding: 10px;
     border-radius: 15px;
@@ -155,7 +133,28 @@ ul.grid {
     white-space: nowrap;
     width: 200px;
     overflow: hidden;
+
 }
+
+
+.title {
+
+    background-color: #353434;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: 200px;
+    overflow: hidden;
+
+}
+
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {

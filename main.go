@@ -93,11 +93,11 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
 
-	genres := []string{"Action", "Drama", "Comedy", "Anime", "Animation", "Last Weeks Winner"}
+	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Werid", "Last Weeks Winner"}
 
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
-			Movies: apiResponse.Results[0:6],
+			Movies: apiResponse.Results[0:8],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
