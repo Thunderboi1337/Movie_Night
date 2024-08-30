@@ -25,8 +25,11 @@
     <ul class="grid">
         {{range .Movies}}
         <li class="grid-item">
+            <div clss="Genre">
+                <h2>{{.Genre}}</h2>
+            </div>
             <a href="#">
-                <img src="https://image.tmdb.org/t/p/w500{{.PosterPath}}" alt="{{.Title}}">
+                <img src="{{.PosterPath}}" alt="{{.Title}}">
             </a>
             <h2>{{.Title}}</h2>
         </li>
@@ -34,7 +37,9 @@
     </ul>
 
     <ul class="grid">
-        <button type="button" name="add" onclick="openAddMovieForm()">Add New Movies</button>
+        <li class="add-movie-button">
+            <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
+        </li>
     </ul>
 
     <script>

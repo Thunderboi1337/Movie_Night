@@ -19,6 +19,7 @@ type Movie struct {
 	PosterPath  string  `json:"poster_path"`
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
+	Genre       string  `json:"Genre"`
 }
 
 type APIResponse struct {
@@ -29,12 +30,7 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
-	Movies      []Movie
-	Title       string
-	Overview    string
-	PosterPath  string
-	ReleaseDate string
-	VoteAverage float64
+	Movies []Movie
 }
 
 type App struct {
@@ -42,6 +38,7 @@ type App struct {
 }
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
+
 	searchQuery := r.URL.Query().Get("search")
 	newMovies := r.URL.Query().Get("addmovies")
 	var url string
@@ -89,14 +86,25 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	baseImageURL := "https://image.tmdb.org/t/p/w500"
+	for i := range apiResponse.Results {
+		apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
+	}
+
 	var data TemplateData
+
+	genres := []string{"Action", "Drama", "Comedy", "Anime", "Animation", "Last Weeks Winner"}
 
 	if len(apiResponse.Results) > 0 {
 		data = TemplateData{
-			Movies: apiResponse.Results[0:4],
+			Movies: apiResponse.Results[0:6],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
+	}
+
+	for i := range genres {
+		data.Movies[i].Genre = genres[i]
 	}
 
 	t, err := template.ParseFiles("index.html")
