@@ -24,14 +24,18 @@
     </header>
     <ul class="grid">
         {{range .Movies}}
-        <li class="grid-item">
-            <a class="Genre">{{.Genre}}</a>
-            </div>
-            <a href="#">
-                <img src="{{.PosterPath}}" alt="{{.Title}}">
-            </a>
-            <a class="title">{{.Title}}</a>
-        </li>
+        <div class="grid_background">
+            <li class="grid-item">
+
+                <a class="Genre">{{.Genre}}</a>
+
+
+                <a href="#">
+                    <img src="{{.PosterPath}}" alt="{{.Title}}">
+                </a>
+                <a class="title">{{.Title}}</a>
+            </li>
+        </div>
         {{end}}
     </ul>
 

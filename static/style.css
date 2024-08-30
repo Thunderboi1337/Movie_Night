@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background: #222;
+    background: #1b1b1b;
     font-family: 'OCR A Extended', monospace;
     font-weight: 300;
 }
@@ -81,10 +81,9 @@ ul.grid {
 
 .grid-item img {
     width: 100%;
-    /* Make the image fill the grid item */
     height: auto;
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: -5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -93,6 +92,17 @@ ul.grid {
     margin-top: 10px;
     font-size: 18px;
     color: #333;
+}
+
+.grid_background {
+
+    background: rgb(214, 85, 113);
+    background: linear-gradient(180deg, rgba(214, 85, 113, 1) 0%, rgba(34, 34, 34, 1) 15%);
+
+
+    padding-bottom: -100px;
+    border-radius: 10px;
+
 }
 
 .add-movie-button {
@@ -119,39 +129,30 @@ ul.grid {
 
 
 .Genre {
-    background-color: #d65571;
+
     color: #ffffff;
     padding: 10px;
-    border-radius: 15px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
-    text-overflow: ellipsis;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
     display: inline-block;
     white-space: nowrap;
-    width: 200px;
-    overflow: hidden;
-
 }
 
 
 .title {
-
-    background-color: #353434;
+    background-color: #222;
     color: #ffffff;
     padding: 10px;
     border-radius: 15px;
     font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    text-overflow: ellipsis;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: left;
     text-transform: uppercase;
-    white-space: nowrap;
-    width: 200px;
+    width: 250px;
     overflow: hidden;
+    word-wrap: break-word;
+    line-height: 1.4;
 
 }
 
