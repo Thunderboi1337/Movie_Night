@@ -40,12 +40,19 @@ type App struct {
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
+	modalSearchQuery := r.URL.Query().Get("	modal-search")
 	newMovies := r.URL.Query().Get("addmovies")
 	trailer := r.URL.Query().Get("trailer")
+
 	var url string
 
 	if searchQuery != "" {
 		// Use the search movies endpoint
+		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
+		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+
+	} else if modalSearchQuery != "" {
+
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
 
