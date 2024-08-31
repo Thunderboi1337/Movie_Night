@@ -45,11 +45,16 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <form method="get" action="/">
-                <input type="text" name="modal-search" placeholder="Search..">
+
+            <!-- Modal Search Form -->
+            <form method="get" action="/modal-search">
+                <input type="text" name="modal-search" placeholder="Search within modal..">
+                <button type="submit">Search</button>
             </form>
+
+            <!-- Modal Search Results -->
             <ul class="grid">
-                {{range .Movies}}
+                {{range .ModalMovies}}
                 <div class="grid_background">
                     <li class="grid-item">
                         <a class="Genre">{{.Genre}}</a>

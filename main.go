@@ -102,27 +102,50 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var data TemplateData
+	var search_data TemplateData
 
 	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
 
-	if len(apiResponse.Results) > 0 {
-		data = TemplateData{
-			Movies: apiResponse.Results[0:8],
+	if modalSearchQuery != "" {
+		if len(apiResponse.Results) > 0 {
+			search_data = TemplateData{
+				Movies: apiResponse.Results[0:8],
+			}
+		} else {
+			fmt.Println("No movies found in the response.")
 		}
+
+		for i := range genres {
+			search_data.Movies[i].Genre = genres[i]
+		}
+
+		t, err := template.ParseFiles("index.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		t.Execute(w, search_data)
 	} else {
-		fmt.Println("No movies found in the response.")
+		if len(apiResponse.Results) > 0 {
+			data = TemplateData{
+				Movies: apiResponse.Results[0:8],
+			}
+		} else {
+			fmt.Println("No movies found in the response.")
+		}
+
+		for i := range genres {
+			data.Movies[i].Genre = genres[i]
+		}
+
+		t, err := template.ParseFiles("index.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		t.Execute(w, data)
 	}
 
-	for i := range genres {
-		data.Movies[i].Genre = genres[i]
-	}
-
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.Execute(w, data)
 }
 
 func main() {
