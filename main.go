@@ -41,6 +41,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
 	newMovies := r.URL.Query().Get("addmovies")
+	trailer := r.URL.Query().Get("trailer")
 	var url string
 
 	if searchQuery != "" {
@@ -52,6 +53,8 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 
+	} else if trailer != "" {
+		url = "https://api.themoviedb.org/3/movie/293660/videos?language=en-US" //deadpool
 	} else {
 		// Default to fetching favorite movies
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
