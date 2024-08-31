@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -19,38 +19,51 @@
                     <input type="text" name="search" placeholder="Search..">
                 </form>
             </div>
-
         </div>
     </header>
+
     <ul class="grid">
         {{range .Movies}}
         <div class="grid_background">
             <li class="grid-item">
-
                 <a class="Genre">{{.Genre}}</a>
-
-
                 <a href="#">
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <a class="title">{{.Title}}</a>
+            <li class="switch-movie-button">
+                <!-- Trigger the modal with a link -->
+                <a href="#modal" class="open-modal">Switch</a>
+            </li>
             </li>
         </div>
         {{end}}
     </ul>
 
+    <!-- The Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <!-- Close the modal with a link -->
+            <a href="#" class="close">&times;</a>
+            <form method="get" action="/">
+                <input type="text" name="search" placeholder="Search..">
+            </form>
+            <ul class="grid">
+                {{range .Movies}}
+                <div class="grid_background">
+                    <li class="grid-item">
+                        <a class="Genre">{{.Genre}}</a>
+                        <a href="#">
+                            <img src="{{.PosterPath}}" alt="{{.Title}}">
+                        </a>
+                        <a class="title">{{.Title}}</a>
+                    </li>
+                </div>
+                {{end}}
+            </ul>
 
-    <li class="add-movie-button">
-        <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
-    </li>
-
-
-    <script>
-        function openAddMovieForm() {
-            // Your code to open a form or handle adding new movies
-            alert("Button clicked! You can now add a new movie.");
-        }
-    </script>
+        </div>
+    </div>
 
 </body>
 
