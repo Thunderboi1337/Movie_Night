@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,14 +46,12 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-
             <!-- Modal Search Form -->
             <form method="get" action="/modal-search">
                 <input type="text" name="modal-search" placeholder="Search within modal..">
                 <button type="submit">Search</button>
             </form>
 
-            <!-- Modal Search Results -->
             <ul class="grid">
                 {{range .ModalMovies}}
                 <div class="grid_background">
@@ -70,6 +69,9 @@
         </div>
     </div>
 
+
 </body>
+
+
 
 </html>

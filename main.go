@@ -30,7 +30,8 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
-	Movies []Movie
+	Movies      []Movie
+	ModalMovies []Movie
 }
 
 type App struct {
@@ -40,24 +41,25 @@ type App struct {
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
-	modalSearchQuery := r.URL.Query().Get("	modal-search")
+	modalSearchQuery := r.URL.Query().Get("modal-search")
 	newMovies := r.URL.Query().Get("addmovies")
 	trailer := r.URL.Query().Get("trailer")
 
 	var url string
+	modalSearch := false
 
 	if searchQuery != "" {
-		// Use the search movies endpoint
+		// Main search
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
 
 	} else if modalSearchQuery != "" {
-
-		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
+		// Modal search
+		formattedQuery := strings.ReplaceAll(modalSearchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+		modalSearch = true
 
 	} else if newMovies != "" {
-
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 
 	} else if trailer != "" {
@@ -101,51 +103,47 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
 	}
 
-	var data TemplateData
-	var search_data TemplateData
-
 	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
 
-	if modalSearchQuery != "" {
-		if len(apiResponse.Results) > 0 {
-			search_data = TemplateData{
+	if len(apiResponse.Results) > 0 {
+		if modalSearch {
+			for i := range genres {
+				if i < len(apiResponse.Results) {
+					apiResponse.Results[i].Genre = genres[i]
+				}
+			}
+
+			modalData := TemplateData{
+				ModalMovies: apiResponse.Results[0:8],
+			}
+
+			t, err := template.ParseFiles("index.html")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			t.Execute(w, modalData)
+		} else {
+			for i := range genres {
+				if i < len(apiResponse.Results) {
+					apiResponse.Results[i].Genre = genres[i]
+				}
+			}
+
+			data := TemplateData{
 				Movies: apiResponse.Results[0:8],
 			}
-		} else {
-			fmt.Println("No movies found in the response.")
-		}
 
-		for i := range genres {
-			search_data.Movies[i].Genre = genres[i]
-		}
+			t, err := template.ParseFiles("index.html")
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
+			t.Execute(w, data)
 		}
-
-		t.Execute(w, search_data)
 	} else {
-		if len(apiResponse.Results) > 0 {
-			data = TemplateData{
-				Movies: apiResponse.Results[0:8],
-			}
-		} else {
-			fmt.Println("No movies found in the response.")
-		}
-
-		for i := range genres {
-			data.Movies[i].Genre = genres[i]
-		}
-
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, data)
+		fmt.Println("No movies found in the response.")
 	}
-
 }
 
 func main() {

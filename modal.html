@@ -1,0 +1,28 @@
+<!-- modal.html -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <!-- Close the modal with a link -->
+        <a href="#" class="close">&times;</a>
+
+        <!-- Modal Search Form -->
+        <form method="get" action="/modal-search">
+            <input type="text" name="modal-search" placeholder="Search within modal..">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Modal Movie Grid -->
+        <ul class="grid">
+            {{range .ModalMovies}}
+            <div class="grid_background">
+                <li class="grid-item">
+                    <a class="Genre">{{.Genre}}</a>
+                    <a href="#">
+                        <img src="{{.PosterPath}}" alt="{{.Title}}">
+                    </a>
+                    <a class="title">{{.Title}}</a>
+                </li>
+            </div>
+            {{end}}
+        </ul>
+    </div>
+</div>
