@@ -38,6 +38,37 @@ type App struct {
 	APIKey string
 }
 
+func getStoredMovies() {
+
+	var storedMovies APIResponse
+	var Movies TemplateData
+
+	jsonFile, err := os.ReadFile("m.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Successfully Opened users.json")
+
+	err = json.Unmarshal(jsonFile, &storedMovies)
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+
+	if len(storedMovies.Results) > 0 {
+		Movies = TemplateData{
+			Movies: storedMovies.Results,
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	for i := 0; i < 2; i++ {
+
+		fmt.Println(Movies.Movies[i])
+	}
+
+}
+
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
@@ -62,6 +93,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// Default to fetching favorite movies
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+
 	}
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -102,6 +134,8 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	var search_data TemplateData
 
 	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
+
+	getStoredMovies()
 
 	if search {
 		if len(apiResponse.Results) > 0 {
