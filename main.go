@@ -41,7 +41,6 @@ type App struct {
 func getStoredMovies() {
 
 	var storedMovies APIResponse
-	var Movies TemplateData
 
 	jsonFile, err := os.ReadFile("m.json")
 	if err != nil {
@@ -54,20 +53,19 @@ func getStoredMovies() {
 		fmt.Println("Error:", err)
 	}
 
-	if len(storedMovies.Results) > 0 {
-		Movies = TemplateData{
-			Movies: storedMovies.Results,
-		}
-	} else {
-		fmt.Println("No movies found in the response.")
-	}
-
-	for i := 0; i < 2; i++ {
-
-		fmt.Println(Movies.Movies[i])
-	}
-
 }
+
+/* func (data *TemplateData) setStoreMovies() {
+	movieData, err := json.MarshalIndent(data.Movies, "", "    ")
+	if err != nil {
+		log.Fatal("Failed to marshal movie data to JSON:", err)
+	}
+
+	err = os.WriteFile("m.json", movieData, 0644) // 0644 is a typical permission setting
+	if err != nil {
+		log.Fatal("Failed to write movie data to file:", err)
+	}
+} */
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
