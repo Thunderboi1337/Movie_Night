@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVIE_NIGHT</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <header>
         <div class="header-container">
             <div class="LOGO">
-                <a class="header_movie" href="index.html">Movie Night</a>
+                <a class="header_movie" href="/">Movie Night</a>
             </div>
             <div class="topnav">
                 <form method="get" action="/">
@@ -28,15 +27,14 @@
         {{range .Movies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a class="Genre">{{.Genre}}</a>
+                <span class="Genre">{{.Genre}}</span>
                 <a href="#">
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
-                <a class="title">{{.Title}}</a>
-            <li class="switch-movie-button">
-
-                <a href="#modal" class="open-modal">Switch</a>
-            </li>
+                <span class="title">{{.Title}}</span>
+                <div class="switch-movie-button">
+                    <a href="#modal" class="open-modal">Switch</a>
+                </div>
             </li>
         </div>
         {{end}}
@@ -44,15 +42,14 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a class="Genre">{{.Genre}}</a>
+                <span class="Genre">{{.Genre}}</span>
                 <a href="#">
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
-                <a class="title">{{.Title}}</a>
-            <li class="switch-movie-button">
-
-                <a href="#modal" class="open-modal">Add</a>
-            </li>
+                <span class="title">{{.Title}}</span>
+                <div class="switch-movie-button">
+                    <a href="#add" class="open-add">Add</a>
+                </div>
             </li>
         </div>
         {{end}}
@@ -61,7 +58,7 @@
         {{end}}
     </ul>
 
-    <!-- The Modal -->
+    <!-- The Modal for Switching Movies -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <!-- Close the modal with a link -->
@@ -71,16 +68,65 @@
                 <input type="text" name="search" placeholder="Search..">
                 <button type="submit">Search</button>
             </form>
+        </div>
+    </div>
 
-
-
-
+    <!-- The Modal for Adding Movies -->
+    <div id="add" class="modal">
+        <div class="modal-content">
+            <!-- Close the modal with a link -->
+            <a href="#" class="close">&times;</a>
+            <button type="submit">Add</button>
+            <button type="submit">Add</button>
+            <button type="submit">Add</button>
         </div>
     </div>
 
 
-</body>
+    <script>
+        // Get the modals
+        var modal = document.getElementById("modal");
+        var addModal = document.getElementById("add");
 
+        // Get the buttons that open the modals
+        var btnOpenModal = document.querySelectorAll(".open-modal");
+        var btnOpenAdd = document.querySelectorAll(".open-add");
 
+        // Get the <span> element that closes the modals
+        var spanCloseModal = modal.querySelector(".close");
+        var spanCloseAdd = addModal.querySelector(".close");
+
+        // When the user clicks on the buttons, open the respective modal
+        btnOpenModal.forEach(function (btn) {
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+        });
+
+        btnOpenAdd.forEach(function (btn) {
+            btn.onclick = function () {
+                addModal.style.display = "block";
+            }
+        });
+
+        // When the user clicks on <span> (x), close the modals
+        spanCloseModal.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        spanCloseAdd.onclick = function () {
+            addModal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == addModal) {
+                addModal.style.display = "none";
+            }
+        }
+    </script>
 
 </html>
