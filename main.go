@@ -30,8 +30,8 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
-	Movies      []Movie
-	ModalMovies []Movie
+	Movies       []Movie
+	SearchMovies []Movie
 }
 
 type App struct {
@@ -45,13 +45,16 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	trailer := r.URL.Query().Get("trailer")
 
 	var url string
+	search := false
 
 	if searchQuery != "" {
-		// Main search
+		// Use the search movies endpoint
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+		search = true
 
 	} else if newMovies != "" {
+
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 
 	} else if trailer != "" {
@@ -95,18 +98,41 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
 	}
 
+	var data TemplateData
+	var search_data TemplateData
+
 	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
 
-	if len(apiResponse.Results) > 0 {
-
-		for i := range genres {
-			if i < len(apiResponse.Results) {
-				apiResponse.Results[i].Genre = genres[i]
+	if search {
+		if len(apiResponse.Results) > 0 {
+			search_data = TemplateData{
+				SearchMovies: apiResponse.Results[0:8],
 			}
+		} else {
+			fmt.Println("No movies found in the response.")
 		}
 
-		data := TemplateData{
-			Movies: apiResponse.Results[0:8],
+		for i := range genres {
+			search_data.SearchMovies[i].Genre = genres[i]
+		}
+
+		t, err := template.ParseFiles("index.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		t.Execute(w, search_data)
+	} else {
+		if len(apiResponse.Results) > 0 {
+			data = TemplateData{
+				Movies: apiResponse.Results[0:8],
+			}
+		} else {
+			fmt.Println("No movies found in the response.")
+		}
+
+		for i := range genres {
+			data.Movies[i].Genre = genres[i]
 		}
 
 		t, err := template.ParseFiles("index.html")
@@ -115,10 +141,8 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		t.Execute(w, data)
-
-	} else {
-		fmt.Println("No movies found in the response.")
 	}
+
 }
 
 func main() {

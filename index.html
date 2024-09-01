@@ -24,6 +24,7 @@
     </header>
 
     <ul class="grid">
+        {{if .Movies}}
         {{range .Movies}}
         <div class="grid_background">
             <li class="grid-item">
@@ -33,11 +34,30 @@
                 </a>
                 <a class="title">{{.Title}}</a>
             <li class="switch-movie-button">
-                <!-- Trigger the modal with a link -->
+
                 <a href="#modal" class="open-modal">Switch</a>
             </li>
             </li>
         </div>
+        {{end}}
+        {{else if .SearchMovies}}
+        {{range .SearchMovies}}
+        <div class="grid_background">
+            <li class="grid-item">
+                <a class="Genre">{{.Genre}}</a>
+                <a href="#">
+                    <img src="{{.PosterPath}}" alt="{{.Title}}">
+                </a>
+                <a class="title">{{.Title}}</a>
+            <li class="switch-movie-button">
+
+                <a href="#modal" class="open-modal">Add</a>
+            </li>
+            </li>
+        </div>
+        {{end}}
+        {{else}}
+        <p>No movies found.</p>
         {{end}}
     </ul>
 
@@ -51,6 +71,9 @@
                 <input type="text" name="search" placeholder="Search..">
                 <button type="submit">Search</button>
             </form>
+
+
+
 
         </div>
     </div>

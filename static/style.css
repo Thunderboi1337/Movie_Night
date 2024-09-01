@@ -114,15 +114,8 @@ ul.grid {
 
 }
 
-.add-movie-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+.switch-movie-button button {
 
-}
-
-.add-movie-button button {
     background-color: #d65571;
     color: #ffffff;
     padding: 5px 110px;
@@ -134,7 +127,10 @@ ul.grid {
     text-transform: uppercase;
 
     cursor: pointer;
+
+
 }
+
 
 
 .Genre {
