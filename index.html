@@ -76,9 +76,13 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <button type="submit">Add</button>
-            <button type="submit">Add</button>
-            <button type="submit">Add</button>
+            <button type="submit" data-id="{{.Id}}">Anime</button>
+            <button type="submit" data-id="{{.Id}}">Animation</button>
+            <button type="submit" data-id="{{.Id}}">Action</button>
+            <button type="submit" data-id="{{.Id}}">Drama</button>
+            <button type="submit" data-id="{{.Id}}">Comedy</button>
+            <button type="submit" data-id="{{.Id}}">Random</button>
+            <button type="submit" data-id="{{.Id}}">Weird</button>
         </div>
     </div>
 
@@ -97,9 +101,18 @@
         var spanCloseAdd = addModal.querySelector(".close");
 
         // When the user clicks on the buttons, open the respective modal
-        btnOpenModal.forEach(function (btn) {
-            btn.onclick = function () {
-                modal.style.display = "block";
+        btnOpenAdd.forEach(function (btn) {
+            btn.onclick = function (event) {
+                event.preventDefault();  // Prevent default action
+                var movieId = btn.getAttribute('data-id');  // Get the movie ID
+
+                // Do something with the movie ID, like sending it to the server
+                //console.log("Movie ID:", movieId);
+
+                // If needed, pass the movie ID to a form input in the modal
+                document.getElementById("hiddenMovieIdInput").value = movieId;
+
+                addModal.style.display = "block";  // Open the modal
             }
         });
 

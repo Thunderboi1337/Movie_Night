@@ -85,8 +85,16 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
 	trailer := r.URL.Query().Get("trailer")
+	movieId := r.URL.Query().Get("movieId")
 
-	if searchQuery != "" {
+	if movieId != "" {
+
+		// Logic to handle the movie addition by its ID
+		fmt.Println("Movie ID to add:", movieId)
+
+		// Respond to the client, or redirect to a success page
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	} else if searchQuery != "" {
 		// Use the search movies endpoint
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
@@ -137,8 +145,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 			return
 		}
-
-		fmt.Println(apiResponse)
 
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
 		for i := range apiResponse.Results {
