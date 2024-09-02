@@ -13,6 +13,18 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type App struct {
+	APIKey string
+}
+
+type APIResponse struct {
+	Results []Movie `json:"results"`
+}
+type TemplateData struct {
+	Movies       []Movie
+	SearchMovies []Movie
+}
+
 type Movie struct {
 	Title       string  `json:"title"`
 	Id          int     `json:"id"`
@@ -21,22 +33,6 @@ type Movie struct {
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
 	Genre       string  `json:"Genre"`
-}
-
-type APIResponse struct {
-	Page         int     `json:"page"`
-	Results      []Movie `json:"results"`
-	TotalPages   int     `json:"total_pages"`
-	TotalResults int     `json:"total_results"`
-}
-
-type TemplateData struct {
-	Movies       []Movie
-	SearchMovies []Movie
-}
-
-type App struct {
-	APIKey string
 }
 
 var storedMovies TemplateData
@@ -60,18 +56,6 @@ func getStoredMovies() {
 	}
 
 }
-
-/* func (data *TemplateData) setStoreMovies() {
-	movieData, err := json.MarshalIndent(data.Movies, "", "    ")
-	if err != nil {
-		log.Fatal("Failed to marshal movie data to JSON:", err)
-	}
-
-	err = os.WriteFile("m.json", movieData, 0644) // 0644 is a typical permission setting
-	if err != nil {
-		log.Fatal("Failed to write movie data to file:", err)
-	}
-} */
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
