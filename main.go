@@ -130,15 +130,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		/* var result map[string]interface{}
-		err = json.Unmarshal(body, &result)
-		if err != nil {
-			http.Error(w, "Failed to parse response", http.StatusInternalServerError)
-			return
-		}
-
-		fmt.Println(result) */
-
 		var apiResponse APIResponse
 		err = json.Unmarshal(body, &apiResponse)
 		if err != nil {
