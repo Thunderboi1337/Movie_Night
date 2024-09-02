@@ -1,57 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVIE_NIGHT</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <header>
         <div class="header-container">
             <div class="LOGO">
-                <a class="header_movie" href="index.html">Movie Night</a>
+                <a class="header_movie" href="/">Movie Night</a>
             </div>
             <div class="topnav">
                 <form method="get" action="/">
                     <input type="text" name="search" placeholder="Search..">
                 </form>
             </div>
-
         </div>
     </header>
+
     <ul class="grid">
+        {{if .Movies}}
         {{range .Movies}}
         <div class="grid_background">
             <li class="grid-item">
-
-                <a class="Genre">{{.Genre}}</a>
-
-
+                <span class="Genre">{{.Genre}}</span>
                 <a href="#">
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
-                <a class="title">{{.Title}}</a>
+                <span class="title">{{.Title}}</span>
+                <div class="switch-movie-button">
+                    <a href="#modal" class="open-modal">Switch</a>
+                </div>
             </li>
         </div>
         {{end}}
+        {{else if .SearchMovies}}
+        {{range .SearchMovies}}
+        <div class="grid_background">
+            <li class="grid-item">
+                <span class="Genre">{{.Genre}}</span>
+                <a href="#">
+                    <img src="{{.PosterPath}}" alt="{{.Title}}">
+                </a>
+                <span class="title">{{.Title}}</span>
+                <div class="switch-movie-button">
+                    <a href="#add" class="open-add">Add</a>
+                    <var>id="{{Id}}"</var>
+                </div>
+            </li>
+        </div>
+        {{end}}
+        {{else}}
+        <p>No movies found.</p>
+        {{end}}
     </ul>
 
+    <!-- The Modal for Switching Movies -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <!-- Close the modal with a link -->
+            <a href="#" class="close">&times;</a>
+            <!-- Modal Search Form -->
+            <form method="get" action="/modal-search">
+                <input type="text" name="search" placeholder="Search..">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
 
-    <li class="add-movie-button">
-        <button type="button" name="add" onclick="openAddMovieForm()">New Movie Night</button>
-    </li>
+    <!-- The Modal for Adding Movies -->
+    <div id="add" class="modal">
+        <div class="modal-content">
+            <!-- Close the modal with a link -->
+            <a href="#" class="close">&times;</a>
+            <button onclick="send_id()" type="submit">Anime</button>
+            <button onclick="send_id()" type="submit">Animation</button>
+            <button onclick="send_id()" type="submit">Action</button>
+            <button onclick="send_id()" type="submit">Drama</button>
+            <button onclick="send_id()" type="submit">Comedy</button>
+            <button onclick="send_id()" type="submit">Random</button>
+            <button onclick="send_id()" type="submit">Weird</button>
+        </div>
+    </div>
 
 
     <script>
-        function openAddMovieForm() {
-            // Your code to open a form or handle adding new movies
-            alert("Button clicked! You can now add a new movie.");
+        // Get the modals
+        var modal = document.getElementById("modal");
+        var addModal = document.getElementById("add");
+
+        // Get the buttons that open the modals
+        var btnOpenModal = document.querySelectorAll(".open-modal");
+        var btnOpenAdd = document.querySelectorAll(".open-add");
+
+        // Get the <span> element that closes the modals
+        var spanCloseModal = modal.querySelector(".close");
+        var spanCloseAdd = addModal.querySelector(".close");
+
+        function send_id() {
+
+
+
+        }
+
+
+        btnOpenAdd.forEach(function (btn) {
+            btn.onclick = function () {
+                addModal.style.display = "block";
+            }
+        });
+
+        // When the user clicks on <span> (x), close the modals
+        spanCloseModal.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        spanCloseAdd.onclick = function () {
+            addModal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == addModal) {
+                addModal.style.display = "none";
+            }
         }
     </script>
-
-</body>
 
 </html>

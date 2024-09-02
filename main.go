@@ -15,6 +15,7 @@ import (
 
 type Movie struct {
 	Title       string  `json:"title"`
+	Id          int     `json:"id"`
 	Overview    string  `json:"overview"`
 	PosterPath  string  `json:"poster_path"`
 	ReleaseDate string  `json:"release_date"`
@@ -30,28 +31,74 @@ type APIResponse struct {
 }
 
 type TemplateData struct {
-	Movies []Movie
+	Movies       []Movie
+	SearchMovies []Movie
 }
 
 type App struct {
 	APIKey string
 }
 
+var storedMovies TemplateData
+
+func getStoredMovies() {
+
+	// Open the JSON file
+	jsonFile, err := os.ReadFile("m.json")
+	if err != nil {
+		fmt.Println("Error opening JSON file:", err)
+
+	}
+
+	fmt.Println("Successfully opened m.json")
+
+	// Unmarshal JSON data into the storedMovies variable
+	err = json.Unmarshal(jsonFile, &storedMovies.Movies)
+	if err != nil {
+		fmt.Println("Error unmarshaling JSON:", err)
+
+	}
+
+}
+
+/* func (data *TemplateData) setStoreMovies() {
+	movieData, err := json.MarshalIndent(data.Movies, "", "    ")
+	if err != nil {
+		log.Fatal("Failed to marshal movie data to JSON:", err)
+	}
+
+	err = os.WriteFile("m.json", movieData, 0644) // 0644 is a typical permission setting
+	if err != nil {
+		log.Fatal("Failed to write movie data to file:", err)
+	}
+} */
+
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
-	searchQuery := r.URL.Query().Get("search")
-	newMovies := r.URL.Query().Get("addmovies")
-	trailer := r.URL.Query().Get("trailer")
-	var url string
+	var data TemplateData
+	var search_data TemplateData
 
-	if searchQuery != "" {
+	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
+
+	var url string
+	search := false
+
+	searchQuery := r.URL.Query().Get("search")
+	trailer := r.URL.Query().Get("trailer")
+	movieId := r.URL.Query().Get("movieId")
+
+	if movieId != "" {
+
+		// Logic to handle the movie addition by its ID
+		fmt.Println("Movie ID to add:", movieId)
+
+		// Respond to the client, or redirect to a success page
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	} else if searchQuery != "" {
 		// Use the search movies endpoint
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
-
-	} else if newMovies != "" {
-
-		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
+		search = true
 
 	} else if trailer != "" {
 		url = "https://api.themoviedb.org/3/movie/293660/videos?language=en-US" //deadpool
@@ -60,65 +107,85 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 	}
 
-	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+	if search {
+		req, _ := http.NewRequest("GET", url, nil)
+		req.Header.Add("accept", "application/json")
+		req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
-		return
-	}
-	defer res.Body.Close()
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+			return
+		}
+		defer res.Body.Close()
 
-	if res.StatusCode != http.StatusOK {
-		http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
-		return
-	}
+		if res.StatusCode != http.StatusOK {
+			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+			return
+		}
 
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		http.Error(w, "Failed to read response", http.StatusInternalServerError)
-		return
-	}
+		body, err := io.ReadAll(res.Body)
+		if err != nil {
+			http.Error(w, "Failed to read response", http.StatusInternalServerError)
+			return
+		}
 
-	var apiResponse APIResponse
-	err = json.Unmarshal(body, &apiResponse)
-	if err != nil {
-		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
-		return
-	}
+		var apiResponse APIResponse
+		err = json.Unmarshal(body, &apiResponse)
+		if err != nil {
+			http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+			return
+		}
 
-	baseImageURL := "https://image.tmdb.org/t/p/w500"
-	for i := range apiResponse.Results {
-		apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
-	}
+		baseImageURL := "https://image.tmdb.org/t/p/w500"
+		for i := range apiResponse.Results {
+			apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
+		}
 
-	var data TemplateData
+		if search {
+			if len(apiResponse.Results) > 0 {
+				search_data = TemplateData{
+					SearchMovies: apiResponse.Results[0:8],
+				}
+			} else {
+				fmt.Println("No movies found in the response.")
+			}
 
-	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
+			for i := range genres {
+				search_data.SearchMovies[i].Genre = genres[i]
+			}
 
-	if len(apiResponse.Results) > 0 {
-		data = TemplateData{
-			Movies: apiResponse.Results[0:8],
+			t, err := template.ParseFiles("index.html")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			t.Execute(w, search_data)
 		}
 	} else {
-		fmt.Println("No movies found in the response.")
+
+		if len(storedMovies.Movies) > 0 {
+			data = TemplateData{
+				Movies: storedMovies.Movies[0:8],
+			}
+		} else {
+			fmt.Println("No movies found in the response.")
+		}
+
+		t, err := template.ParseFiles("index.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		t.Execute(w, data)
 	}
 
-	for i := range genres {
-		data.Movies[i].Genre = genres[i]
-	}
-
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.Execute(w, data)
 }
 
 func main() {
+
+	getStoredMovies()
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")

@@ -105,15 +105,17 @@ ul.grid {
 
 }
 
-.add-movie-button {
+.switch-movie-button {
+
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
+    justify-content: Right;
+    align-items: Right;
+
 
 }
 
-.add-movie-button button {
+.switch-movie-button button {
+
     background-color: #d65571;
     color: #ffffff;
     padding: 5px 110px;
@@ -125,7 +127,10 @@ ul.grid {
     text-transform: uppercase;
 
     cursor: pointer;
+
+
 }
+
 
 
 .Genre {
@@ -157,7 +162,97 @@ ul.grid {
 }
 
 
-/* Responsive adjustments for smaller screens */
+.open-modal {
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+
+.modal {
+    display: none;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    padding-top: 60px;
+}
+
+
+.modal-content {
+    background-color: #1b1b1b;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center content horizontally */
+    justify-content: center;
+    /* Center content vertically */
+}
+
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+#modal:target {
+    display: block;
+}
+
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+}
+
+.modal-content input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    max-width: 400px;
+    font-size: 16px;
+}
+
+.modal-content button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 150px;
+}
+
+
+
 @media (max-width: 768px) {
     ul.grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
