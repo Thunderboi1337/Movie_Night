@@ -50,6 +50,7 @@
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <span class="title">{{.Title}}</span>
+                <var data-movie-id="{{.Id}}"></var>
                 <div class="switch-movie-button">
                     <a href="#add" class="open-add">Add</a>
                 </div>
@@ -76,16 +77,16 @@
 
     <!-- The Modal for Adding Movies -->
     <div id="add" class="modal">
-        <div hx-post="/add-movie/" class="modal-content">
+        <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <button type="submit">Anime</button>
-            <button type="submit">Animation</button>
-            <button type="submit">Action</button>
-            <button type="submit">Drama</button>
-            <button type="submit">Comedy</button>
-            <button type="submit">Random</button>
-            <button type="submit">Weird</button>
+            <button hx-post="/add-movie/" id="add-anime" hx-vals='{"category":"1", "movie_id":""}'>Anime</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"2", "movie_id":""}'>Animation</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"3", "movie_id":""}'>Action</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"4", "movie_id":""}'>Drama</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"5", "movie_id":""}'>Comedy</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"6", "movie_id":""}'>Random</button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"7", "movie_id":""}'>Weird</button>
         </div>
     </div>
 
@@ -103,8 +104,30 @@
         var spanCloseModal = modal.querySelector(".close");
         var spanCloseAdd = addModal.querySelector(".close");
 
-        function send_id() { }
 
+        function setMovieId(element) {
+            // Find the closest var element with the data-movie-id attribute
+            var movieId = element.closest('.grid-item').querySelector('var').getAttribute('data-movie-id');
+
+            // Update the hx-vals attribute of all buttons in the add modal
+            var buttons = document.querySelectorAll('#add button');
+            buttons.forEach(function (button) {
+                var hxVals = JSON.parse(button.getAttribute('hx-vals'));
+                hxVals.movie_id = movieId;
+                button.setAttribute('hx-vals', JSON.stringify(hxVals));
+            });
+
+            // Show the add modal
+            var addModal = document.getElementById("add");
+            addModal.style.display = "block";
+        }
+
+        document.querySelectorAll('.open-add').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();  // Prevent the default anchor behavior
+                setMovieId(btn);     // Set the movie ID and open the modal
+            });
+        });
 
         btnOpenAdd.forEach(function (btn) {
             btn.onclick = function () {

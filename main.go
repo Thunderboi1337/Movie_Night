@@ -171,6 +171,17 @@ func get_movie(w http.ResponseWriter, r *http.Request) {
 	log.Print("HTMX request received")
 	log.Print(r.Header.Get("HX-Request"))
 
+	// Parse the form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error parsing form: %v", err)
+		return
+	}
+
+	// Retrieve the category value
+	category := r.PostFormValue("category")
+	movieID := r.PostFormValue("movie_id")
+	log.Printf("Category: %s, Movie ID: %s", category, movieID)
 }
 
 func main() {
