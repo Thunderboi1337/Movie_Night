@@ -69,7 +69,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
 	trailer := r.URL.Query().Get("trailer")
-	movieId := r.URL.Query().Get("movieId")
+	movieId := r.URL.Query().Get("add-movie")
 
 	if movieId != "" {
 
@@ -166,6 +166,13 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func get_movie(w http.ResponseWriter, r *http.Request) {
+
+	log.Print("HTMX request received")
+	log.Print(r.Header.Get("HX-Request"))
+
+}
+
 func main() {
 
 	getStoredMovies()
@@ -184,6 +191,7 @@ func main() {
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/add-movie/", get_movie)
 	http.HandleFunc("/", app.indexHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
