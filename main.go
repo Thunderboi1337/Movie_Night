@@ -57,16 +57,12 @@ func getStoredMovies() {
 
 }
 
-func storeMovies() {
-
-}
-
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
 	var search_data TemplateData
 
-	genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
+	//genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
 
 	var url string
 	search := false
@@ -131,9 +127,9 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("No movies found in the response.")
 			}
 
-			for i := range genres {
+			/* for i := range genres {
 				search_data.SearchMovies[i].Genre = genres[i]
-			}
+			} */
 
 			t, err := template.ParseFiles("index.html")
 			if err != nil {
@@ -192,6 +188,23 @@ func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
 	body, _ := io.ReadAll(res.Body)
 
 	fmt.Println(string(body))
+	var movie Movie
+
+	err = json.Unmarshal(body, &movie)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	for _, movies := range storedMovies.Movies {
+
+		if movies.Genre == category {
+
+			movies = movie
+
+		}
+
+	}
 
 }
 
