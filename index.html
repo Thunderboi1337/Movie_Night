@@ -73,24 +73,26 @@
             <form method="get" action="/modal-search">
                 <input type="text" name="search" placeholder="Search..">
                 <button type="submit">Search</button>
-
-
             </form>
         </div>
     </div>
 
+    <!-- The Modal for Showing the Trailer -->
     <div id="about" class="modal">
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
+
+            <!-- Display Trailer -->
             {{if .Trailer}}
-            {{range .Trailer}}
-            <iframe width="420" height="315" src="{{.Key}}"></iframe>
+            <div>
+                {{range .Trailer}}
+                <iframe width="420" height="315" src="{{.Key}}"></iframe>
+                {{end}}
+            </div>
             {{else}}
             <p>No official trailer available.</p>
             {{end}}
-
-
         </div>
     </div>
 

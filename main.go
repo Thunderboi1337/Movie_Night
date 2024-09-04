@@ -145,11 +145,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			fmt.Println("No movies found in the response.")
 		}
-		for i, mov := range search_data.SearchMovies {
-
-			log.Println(mov.Title[i])
-
-		}
 
 		t, err := template.ParseFiles("index.html")
 		if err != nil {
@@ -207,7 +202,6 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
-	//fmt.Println(string(body))
 	var movie Movie
 
 	baseImageURL := "https://image.tmdb.org/t/p/w500"
@@ -251,7 +245,7 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Retrieve the category value
+	// Retrieve the movie ID value
 	movieID := r.PostFormValue("movie_id")
 	log.Printf(" Movie ID: %s", movieID)
 
@@ -272,35 +266,36 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
-		fmt.Println("failed to parse")
+		log.Println("Failed to parse response:", err)
 		return
 	}
 
-	if len(trailerAPIresponse.TrailerResults) > 0 {
-		temp = TemplateData{
-			Trailer: trailerAPIresponse.TrailerResults,
-		}
-	} else {
-		fmt.Println("No trailer found in the response.")
-	}
-
-	for _, trailer := range temp.Trailer {
-
-		if trailer.Offical {
-
-			trailer.Key = "https://www.youtube.com/embed/" + trailer.Key
+	// Find the first official trailer of type "Trailer"
+	var officialTrailer Trailer
+	for _, trailer := range trailerAPIresponse.TrailerResults {
+		if trailer.Offical && trailer.Type == "Trailer" {
+			officialTrailer = trailer
 			break
 		}
-
 	}
 
+	if officialTrailer.Key != "" {
+		// Construct the YouTube embed URL
+		officialTrailer.Key = "https://www.youtube.com/embed/" + officialTrailer.Key
+		temp = TemplateData{
+			Trailer: []Trailer{officialTrailer}, // Wrap the single trailer in a slice
+		}
+	} else {
+		log.Println("No official trailer found in the response.")
+	}
+
+	// Parse and execute the template
 	t, err := template.ParseFiles("index.html")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	t.Execute(w, temp)
-
 }
 
 func main() {
