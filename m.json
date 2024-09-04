@@ -1,74 +1,74 @@
 [
-    {
-        "title": "Your Name.",
-        "id": 372058,
-        "overview": "High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
-        "release_date": "2016-08-26",
-        "vote_average": 8.488,
-        "Genre": "Anime"
-    },
-    {
-        "title": "Puss in Boots: The Last Wish",
-        "id": 315162,
-        "overview": "Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/kuf6dutpsT0vSVehic3EZIqkOBt.jpg",
-        "release_date": "2022-12-07",
-        "vote_average": 8.226,
-        "Genre": "Animation"
-    },
-    {
-        "title": "xXx",
-        "id": 7451,
-        "overview": "Xander Cage is your standard adrenaline junkie with no fear and a lousy attitude. When the US Government \"recruits\" him to go on a mission, he's not exactly thrilled. His mission: to gather information on an organization that may just be planning the destruction of the world, led by the nihilistic Yorgi.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/xeEw3eLeSFmJgXZzmF2Efww0q3s.jpg",
-        "release_date": "2002-08-09",
-        "vote_average": 5.937,
-        "Genre": "Action"
-    },
-    {
-        "title": "The King's Speech",
-        "id": 45269,
-        "overview": "The King's Speech tells the story of the man who became King George VI, the father of Queen Elizabeth II. After his brother abdicates, George ('Bertie') reluctantly assumes the throne. Plagued by a dreaded stutter and considered unfit to be king, Bertie engages the help of an unorthodox speech therapist named Lionel Logue. Through a set of unexpected techniques, and as a result of an unlikely friendship, Bertie is able to find his voice and boldly lead the country into war.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/uQ538BfYLDJh3GXlzRZLo0j7PFj.jpg",
-        "release_date": "2010-11-26",
-        "vote_average": 7.7,
-        "Genre": "Drama"
-    },
-    {
-        "title": "Step Brothers",
-        "id": 12133,
-        "overview": "Brennan Huff and Dale Doback might be grown men. But that doesn't stop them from living at home and turning into jealous, competitive stepbrothers when their single parents marry. Brennan's constant competition with Dale strains his mom's marriage to Dale's dad, leaving everyone to wonder whether they'll ever see eye to eye.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/wRR6U3K3v2iQsG3uw7ehz1ctRyT.jpg",
-        "release_date": "2008-07-25",
-        "vote_average": 6.6,
-        "Genre": "Comedy"
-    },
-    {
-        "title": "The Disaster Artist",
-        "id": 371638,
-        "overview": "An aspiring actor in Hollywood meets an enigmatic stranger by the name of Tommy Wiseau, the meeting leads the actor down a path nobody could have predicted; creating the worst movie ever made.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/jj84nF5vYRD0HUTowBKcrKk8hZP.jpg",
-        "release_date": "2017-03-12",
-        "vote_average": 7.113,
-        "Genre": "Random"
-    },
-    {
-        "title": "The Room",
-        "id": 17473,
-        "overview": "Johnny is a successful banker with great respect for and dedication to the people in his life, especially his future wife Lisa. The happy-go-lucky guy sees his world being torn apart when his friends begin to betray him one-by-one.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/9QscHN4pXj6Ja1k7e1ZT4vWDGnr.jpg",
-        "release_date": "2003-06-27",
-        "vote_average": 4,
-        "Genre": "Weird"
-    },
-    {
-        "title": "Fly Me to the Moon",
-        "id": 956842,
-        "overview": "Sparks fly in all directions as marketing maven Kelly Jones, brought in to fix NASA's public image, wreaks havoc on Apollo 11 launch director Cole Davis' already difficult task of putting a man on the moon. When the White House deems the mission too important to fail, Jones is directed to stage a fake moon landing as backup, and the countdown truly begins.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/gjk8YdXpItoC1in53FCrZMFIuBx.jpg",
-        "release_date": "2024-07-10",
-        "vote_average": 6.992,
-        "Genre": "Last Weeks Winner"
-    }
+  {
+    "title": "Your Name.",
+    "id": 372058,
+    "overview": "High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
+    "release_date": "2016-08-26",
+    "vote_average": 8.488,
+    "Genre": "Anime"
+  },
+  {
+    "title": "Puss in Boots: The Last Wish",
+    "id": 315162,
+    "overview": "Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/kuf6dutpsT0vSVehic3EZIqkOBt.jpg",
+    "release_date": "2022-12-07",
+    "vote_average": 8.226,
+    "Genre": "Animation"
+  },
+  {
+    "title": "xXx",
+    "id": 7451,
+    "overview": "Xander Cage is your standard adrenaline junkie with no fear and a lousy attitude. When the US Government \"recruits\" him to go on a mission, he's not exactly thrilled. His mission: to gather information on an organization that may just be planning the destruction of the world, led by the nihilistic Yorgi.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/xeEw3eLeSFmJgXZzmF2Efww0q3s.jpg",
+    "release_date": "2002-08-09",
+    "vote_average": 5.937,
+    "Genre": "Action"
+  },
+  {
+    "title": "The King's Speech",
+    "id": 45269,
+    "overview": "The King's Speech tells the story of the man who became King George VI, the father of Queen Elizabeth II. After his brother abdicates, George ('Bertie') reluctantly assumes the throne. Plagued by a dreaded stutter and considered unfit to be king, Bertie engages the help of an unorthodox speech therapist named Lionel Logue. Through a set of unexpected techniques, and as a result of an unlikely friendship, Bertie is able to find his voice and boldly lead the country into war.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/uQ538BfYLDJh3GXlzRZLo0j7PFj.jpg",
+    "release_date": "2010-11-26",
+    "vote_average": 7.7,
+    "Genre": "Drama"
+  },
+  {
+    "title": "Step Brothers",
+    "id": 12133,
+    "overview": "Brennan Huff and Dale Doback might be grown men. But that doesn't stop them from living at home and turning into jealous, competitive stepbrothers when their single parents marry. Brennan's constant competition with Dale strains his mom's marriage to Dale's dad, leaving everyone to wonder whether they'll ever see eye to eye.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/wRR6U3K3v2iQsG3uw7ehz1ctRyT.jpg",
+    "release_date": "2008-07-25",
+    "vote_average": 6.6,
+    "Genre": "Comedy"
+  },
+  {
+    "title": "The Disaster Artist",
+    "id": 371638,
+    "overview": "An aspiring actor in Hollywood meets an enigmatic stranger by the name of Tommy Wiseau, the meeting leads the actor down a path nobody could have predicted; creating the worst movie ever made.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/jj84nF5vYRD0HUTowBKcrKk8hZP.jpg",
+    "release_date": "2017-03-12",
+    "vote_average": 7.113,
+    "Genre": "Random"
+  },
+  {
+    "title": "The Room",
+    "id": 17473,
+    "overview": "Johnny is a successful banker with great respect for and dedication to the people in his life, especially his future wife Lisa. The happy-go-lucky guy sees his world being torn apart when his friends begin to betray him one-by-one.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/9QscHN4pXj6Ja1k7e1ZT4vWDGnr.jpg",
+    "release_date": "2003-06-27",
+    "vote_average": 4,
+    "Genre": "Weird"
+  },
+  {
+    "title": "Fly Me to the Moon",
+    "id": 956842,
+    "overview": "Sparks fly in all directions as marketing maven Kelly Jones, brought in to fix NASA's public image, wreaks havoc on Apollo 11 launch director Cole Davis' already difficult task of putting a man on the moon. When the White House deems the mission too important to fail, Jones is directed to stage a fake moon landing as backup, and the countdown truly begins.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/gjk8YdXpItoC1in53FCrZMFIuBx.jpg",
+    "release_date": "2024-07-10",
+    "vote_average": 6.992,
+    "Genre": "Last Weeks Winner"
+  }
 ]

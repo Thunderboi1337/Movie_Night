@@ -80,8 +80,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 	var data TemplateData
 	var search_data TemplateData
 
-	//genres := []string{"Anime", "Animation", "Action", "Drama", "Comedy", "Random", "Weird", "Last Weeks Winner"}
-
 	var url string
 	search := false
 
@@ -96,9 +94,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	} else if trailer != "" {
 		url = "https://api.themoviedb.org/3/movie/293660/videos?language=en-US" //deadpool
-	} else {
-		// Default to fetching favorite movies
-		url = "https://api.themoviedb.org/3/account/21472664/favorite/movies?language=en-US&page=1&sort_by=created_at.asc"
 	}
 
 	if search {
@@ -145,10 +140,6 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("No movies found in the response.")
 			}
 
-			/* for i := range genres {
-				search_data.SearchMovies[i].Genre = genres[i]
-			} */
-
 			t, err := template.ParseFiles("index.html")
 			if err != nil {
 				log.Fatal(err)
@@ -176,7 +167,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
+func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	log.Print("HTMX request received")
 	log.Print(r.Header.Get("HX-Request"))
@@ -237,6 +228,24 @@ func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
+
+	log.Print("HTMX request received")
+	log.Print(r.Header.Get("HX-Request"))
+
+	// Parse the form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error parsing form: %v", err)
+		return
+	}
+
+	// Retrieve the category value
+	movieID := r.PostFormValue("movie_id")
+	log.Printf(" Movie ID: %s", movieID)
+
+}
+
 func main() {
 
 	getStoredMovies()
@@ -255,7 +264,8 @@ func main() {
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/add-movie/", app.get_movie)
+	http.HandleFunc("/add-movie/", app.getMovie)
+	http.HandleFunc("/about/", app.getTrailer)
 	http.HandleFunc("/", app.indexHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
