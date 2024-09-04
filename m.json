@@ -1,74 +1,74 @@
 [
-    {
-        "title": "Deadpool \u0026 Wolverine",
-        "id": 533535,
-        "overview": "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-        "release_date": "2024-07-24",
-        "vote_average": 7.774,
-        "Genre": "Anime"
-    },
-    {
-        "title": "Saving Bikini Bottom: The Sandy Cheeks Movie",
-        "id": 831815,
-        "overview": "When Bikini Bottom is scooped from the ocean, scientific squirrel Sandy Cheeks and her pal SpongeBob SquarePants saddle up for Texas to save their town.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/30YnfZdMNIV7noWLdvmcJS0cbnQ.jpg",
-        "release_date": "2024-08-01",
-        "vote_average": 6.435,
-        "Genre": "Animation"
-    },
-    {
-        "title": "xXx",
-        "id": 7451,
-        "overview": "Xander Cage is your standard adrenaline junkie with no fear and a lousy attitude. When the US Government \"recruits\" him to go on a mission, he's not exactly thrilled. His mission: to gather information on an organization that may just be planning the destruction of the world, led by the nihilistic Yorgi.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/xeEw3eLeSFmJgXZzmF2Efww0q3s.jpg",
-        "release_date": "2002-08-09",
-        "vote_average": 5.937,
-        "Genre": "Action"
-    },
-    {
-        "title": "Kung Fu Panda 4",
-        "id": 11111,
-        "overview": "Po is gearing up to become the spiritual leader of his Valley of Peace, but also needs someone to take his place as Dragon Warrior. As such, he will train a new kung fu practitioner for the spot and will encounter a villain called the Chameleon who conjures villains from the past.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
-        "release_date": "2024-03-02",
-        "vote_average": 7.113,
-        "Genre": "Drama"
-    },
-    {
-        "title": "The Lord of the Rings: The Return of the King",
-        "id": 122,
-        "overview": "As armies mass for a final battle that will decide the fate of the world--and powerful, ancient forces of Light and Dark compete to determine the outcome--one member of the Fellowship of the Ring is revealed as the noble heir to the throne of the Kings of Men. Yet, the sole hope for triumph over evil lies with a brave hobbit, Frodo, who, accompanied by his loyal friend Sam and the hideous, wretched Gollum, ventures deep into the very dark heart of Mordor on his seemingly impossible quest to destroy the Ring of Power.​",
-        "poster_path": "https://image.tmdb.org/t/p/w500/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
-        "release_date": "2003-12-17",
-        "vote_average": 8.481,
-        "Genre": "Comedy"
-    },
-    {
-        "title": "The Lord of the Rings: The Two Towers",
-        "id": 121,
-        "overview": "Frodo Baggins and the other members of the Fellowship continue on their sacred quest to destroy the One Ring--but on separate paths. Their destinies lie at two towers--Orthanc Tower in Isengard, where the corrupt wizard Saruman awaits, and Sauron's fortress at Barad-dur, deep within the dark lands of Mordor. Frodo and Sam are trekking to Mordor to destroy the One Ring of Power while Gimli, Legolas and Aragorn search for the orc-captured Merry and Pippin. All along, nefarious wizard Saruman awaits the Fellowship members at the Orthanc Tower in Isengard.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/5VTN0pR8gcqV3EPUHHfMGnJYN9L.jpg",
-        "release_date": "2002-12-18",
-        "vote_average": 8.397,
-        "Genre": "Random"
-    },
-    {
-        "title": "The Lord of the Rings: The Fellowship of the Ring",
-        "id": 123,
-        "overview": "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
-        "release_date": "2001-12-18",
-        "vote_average": 8.413,
-        "Genre": "Weird"
-    },
-    {
-        "title": "Fly Me to the Moon",
-        "id": 956842,
-        "overview": "Sparks fly in all directions as marketing maven Kelly Jones, brought in to fix NASA's public image, wreaks havoc on Apollo 11 launch director Cole Davis' already difficult task of putting a man on the moon. When the White House deems the mission too important to fail, Jones is directed to stage a fake moon landing as backup, and the countdown truly begins.",
-        "poster_path": "https://image.tmdb.org/t/p/w500/gjk8YdXpItoC1in53FCrZMFIuBx.jpg",
-        "release_date": "2024-07-10",
-        "vote_average": 6.992,
-        "Genre": "Last Weeks Winner"
-    }
+  {
+    "title": "Your Name.",
+    "id": 372058,
+    "overview": "High schoolers Mitsuha and Taki are complete strangers living separate lives. But one night, they suddenly switch places. Mitsuha wakes up in Taki’s body, and he in hers. This bizarre occurrence continues to happen randomly, and the two must adjust their lives around each other.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
+    "release_date": "2016-08-26",
+    "vote_average": 8.488,
+    "Genre": "Anime"
+  },
+  {
+    "title": "Puss in Boots: The Last Wish",
+    "id": 315162,
+    "overview": "Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/kuf6dutpsT0vSVehic3EZIqkOBt.jpg",
+    "release_date": "2022-12-07",
+    "vote_average": 8.226,
+    "Genre": "Animation"
+  },
+  {
+    "title": "xXx",
+    "id": 7451,
+    "overview": "Xander Cage is your standard adrenaline junkie with no fear and a lousy attitude. When the US Government \"recruits\" him to go on a mission, he's not exactly thrilled. His mission: to gather information on an organization that may just be planning the destruction of the world, led by the nihilistic Yorgi.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/xeEw3eLeSFmJgXZzmF2Efww0q3s.jpg",
+    "release_date": "2002-08-09",
+    "vote_average": 5.937,
+    "Genre": "Action"
+  },
+  {
+    "title": "The King's Speech",
+    "id": 45269,
+    "overview": "The King's Speech tells the story of the man who became King George VI, the father of Queen Elizabeth II. After his brother abdicates, George ('Bertie') reluctantly assumes the throne. Plagued by a dreaded stutter and considered unfit to be king, Bertie engages the help of an unorthodox speech therapist named Lionel Logue. Through a set of unexpected techniques, and as a result of an unlikely friendship, Bertie is able to find his voice and boldly lead the country into war.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/uQ538BfYLDJh3GXlzRZLo0j7PFj.jpg",
+    "release_date": "2010-11-26",
+    "vote_average": 7.7,
+    "Genre": "Drama"
+  },
+  {
+    "title": "Step Brothers",
+    "id": 12133,
+    "overview": "Brennan Huff and Dale Doback might be grown men. But that doesn't stop them from living at home and turning into jealous, competitive stepbrothers when their single parents marry. Brennan's constant competition with Dale strains his mom's marriage to Dale's dad, leaving everyone to wonder whether they'll ever see eye to eye.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/wRR6U3K3v2iQsG3uw7ehz1ctRyT.jpg",
+    "release_date": "2008-07-25",
+    "vote_average": 6.6,
+    "Genre": "Comedy"
+  },
+  {
+    "title": "The Disaster Artist",
+    "id": 371638,
+    "overview": "An aspiring actor in Hollywood meets an enigmatic stranger by the name of Tommy Wiseau, the meeting leads the actor down a path nobody could have predicted; creating the worst movie ever made.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/jj84nF5vYRD0HUTowBKcrKk8hZP.jpg",
+    "release_date": "2017-03-12",
+    "vote_average": 7.113,
+    "Genre": "Random"
+  },
+  {
+    "title": "The Room",
+    "id": 17473,
+    "overview": "Johnny is a successful banker with great respect for and dedication to the people in his life, especially his future wife Lisa. The happy-go-lucky guy sees his world being torn apart when his friends begin to betray him one-by-one.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/9QscHN4pXj6Ja1k7e1ZT4vWDGnr.jpg",
+    "release_date": "2003-06-27",
+    "vote_average": 4,
+    "Genre": "Weird"
+  },
+  {
+    "title": "Fly Me to the Moon",
+    "id": 956842,
+    "overview": "Sparks fly in all directions as marketing maven Kelly Jones, brought in to fix NASA's public image, wreaks havoc on Apollo 11 launch director Cole Davis' already difficult task of putting a man on the moon. When the White House deems the mission too important to fail, Jones is directed to stage a fake moon landing as backup, and the countdown truly begins.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/gjk8YdXpItoC1in53FCrZMFIuBx.jpg",
+    "release_date": "2024-07-10",
+    "vote_average": 6.992,
+    "Genre": "Last Weeks Winner"
+  }
 ]
