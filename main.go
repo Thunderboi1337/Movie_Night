@@ -277,16 +277,15 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-	var key string
+
 	if officialTrailer.Key != "" {
 		// Construct the YouTube embed URL
-		key = officialTrailer.Key
-
+		officialTrailer.Key = "https://www.youtube.com/embed/" + officialTrailer.Key
 	} else {
 		log.Println("No official trailer found in the response.")
 	}
 
-	tmpl, _ := template.New("t").Parse(key)
+	tmpl, _ := template.New("t").Parse(officialTrailer.Key)
 
 	tmpl.Execute(w, nil)
 }

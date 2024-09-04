@@ -84,15 +84,9 @@
             <a href="#" class="close">&times;</a>
 
             <!-- Display Trailer -->
-            {{if .Trailer}}
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/"></iframe>
 
-            {{range .Trailer}}
-            <iframe width="420" height="315" src='https://www.youtube.com/embed/Idh8n5XuYIA'></iframe>
-            {{end}}
 
-            {{else}}
-            <p>No official trailer available.</p>
-            {{end}}
         </div>
     </div>
 
@@ -101,7 +95,7 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Anime", "movie_id":""}'>Anime</button>
+            <button hx-post="/add-movie/" hx-vals=' {"category":"Anime", "movie_id" :""}'>Anime</button>
             <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'>Animation</button>
             <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'>Action</button>
             <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'>Drama</button>
