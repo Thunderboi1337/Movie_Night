@@ -18,11 +18,13 @@ type App struct {
 }
 
 type APIResponse struct {
-	Results []Movie `json:"results"`
+	MovieResults   []Movie   `json:"results"`
+	TrailerResults []Trailer `json:"results"`
 }
 type TemplateData struct {
 	Movies       []Movie
 	SearchMovies []Movie
+	Trailer      []Trailer
 }
 
 type Movie struct {
@@ -33,6 +35,14 @@ type Movie struct {
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
 	Genre       string  `json:"Genre"`
+}
+
+type Trailer struct {
+	Name    string `json:"name"`
+	Type    string `json:"type"`
+	Offical bool   `json:"official"`
+	Key     string `json:"key"`
+	Site    string `json:"site"`
 }
 
 var storedMovies TemplateData
@@ -127,14 +137,14 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
-		for i := range apiResponse.Results {
-			apiResponse.Results[i].PosterPath = baseImageURL + apiResponse.Results[i].PosterPath
+		for i := range apiResponse.MovieResults {
+			apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
 		}
 
 		if search {
-			if len(apiResponse.Results) > 0 {
+			if len(apiResponse.MovieResults) > 0 {
 				search_data = TemplateData{
-					SearchMovies: apiResponse.Results,
+					SearchMovies: apiResponse.MovieResults,
 				}
 			} else {
 				fmt.Println("No movies found in the response.")
@@ -244,6 +254,39 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 	movieID := r.PostFormValue("movie_id")
 	log.Printf(" Movie ID: %s", movieID)
 
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	var temp TemplateData
+	var apiResponse APIResponse
+	err = json.Unmarshal(body, &apiResponse)
+	if err != nil {
+		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+		return
+	}
+
+	if len(apiResponse.TrailerResults) > 0 {
+		temp = TemplateData{
+			Trailer: apiResponse.TrailerResults,
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	for i, trailers := range temp.Trailer {
+
+		log.Println(trailers.Name[i])
+
+	}
 }
 
 func main() {
