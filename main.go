@@ -57,6 +57,10 @@ func getStoredMovies() {
 
 }
 
+func storeMovies() {
+
+}
+
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
@@ -69,16 +73,8 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("search")
 	trailer := r.URL.Query().Get("trailer")
-	movieId := r.URL.Query().Get("add-movie")
 
-	if movieId != "" {
-
-		// Logic to handle the movie addition by its ID
-		fmt.Println("Movie ID to add:", movieId)
-
-		// Respond to the client, or redirect to a success page
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-	} else if searchQuery != "" {
+	if searchQuery != "" {
 		// Use the search movies endpoint
 		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
 		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
@@ -129,7 +125,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		if search {
 			if len(apiResponse.Results) > 0 {
 				search_data = TemplateData{
-					SearchMovies: apiResponse.Results[0:8],
+					SearchMovies: apiResponse.Results,
 				}
 			} else {
 				fmt.Println("No movies found in the response.")
@@ -166,7 +162,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func get_movie(w http.ResponseWriter, r *http.Request) {
+func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
 
 	log.Print("HTMX request received")
 	log.Print(r.Header.Get("HX-Request"))
@@ -182,6 +178,21 @@ func get_movie(w http.ResponseWriter, r *http.Request) {
 	category := r.PostFormValue("category")
 	movieID := r.PostFormValue("movie_id")
 	log.Printf("Category: %s, Movie ID: %s", category, movieID)
+
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	fmt.Println(string(body))
+
 }
 
 func main() {
@@ -202,7 +213,7 @@ func main() {
 
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/add-movie/", get_movie)
+	http.HandleFunc("/add-movie/", app.get_movie)
 	http.HandleFunc("/", app.indexHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
