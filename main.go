@@ -57,6 +57,24 @@ func getStoredMovies() {
 
 }
 
+func storeMovies() {
+
+	file, err := json.MarshalIndent(storedMovies.Movies, "", "  ")
+	if err != nil {
+		fmt.Println("Error marshaling data:", err)
+		return
+	}
+
+	// Write the marshaled data to the JSON file (m.json)
+	err = os.WriteFile("m.json", file, 0644)
+	if err != nil {
+		fmt.Println("Error writing to JSON file:", err)
+		return
+	}
+
+	fmt.Println("Successfully stored movies to m.json")
+}
+
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
@@ -187,8 +205,10 @@ func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 	var movie Movie
+
+	baseImageURL := "https://image.tmdb.org/t/p/w500"
 
 	err = json.Unmarshal(body, &movie)
 	if err != nil {
@@ -196,15 +216,24 @@ func (app *App) get_movie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, movies := range storedMovies.Movies {
+	movie.Genre = category
+	movie.PosterPath = baseImageURL + movie.PosterPath
 
-		if movies.Genre == category {
-
-			movies = movie
-
+	updated := false
+	for i, m := range storedMovies.Movies {
+		if m.Genre == category {
+			storedMovies.Movies[i] = movie
+			updated = true
+			break
 		}
-
 	}
+
+	if !updated {
+		storedMovies.Movies = append(storedMovies.Movies, movie)
+	}
+
+	// Store the updated movies list
+	storeMovies()
 
 }
 
