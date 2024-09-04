@@ -285,7 +285,7 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 		log.Println("No official trailer found in the response.")
 	}
 
-	t, err := template.New("t").ParseFiles("index.html")
+	t, err := template.New("t").Parse("index.html")
 	if err != nil {
 		log.Fatal(err)
 	}
