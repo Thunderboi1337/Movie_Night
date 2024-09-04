@@ -285,12 +285,13 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 		log.Println("No official trailer found in the response.")
 	}
 
-	t, err := template.New("t").Parse("index.html")
+	t, err := template.New("t").Parse(officialTrailer.Key)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	t.Execute(w, officialTrailer)
+	t.Execute(w, nil)
+
 }
 
 func main() {
