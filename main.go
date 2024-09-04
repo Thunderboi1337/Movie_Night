@@ -261,7 +261,6 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
-	var temp TemplateData
 	var trailerAPIresponse TrailerAPIResponse
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
@@ -278,24 +277,18 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-
+	var key string
 	if officialTrailer.Key != "" {
 		// Construct the YouTube embed URL
-		officialTrailer.Key = "https://www.youtube.com/embed/" + officialTrailer.Key
-		temp = TemplateData{
-			Trailer: []Trailer{officialTrailer}, // Wrap the single trailer in a slice
-		}
+		key = officialTrailer.Key
+
 	} else {
 		log.Println("No official trailer found in the response.")
 	}
 
-	// Parse and execute the template
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
+	tmpl, _ := template.New("t").Parse(key)
 
-	t.Execute(w, temp)
+	tmpl.Execute(w, nil)
 }
 
 func main() {
