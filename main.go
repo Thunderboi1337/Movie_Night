@@ -233,7 +233,7 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 		}
 
 		t.Execute(w, search_data)
-		http.Redirect(w, r, "/info/", http.StatusFound)
+
 	}
 }
 
@@ -283,6 +283,8 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+
+	http.Redirect(w, r, "/info/", http.StatusFound)
 
 }
 
