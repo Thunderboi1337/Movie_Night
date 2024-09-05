@@ -151,6 +151,26 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
+
+	if len(storedMovies.Movies) > 0 {
+		data = TemplateData{
+			Movies: storedMovies.Movies[0:8],
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t.Execute(w, data)
+
+}
+
+func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
+
 	var search_data TemplateData
 
 	var url string
@@ -213,24 +233,11 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 		t.Execute(w, search_data)
 
-	} else {
-
-		if len(storedMovies.Movies) > 0 {
-			data = TemplateData{
-				Movies: storedMovies.Movies[0:8],
-			}
-		} else {
-			fmt.Println("No movies found in the response.")
-		}
-
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, data)
 	}
+}
 
+func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/main/", http.StatusFound) // StatusFound (302) is a more common choice for redirects
 }
 
 func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
@@ -307,7 +314,9 @@ func main() {
 	http.HandleFunc("/add-movie/", app.getMovie)
 
 	http.HandleFunc("/about/", app.movieDetailHandler)
-	http.HandleFunc("/", app.indexHandler)
+	http.HandleFunc("/search/", app.movieDetailHandler)
+	http.HandleFunc("/main/", app.indexHandler)
+	http.HandleFunc("/", app.hostHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
