@@ -284,8 +284,6 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
-	http.Redirect(w, r, "/info/", http.StatusFound)
-
 }
 
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {

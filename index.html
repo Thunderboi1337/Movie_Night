@@ -17,6 +17,9 @@
             <div class="LOGO">
                 <a class="header_movie" href="/main/">Movie Night</a>
             </div>
+            <div class="LOGO">
+                <a class="header_movie" href="/info/">Info</a>
+            </div>
             <div class="topnav">
                 <form method="get" action="/search/">
                     <input type="text" name="search" placeholder="Search..">
@@ -30,16 +33,21 @@
         {{if .Movies}}
         {{range .Movies}}
         <div class="grid_background">
+
             <li class="grid-item">
                 <span class="Genre">{{.Genre}}</span>
-                <a href="#" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
-                    <img src="{{.PosterPath}}" alt="{{.Title}}">
+                <a href="/info/" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
+                    <img src="{{.PosterPath}}" alt="{{.Title}}" class="poster" data-movie-id="{{.Id}}">
+
                 </a>
+
+                <a href=" /info/"></a>
                 <span class="title">{{.Title}}</span>
                 <div class="switch-movie-button">
                     <a href="#modal" class="open-modal">Switch</a>
                 </div>
             </li>
+
         </div>
         {{end}}
         {{else if .SearchMovies}}
@@ -169,6 +177,16 @@
             }
 
         }
+
+
+        document.querySelectorAll('.poster').forEach(function (poster) {
+            poster.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default behavior of the link
+                const movieId = poster.getAttribute('data-movie-id');
+                window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
+            });
+        });
+
     </script>
 
 </html>
