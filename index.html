@@ -15,10 +15,10 @@
     <header>
         <div class="header-container">
             <div class="LOGO">
-                <a class="header_movie" href="/">Movie Night</a>
+                <a class="header_movie" href="/main/">Movie Night</a>
             </div>
             <div class="topnav">
-                <form method="get" action="/">
+                <form method="get" action="/search/">
                     <input type="text" name="search" placeholder="Search..">
                 </form>
             </div>
@@ -32,7 +32,7 @@
         <div class="grid_background">
             <li class="grid-item">
                 <span class="Genre">{{.Genre}}</span>
-                <a href="movie.html" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
+                <a href="#" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <span class="title">{{.Title}}</span>
@@ -46,7 +46,7 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a href="movie.html" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
+                <a href="#" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <span class="title">{{.Title}}</span>

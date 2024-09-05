@@ -314,7 +314,7 @@ func main() {
 	http.HandleFunc("/add-movie/", app.getMovie)
 
 	http.HandleFunc("/about/", app.movieDetailHandler)
-	http.HandleFunc("/search/", app.movieDetailHandler)
+	http.HandleFunc("/search/", app.SearchMoviesHandlers)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 
