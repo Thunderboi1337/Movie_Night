@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
-	"text/template"
 
 	"github.com/joho/godotenv"
 )
@@ -49,6 +49,7 @@ type Trailer struct {
 }
 
 var storedMovies TemplateData
+var trailer_data TemplateData
 
 func getStoredMovies() {
 
@@ -232,12 +233,12 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 		}
 
 		t.Execute(w, search_data)
-
+		http.Redirect(w, r, "/info/", http.StatusFound)
 	}
 }
 
 func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/main/", http.StatusFound) // StatusFound (302) is a more common choice for redirects
+	http.Redirect(w, r, "/main/", http.StatusFound)
 }
 
 func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
@@ -268,7 +269,6 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
-	var trailer_data TemplateData
 	var trailerAPIresponse TrailerAPIResponse
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
@@ -284,15 +284,17 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
+}
+
+func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
+
 	t, err := template.ParseFiles("movie.html")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	t.Execute(w, trailer_data)
-
+	t.ExecuteTemplate(w, "movie.html", trailer_data)
 }
-
 func main() {
 
 	getStoredMovies()
@@ -315,8 +317,10 @@ func main() {
 
 	http.HandleFunc("/about/", app.movieDetailHandler)
 	http.HandleFunc("/search/", app.SearchMoviesHandlers)
+	http.HandleFunc("/info/", app.AboutHandlers)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
