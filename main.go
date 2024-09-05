@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
-	"text/template"
 
 	"github.com/joho/godotenv"
 )
@@ -49,6 +49,7 @@ type Trailer struct {
 }
 
 var storedMovies TemplateData
+var trailer_data TemplateData
 
 func getStoredMovies() {
 
@@ -86,91 +87,6 @@ func storeMovies() {
 	}
 
 	fmt.Println("Successfully stored movies to m.json")
-}
-
-func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
-
-	var data TemplateData
-	var search_data TemplateData
-
-	var url string
-
-	searchQuery := r.URL.Query().Get("search")
-
-	if searchQuery != "" {
-		// Use the search movies endpoint
-		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
-		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
-
-		req, _ := http.NewRequest("GET", url, nil)
-		req.Header.Add("accept", "application/json")
-		req.Header.Add("Authorization", "Bearer "+app.APIKey)
-
-		res, err := http.DefaultClient.Do(req)
-		if err != nil {
-			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
-			fmt.Println("failed")
-		}
-		defer res.Body.Close()
-
-		if res.StatusCode != http.StatusOK {
-			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
-			fmt.Println("failed")
-		}
-
-		body, err := io.ReadAll(res.Body)
-		if err != nil {
-			http.Error(w, "Failed to read response", http.StatusInternalServerError)
-			fmt.Println("failed")
-
-		}
-
-		var apiResponse MovieAPIResponse
-		err = json.Unmarshal(body, &apiResponse)
-		if err != nil {
-			http.Error(w, "Failed to parse response", http.StatusInternalServerError)
-			fmt.Println("failed")
-
-		}
-
-		baseImageURL := "https://image.tmdb.org/t/p/w500"
-		for i := range apiResponse.MovieResults {
-			apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
-		}
-
-		if len(apiResponse.MovieResults) > 0 {
-			search_data = TemplateData{
-				SearchMovies: apiResponse.MovieResults,
-			}
-		} else {
-			fmt.Println("No movies found in the response.")
-		}
-
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, search_data)
-
-	} else {
-
-		if len(storedMovies.Movies) > 0 {
-			data = TemplateData{
-				Movies: storedMovies.Movies[0:8],
-			}
-		} else {
-			fmt.Println("No movies found in the response.")
-		}
-
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, data)
-	}
-
 }
 
 func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
@@ -233,7 +149,99 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
+func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
+
+	var data TemplateData
+
+	if len(storedMovies.Movies) > 0 {
+		data = TemplateData{
+			Movies: storedMovies.Movies[0:8],
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
+
+	t, err := template.ParseFiles("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t.Execute(w, data)
+
+}
+
+func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
+
+	var search_data TemplateData
+
+	var url string
+
+	searchQuery := r.URL.Query().Get("search")
+
+	if searchQuery != "" {
+		// Use the search movies endpoint
+		formattedQuery := strings.ReplaceAll(searchQuery, " ", "-")
+		url = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?query=%s&language=en-US&page=1&include_adult=false", formattedQuery)
+
+		req, _ := http.NewRequest("GET", url, nil)
+		req.Header.Add("accept", "application/json")
+		req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+			fmt.Println("failed")
+		}
+		defer res.Body.Close()
+
+		if res.StatusCode != http.StatusOK {
+			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
+			fmt.Println("failed")
+		}
+
+		body, err := io.ReadAll(res.Body)
+		if err != nil {
+			http.Error(w, "Failed to read response", http.StatusInternalServerError)
+			fmt.Println("failed")
+
+		}
+
+		var apiResponse MovieAPIResponse
+		err = json.Unmarshal(body, &apiResponse)
+		if err != nil {
+			http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+			fmt.Println("failed")
+
+		}
+
+		baseImageURL := "https://image.tmdb.org/t/p/w500"
+		for i := range apiResponse.MovieResults {
+			apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
+		}
+
+		if len(apiResponse.MovieResults) > 0 {
+			search_data = TemplateData{
+				SearchMovies: apiResponse.MovieResults,
+			}
+		} else {
+			fmt.Println("No movies found in the response.")
+		}
+
+		t, err := template.ParseFiles("index.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		t.Execute(w, search_data)
+
+	}
+}
+
+func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/main/", http.StatusFound)
+}
+
+func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Print("HTMX request received")
 	log.Print(r.Header.Get("HX-Request"))
@@ -266,34 +274,27 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
-		return
 	}
 
-	// Find the first official trailer of type "Trailer"
-	var officialTrailer Trailer
-	for _, trailer := range trailerAPIresponse.TrailerResults {
-		if trailer.Offical && trailer.Type == "Trailer" {
-			officialTrailer = trailer
-			break
+	if len(trailerAPIresponse.TrailerResults) > 0 {
+		trailer_data = TemplateData{
+			Trailer: trailerAPIresponse.TrailerResults,
 		}
-	}
-
-	if officialTrailer.Key != "" {
-		// Construct the YouTube embed URL
-		officialTrailer.Key = "https://www.youtube.com/embed/" + officialTrailer.Key
 	} else {
-		log.Println("No official trailer found in the response.")
+		fmt.Println("No movies found in the response.")
 	}
 
-	t, err := template.New("t").Parse(officialTrailer.Key)
+}
+
+func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
+
+	t, err := template.ParseFiles("movie.html")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	t.Execute(w, nil)
-
+	t.ExecuteTemplate(w, "movie.html", trailer_data)
 }
-
 func main() {
 
 	getStoredMovies()
@@ -313,8 +314,13 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
-	http.HandleFunc("/about/", app.getTrailer)
-	http.HandleFunc("/", app.indexHandler)
+
+	http.HandleFunc("/about/", app.movieDetailHandler)
+	http.HandleFunc("/search/", app.SearchMoviesHandlers)
+	http.HandleFunc("/info/", app.AboutHandlers)
+	http.HandleFunc("/main/", app.indexHandler)
+	http.HandleFunc("/", app.hostHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
