@@ -88,6 +88,66 @@ func storeMovies() {
 	fmt.Println("Successfully stored movies to m.json")
 }
 
+func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
+
+	log.Print("HTMX request received")
+	log.Print(r.Header.Get("HX-Request"))
+
+	// Parse the form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error parsing form: %v", err)
+		return
+	}
+
+	// Retrieve the category value
+	category := r.PostFormValue("category")
+	movieID := r.PostFormValue("movie_id")
+	log.Printf("Category: %s, Movie ID: %s", category, movieID)
+
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+
+	var movie Movie
+
+	baseImageURL := "https://image.tmdb.org/t/p/w500"
+
+	err = json.Unmarshal(body, &movie)
+	if err != nil {
+		fmt.Println("Error:", err)
+
+	}
+
+	movie.Genre = category
+	movie.PosterPath = baseImageURL + movie.PosterPath
+
+	updated := false
+	for i, m := range storedMovies.Movies {
+		if m.Genre == category {
+			storedMovies.Movies[i] = movie
+			updated = true
+			break
+		}
+	}
+
+	if !updated {
+		storedMovies.Movies = append(storedMovies.Movies, movie)
+	}
+
+	// Store the updated movies list
+	storeMovies()
+
+}
+
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
@@ -173,67 +233,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
-
-	log.Print("HTMX request received")
-	log.Print(r.Header.Get("HX-Request"))
-
-	// Parse the form data
-	err := r.ParseForm()
-	if err != nil {
-		log.Printf("Error parsing form: %v", err)
-		return
-	}
-
-	// Retrieve the category value
-	category := r.PostFormValue("category")
-	movieID := r.PostFormValue("movie_id")
-	log.Printf("Category: %s, Movie ID: %s", category, movieID)
-
-	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+app.APIKey)
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := io.ReadAll(res.Body)
-
-	var movie Movie
-
-	baseImageURL := "https://image.tmdb.org/t/p/w500"
-
-	err = json.Unmarshal(body, &movie)
-	if err != nil {
-		fmt.Println("Error:", err)
-
-	}
-
-	movie.Genre = category
-	movie.PosterPath = baseImageURL + movie.PosterPath
-
-	updated := false
-	for i, m := range storedMovies.Movies {
-		if m.Genre == category {
-			storedMovies.Movies[i] = movie
-			updated = true
-			break
-		}
-	}
-
-	if !updated {
-		storedMovies.Movies = append(storedMovies.Movies, movie)
-	}
-
-	// Store the updated movies list
-	storeMovies()
-
-}
-
-func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
+func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Print("HTMX request received")
 	log.Print(r.Header.Get("HX-Request"))
@@ -261,36 +261,28 @@ func (app *App) getTrailer(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
+	var trailer_data TemplateData
 	var trailerAPIresponse TrailerAPIResponse
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
-		return
 	}
 
-	// Find the first official trailer of type "Trailer"
-	var officialTrailer Trailer
-	for _, trailer := range trailerAPIresponse.TrailerResults {
-		if trailer.Offical && trailer.Type == "Trailer" {
-			officialTrailer = trailer
-			break
+	if len(trailerAPIresponse.TrailerResults) > 0 {
+		trailer_data = TemplateData{
+			Trailer: trailerAPIresponse.TrailerResults,
 		}
-	}
-
-	if officialTrailer.Key != "" {
-		// Construct the YouTube embed URL
-		officialTrailer.Key = "https://www.youtube.com/embed/" + officialTrailer.Key
 	} else {
-		log.Println("No official trailer found in the response.")
+		fmt.Println("No movies found in the response.")
 	}
 
-	t, err := template.New("t").Parse(officialTrailer.Key)
+	t, err := template.ParseFiles("movie.html")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	t.Execute(w, nil)
+	t.Execute(w, trailer_data)
 
 }
 
@@ -313,7 +305,8 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
-	http.HandleFunc("/about/", app.getTrailer)
+
+	http.HandleFunc("/about/", app.movieDetailHandler)
 	http.HandleFunc("/", app.indexHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))

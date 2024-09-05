@@ -26,13 +26,13 @@
     </header>
 
     <ul class="grid">
+
         {{if .Movies}}
         {{range .Movies}}
         <div class="grid_background">
             <li class="grid-item">
                 <span class="Genre">{{.Genre}}</span>
-                <a href="#about" class="open-about" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'
-                    hx-target="#Trailers">
+                <a href="movie.html" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
                     <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <span class="title">{{.Title}}</span>
@@ -46,9 +46,8 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a href="#about" class="open-about" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'
-                    hx-target="#Trailers">
-                    <img src=" {{.PosterPath}}" alt="{{.Title}}">
+                <a href="movie.html" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
+                    <img src="{{.PosterPath}}" alt="{{.Title}}">
                 </a>
                 <span class="title">{{.Title}}</span>
                 <var data-movie-id="{{.Id}}"></var>
@@ -77,20 +76,8 @@
         </div>
     </div>
 
-    <!-- The Modal for Showing the Trailer -->
-    <div id="about" class="modal">
-        <div class="modal-content">
-            <!-- Close the modal with a link -->
-            <a href="#" class="close">&times;</a>
 
-            <!-- Display Trailer -->
-            <iframe id="Trailers" width="420" height="315" src="{{ .Trailer}}"></iframe>
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-            </iframe>
-
-
-
-        </div>
+    </div>
     </div>
 
     <!-- The Modal for Adding Movies -->
@@ -113,17 +100,15 @@
         // Get the modals
         var modal = document.getElementById("modal");
         var addModal = document.getElementById("add");
-        var aboutModal = document.getElementById("about");
 
         // Get the buttons that open the modals
         var btnOpenModal = document.querySelectorAll(".open-modal");
         var btnOpenAdd = document.querySelectorAll(".open-add");
-        var btnOpenAbout = document.querySelectorAll(".open-about");
+
 
         // Get the <span> element that closes the modals
         var spanCloseModal = modal.querySelector(".close");
         var spanCloseAdd = addModal.querySelector(".close");
-        var spanCloseAbout = aboutModal.querySelector(".close");
 
         function setMovieId(element) {
             // Find the closest var element with the data-movie-id attribute
@@ -149,24 +134,6 @@
             });
         });
 
-        function setMovieId(element) {
-            // Find the closest var element with the data-movie-id attribute
-            var movieId = element.closest('.grid-item').querySelector('var').getAttribute('data-movie-id');
-
-
-            // Show the add modal
-            var aboutModal = document.getElementById("about");
-            aboutModal.style.display = "block";
-        }
-
-        document.querySelectorAll('.open-about').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();  // Prevent the default anchor behavior
-                setMovieId(btn);     // Set the movie ID and open the modal
-            });
-        });
-
-
         // Set up the event listeners for opening modals
         btnOpenModal.forEach(function (btn) {
             btn.addEventListener('click', function (e) {
@@ -182,13 +149,6 @@
             });
         });
 
-        btnOpenAbout.forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();  // Prevent the default anchor behavior
-                aboutModal.style.display = "block";
-            });
-        });
-
         // When the user clicks on <span> (x), close the modals
         spanCloseModal.onclick = function () {
             modal.style.display = "none";
@@ -198,9 +158,6 @@
             addModal.style.display = "none";
         }
 
-        spanCloseAbout.onclick = function () {
-            aboutModal.style.display = "none";
-        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
@@ -210,9 +167,7 @@
             if (event.target == addModal) {
                 addModal.style.display = "none";
             }
-            if (event.target == aboutModal) {
-                aboutModal.style.display = "none";
-            }
+
         }
     </script>
 
