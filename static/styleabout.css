@@ -4,6 +4,7 @@ body {
     font-family: 'OCR A Extended', monospace;
     font-weight: 300;
     color: #ffffff;
+
 }
 
 .container {
@@ -28,8 +29,6 @@ header {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 100px;
-
-
 }
 
 .topnav input[type="text"] {
@@ -52,6 +51,7 @@ header {
     display: grid;
     grid-template-columns: 1fr;
     gap: 30px;
+    background-color: rgba(0, 0, 0, .1);
 }
 
 .aboutdiv {
@@ -74,6 +74,7 @@ header {
     font-weight: 700;
     color: #9c39b4;
     margin-top: 10px;
+
 }
 
 .aboutabout h2 {
@@ -85,6 +86,8 @@ header {
 .aboutabout p {
     font-size: 1rem;
     line-height: 1.6;
+
+
 }
 
 /* Trailer Section */
