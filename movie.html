@@ -13,18 +13,31 @@
 
 <body>
 
+    <header>
+        <div class="header-container">
+            <div class="LOGO">
+                <a class="header_movie" href="/main/">Movie Night</a>
+            </div>
+            <div class="topnav">
+                <form method="get" action="/search/">
+                    <input type="text" name="search" placeholder="Search..">
+                </form>
+            </div>
+        </div>
+    </header>
 
-    <div>
+    <div class="wrapper">
 
         {{range .Trailer}}
 
-        <iframe width="420" height="315" src="https://www.youtube.com/embed/{{.Key}}">
+        <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
 
         </iframe>
         {{end}}
 
-
     </div>
+
+
 </body>
 
 </html>

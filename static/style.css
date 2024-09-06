@@ -249,6 +249,27 @@ ul.grid {
     width: 150px;
 }
 
+.wrapper {
+    max-height: 300px;
+    border: 1px solid #ddd;
+    display: flex;
+    overflow: auto;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 0;
+
+}
+
+.wrapper .item {
+
+    min-width: 300px;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    background-color: #ddd;
+}
+
 
 
 @media (max-width: 768px) {
