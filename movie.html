@@ -25,26 +25,38 @@
             </div>
         </div>
     </header>
-    <div class="aboutdiv">
-        <div>
-            <a class="abouttitle"> Movie_TITLE class</a>
+
+    <ul class="aboutgrid">
+
+        <div class="aboutdiv">
+            <div>
+                <img src="/static/images/logan.jpg" alt="Movie_TITLE" class="aboutposter">
+
+                <div>
+                    <a class="abouttitle"> Movie Title</a>
+                </div>
+            </div>
+            <div class="aboutabout">
+                <h2>About</h2>
+                <a>AAJFALFJAÖSKFÖLASKFÖLASKFALÄSKFASÖLFASFKAÖSLKFDÖLASKFÖLASKFÖLASFK</a>
+            </div>
+
         </div>
-        <div>
-            <img src="/static/images/logan.jpg" alt="Movie_TITLE" class="aboutposter">
+
+
+        <div class="wrapper-container">
+            <a class="abouttrailer"> Trailers</a>
+            <div class="wrapper">
+                {{range .Trailer}}
+                <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+                </iframe>
+                {{end}}
+
+            </div>
+
         </div>
 
-
-    </div>
-
-
-    <div class="wrapper">
-        {{range .Trailer}}
-        <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
-        </iframe>
-        {{end}}
-
-    </div>
-
+    </ul>
 
 
 </body>
