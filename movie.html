@@ -26,16 +26,20 @@
         </div>
     </header>
 
-    <div class="wrapper">
+    <section>
 
-        {{range .Trailer}}
 
-        <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+        <div class="wrapper">
 
-        </iframe>
-        {{end}}
+            {{range .Trailer}}
 
-    </div>
+            <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+
+            </iframe>
+            {{end}}
+
+        </div>
+    </section>
 
 
 </body>
