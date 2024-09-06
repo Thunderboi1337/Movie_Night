@@ -41,7 +41,6 @@
 
                 </a>
 
-                <a href=" /info/"></a>
                 <span class="title">{{.Title}}</span>
                 <div class="switch-movie-button">
                     <a href="#modal" class="open-modal">Switch</a>
@@ -54,9 +53,9 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a href="#" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
-                    <img src="{{.PosterPath}}" alt="{{.Title}}">
-                </a>
+                <a href="/info/" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
+                    <img src="{{.PosterPath}}" alt="{{.Title}}" class="poster" data-movie-id="{{.Id}}"></a>
+
                 <span class="title">{{.Title}}</span>
                 <var data-movie-id="{{.Id}}"></var>
                 <div class="switch-movie-button">

@@ -25,42 +25,26 @@
             </div>
         </div>
     </header>
-
-
-
-
-    <div>
-
-
-
-        <img src="/static/images/logan.jpg" alt="Movie_TITLE" class="aboutposter">
-
-
-        <span class="title">Movie_TITLE class"</span>
-
-        <div class="switch-movie-button">
-            <a href="#modal" class="open-modal">Switch</a>
+    <div class="aboutdiv">
+        <div>
+            <a class="abouttitle"> Movie_TITLE class</a>
+        </div>
+        <div>
+            <img src="/static/images/logan.jpg" alt="Movie_TITLE" class="aboutposter">
         </div>
 
 
     </div>
 
 
+    <div class="wrapper">
+        {{range .Trailer}}
+        <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+        </iframe>
+        {{end}}
 
-    <section>
+    </div>
 
-
-        <div class="wrapper">
-
-            {{range .Trailer}}
-
-            <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
-
-            </iframe>
-            {{end}}
-
-        </div>
-    </section>
 
 
 </body>
