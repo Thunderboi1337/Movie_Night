@@ -35,7 +35,6 @@ header::after {
     text-transform: uppercase;
     font-size: 100px;
 
-
 }
 
 /* Style the search box inside the navigation bar */
@@ -260,7 +259,7 @@ ul.grid {
     font-weight: 700;
     margin-left: 20px;
     margin-bottom: 20px;
-    color: #f57c00;
+    color: #9c39b4;
 }
 
 .aboutposter {

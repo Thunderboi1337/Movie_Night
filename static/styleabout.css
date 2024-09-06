@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    background: #1b1b1b;
+    font-family: 'OCR A Extended', monospace;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+header {
+    background: rgb(214, 85, 113);
+    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
+    padding-top: 200;
+    margin-top: 200;
+}
+
+.LOGO {
+    padding-top: 50px;
+    margin-bottom: -40px;
+}
+
+.header_movie {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 100px;
+
+
+}
+
+.topnav input[type="text"] {
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    font-size: 17px;
+    float: right;
+}
+
+.header-container {
+    text-align: center;
+}
+
+/* Main Content */
+.aboutgrid {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.aboutdiv {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background-color: rgba(27, 27, 27, 1);
+    border-radius: 10px;
+}
+
+.aboutposter {
+    max-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.abouttitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #9c39b4;
+    margin-top: 10px;
+}
+
+.aboutabout h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #9c39b4;
+}
+
+.aboutabout p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Trailer Section */
+.wrapper-container {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.abouttrailer {
+    font-size: 1.8rem;
+    color: #9c39b4;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+.item {
+    min-width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .aboutdiv {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .aboutposter {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header_movie {
+        font-size: 2rem;
+    }
+
+    .abouttitle {
+        font-size: 1.5rem;
+    }
+
+    .aboutabout h2 {
+        font-size: 1.2rem;
+    }
+
+    .aboutabout p {
+        font-size: 0.9rem;
+    }
+
+    .abouttrailer {
+        font-size: 1.5rem;
+    }
+}
