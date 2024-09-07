@@ -59,6 +59,7 @@
                     </button>
                 </form>
                 <span class="title">{{.Title}}</span>
+                <var data-movie-id="{{.Id}}"></var>
                 <div class="switch-movie-button">
                     <a href="#add" class="open-add">Add</a>
                 </div>
@@ -178,15 +179,15 @@
 
         }
 
-        /*
-                document.querySelectorAll('.poster').forEach(function (poster) {
-                    poster.addEventListener('click', function (event) {
-                        event.preventDefault(); // Prevent the default behavior of the link
-                        const movieId = poster.getAttribute('data-movie-id');
-                        // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
-                        document.getElementById("movie__id").value = movieId
-                    });
-                }); */
+
+        document.querySelectorAll('.poster').forEach(function (poster) {
+            poster.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default behavior of the link
+                const movieId = poster.getAttribute('data-movie-id');
+                // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
+
+            });
+        });
 
     </script>
 
