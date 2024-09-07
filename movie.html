@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVIE NIGHT</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/styleabout.css">
     <script src="https://unpkg.com/htmx.org@2.0.2"
         integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
         crossorigin="anonymous"></script>
@@ -26,21 +26,33 @@
         </div>
     </header>
 
-    <section>
+    <div class="aboutgrid">
 
-
-        <div class="wrapper">
-
-            {{range .Trailer}}
-
-            <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
-
-            </iframe>
-            {{end}}
-
+        <div class="aboutdiv">
+            <div>
+                <img src="/static/images/logan.jpg" alt="Movie Title" class="aboutposter">
+                <div>
+                    <a class="abouttitle"> Movie Title</a>
+                </div>
+            </div>
+            <div class="aboutabout">
+                <h2>About</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
+                    vestibulum.</p>
+            </div>
         </div>
-    </section>
 
+        <div class="wrapper-container">
+            <a class="abouttrailer"> Trailers</a>
+            <div class="wrapper">
+                {{range .Trailer}}
+                <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+                </iframe>
+                {{end}}
+            </div>
+        </div>
+
+    </div>
 
 </body>
 
