@@ -94,13 +94,9 @@ func storeMovies() {
 		return
 	}
 
-	fmt.Println("Successfully stored movies to m.json")
 }
 
 func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
-
-	log.Print("HTMX request received")
-	log.Print(r.Header.Get("HX-Request"))
 
 	// Parse the form data
 	err := r.ParseForm()

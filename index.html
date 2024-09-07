@@ -94,14 +94,37 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <button hx-post="/add-movie/" hx-vals=' {"category":"Anime", "movie_id" :""}'>Anime</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'>Animation</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'>Action</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'>Drama</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Comedy", "movie_id":""}'>Comedy</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Random", "movie_id":""}'>Random</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Weird", "movie_id":""}'>Weird</button>
+
+            <button hx-post="/add-movie/" hx-vals='{"category":"Anime", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Anime
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Animation
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Action
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Drama
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Comedy", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Comedy
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Random", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Random
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Weird", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Weird
+            </button>
         </div>
+    </div>
     </div>
 
 
