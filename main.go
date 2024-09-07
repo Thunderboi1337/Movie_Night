@@ -48,8 +48,16 @@ type Trailer struct {
 	Site    string `json:"site"`
 }
 
+var tpl *template.Template
+
 var storedMovies TemplateData
 var trailer_data TemplateData
+
+func init() {
+
+	tpl = template.Must(template.ParseGlob("*.html"))
+
+}
 
 func getStoredMovies() {
 
@@ -161,12 +169,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.Execute(w, data)
+	tpl.Execute(w, data)
 
 }
 
@@ -227,12 +230,7 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No movies found in the response.")
 		}
 
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, search_data)
+		tpl.Execute(w, search_data)
 
 	}
 }
@@ -243,19 +241,28 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 
 func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 
-	log.Print("HTMX request received")
-	log.Print(r.Header.Get("HX-Request"))
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
 
 	// Parse the form data
 	err := r.ParseForm()
 	if err != nil {
 		log.Printf("Error parsing form: %v", err)
+		http.Error(w, "Unable to parse form", http.StatusBadRequest)
 		return
 	}
 
 	// Retrieve the movie ID value
-	movieID := r.PostFormValue("movie_id")
-	log.Printf(" Movie ID: %s", movieID)
+	movieID := r.PostFormValue("movie_ids")
+	if movieID == "" {
+		log.Println("Movie ID is missing")
+		http.Error(w, "Movie ID is required", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("Movie ID: %s", movieID)
 
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
@@ -284,23 +291,13 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
-	t, err := template.ParseFiles("movie.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.ExecuteTemplate(w, "movie.html", nil)
+	tpl.ExecuteTemplate(w, "movie.html", nil)
 
 }
 
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
-	t, err := template.ParseFiles("movie.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.ExecuteTemplate(w, "movie.html", trailer_data)
+	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 }
 func main() {
 
