@@ -284,6 +284,13 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
+	t, err := template.ParseFiles("movie.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	t.ExecuteTemplate(w, "movie.html", nil)
+
 }
 
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
