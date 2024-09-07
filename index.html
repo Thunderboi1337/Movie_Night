@@ -36,10 +36,10 @@
 
             <li class="grid-item">
                 <span class="Genre">{{.Genre}}</span>
-                <form action="/about/" method="POST">
+                <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
-                    <button type="submit" class="hiddenbutton"> <img src="{{.PosterPath}}" alt="{{.Title}}"
-                            class="poster">
+                    <button type="submit" class="hiddenbutton">
+                        <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
                     </button>
                 </form>
 
@@ -55,14 +55,13 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <form action="/about/" method="POST">
+                <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
                     <button type="submit" class="hiddenbutton"> <img src="{{.PosterPath}}" alt="{{.Title}}"
                             class="poster">
                     </button>
                 </form>
                 <span class="title">{{.Title}}</span>
-                <var data-movie-id="{{.Id}}"></var>
                 <div class="switch-movie-button">
                     <a href="#add" class="open-add">Add</a>
                 </div>
@@ -182,15 +181,15 @@
 
         }
 
-
-        document.querySelectorAll('.poster').forEach(function (poster) {
-            poster.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default behavior of the link
-                const movieId = poster.getAttribute('data-movie-id');
-                // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
-                document.getElementById("movie__id").value = movieId
-            });
-        });
+        /*
+                document.querySelectorAll('.poster').forEach(function (poster) {
+                    poster.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the default behavior of the link
+                        const movieId = poster.getAttribute('data-movie-id');
+                        // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
+                        document.getElementById("movie__id").value = movieId
+                    });
+                }); */
 
     </script>
 

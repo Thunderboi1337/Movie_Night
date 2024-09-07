@@ -242,8 +242,10 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
+		log.Println("Not fuckin buzzzin buzzin")
+		log.Println(r.Method)
+	} else {
+		log.Println("Fuckin buzzzin")
 	}
 
 	// Parse the form data
