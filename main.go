@@ -271,8 +271,8 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	res, _ := http.DefaultClient.Do(req)
 
-	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
+	res.Body.Close()
 
 	var trailerAPIresponse TrailerAPIResponse
 	err = json.Unmarshal(body, &trailerAPIresponse)
@@ -288,6 +288,34 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+	//FOR LATER IMPLEMATION____________________________
+	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
+
+	   	req, _ = http.NewRequest("GET", url, nil)
+
+	   	req.Header.Add("accept", "application/json")
+	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	   	res, _ = http.DefaultClient.Do(req)
+
+	   	body, _ = io.ReadAll(res.Body)
+	   	res.Body.Close()
+
+	   	fmt.Println(string(body)) */
+	//ALSO FOR LATER IMPLEMENTATION _________________________-
+	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
+
+	   	req, _ = http.NewRequest("GET", url, nil)
+
+	   	req.Header.Add("accept", "application/json")
+	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	   	res, _ = http.DefaultClient.Do(req)
+
+	   	defer res.Body.Close()
+	   	body, _ = io.ReadAll(res.Body)
+
+	   	fmt.Println(string(body)) */
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 
