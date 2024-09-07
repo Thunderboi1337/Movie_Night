@@ -32,7 +32,19 @@
             <div>
                 <img src="/static/images/logan.jpg" alt="Movie Title" class="aboutposter">
                 <div>
+                    {{if .Movies}}
+                    {{range .Movies}}
+                    <a class="abouttitle"> {{.Title}}</a>
+                    {{end}}
+
+                    {{else if .SearchMovies}}
+                    {{range .SearchMovies}}
+                    <a class="abouttitle"> {{.Title}}</a>
+
+                    {{end}}
+                    {{else}}
                     <a class="abouttitle"> Movie Title</a>
+                    {{end}}
                 </div>
             </div>
             <div class="aboutabout">
