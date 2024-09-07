@@ -1,7 +1,9 @@
 body {
     margin: 0;
+    background: #141414;
+    /* 
     background: rgb(38, 38, 38);
-    background: linear-gradient(90deg, rgba(38, 38, 38, 1) 4%, rgba(214, 85, 113, 1) 41%, rgba(93, 67, 136, 1) 53%, rgba(38, 38, 38, 1) 98%);
+    background: linear-gradient(90deg, rgba(38, 38, 38, 1) 4%, rgba(214, 85, 113, 1) 41%, rgba(93, 67, 136, 1) 53%, rgba(38, 38, 38, 1) 98%); */
     font-family: 'OCR A Extended', monospace;
     font-weight: 300;
     color: #ffffff;
@@ -15,7 +17,8 @@ body {
 }
 
 header {
-
+    background: rgb(214, 85, 113);
+    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
     padding-top: 200;
     margin-top: 200;
 }
