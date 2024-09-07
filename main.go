@@ -239,7 +239,7 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/main/", http.StatusFound)
 }
 
-func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
+func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
 		log.Println("Not fuckin buzzzin buzzin")
@@ -293,14 +293,10 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
-	tpl.ExecuteTemplate(w, "movie.html", nil)
-
-}
-
-func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
-
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
+
 }
+
 func main() {
 
 	getStoredMovies()
@@ -321,9 +317,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
 
-	http.HandleFunc("/about/", app.movieDetailHandler)
+	http.HandleFunc("/about/", app.AboutHandlers)
 	http.HandleFunc("/search/", app.SearchMoviesHandlers)
-	http.HandleFunc("/info/", app.AboutHandlers)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 
