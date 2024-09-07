@@ -1,9 +1,11 @@
 body {
     margin: 0;
-    background: #1b1b1b;
+    background: rgb(38, 38, 38);
+    background: linear-gradient(90deg, rgba(38, 38, 38, 1) 4%, rgba(214, 85, 113, 1) 41%, rgba(93, 67, 136, 1) 53%, rgba(38, 38, 38, 1) 98%);
     font-family: 'OCR A Extended', monospace;
     font-weight: 300;
     color: #ffffff;
+
 
 }
 
@@ -13,8 +15,7 @@ body {
 }
 
 header {
-    background: rgb(214, 85, 113);
-    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
+
     padding-top: 200;
     margin-top: 200;
 }
@@ -51,7 +52,7 @@ header {
     display: grid;
     grid-template-columns: 1fr;
     gap: 30px;
-    background-color: rgba(0, 0, 0, .1);
+
 }
 
 .aboutdiv {
@@ -72,7 +73,7 @@ header {
 .abouttitle {
     font-size: 2rem;
     font-weight: 700;
-    color: #9c39b4;
+    color: #ffffff;
     margin-top: 10px;
 
 }
@@ -80,7 +81,7 @@ header {
 .aboutabout h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #9c39b4;
+    color: #ffffff;
 }
 
 .aboutabout p {
@@ -94,13 +95,16 @@ header {
 .wrapper-container {
     padding: 20px;
     overflow-x: auto;
+    background-color: rgba(27, 27, 27, 1);
+    border-radius: 10px;
 }
 
 .abouttrailer {
     font-size: 1.8rem;
-    color: #9c39b4;
+    color: #ffffff;
     margin-bottom: 15px;
     display: block;
+
 }
 
 .wrapper {
@@ -108,6 +112,7 @@ header {
     gap: 15px;
     overflow-x: auto;
     scroll-behavior: smooth;
+
 }
 
 .wrapper::-webkit-scrollbar {
