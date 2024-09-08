@@ -240,10 +240,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		log.Println("Not fuckin buzzzin buzzin")
 		log.Println(r.Method)
-	} else {
-		log.Println("Fuckin buzzzin")
 	}
-
 	// Parse the form data
 	err := r.ParseForm()
 	if err != nil {
@@ -259,8 +256,6 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Movie ID is required", http.StatusBadRequest)
 		return
 	}
-
-	log.Printf("Movie ID: %s", movieID)
 
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
