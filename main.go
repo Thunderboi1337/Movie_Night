@@ -351,7 +351,21 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ = io.ReadAll(res.Body)
 
-	fmt.Println(string(body))
+	var movieAPIresponse MovieAPIResponse
+	err = json.Unmarshal(body, &movieAPIresponse.MovieResults)
+	if err != nil {
+		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+		log.Println("Failed to parse response:", err)
+		return
+	}
+
+	if len(movieAPIresponse.MovieResults) > 0 {
+		trailer_data = TemplateData{
+			Movies: movieAPIresponse.MovieResults,
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 
