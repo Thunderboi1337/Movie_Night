@@ -76,7 +76,6 @@ type StreamSiteInformation struct {
 var tpl *template.Template
 
 var storedMovies TemplateData
-var trailer_data TemplateData
 
 func init() {
 
@@ -295,6 +294,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	res.Body.Close()
 
 	var trailerAPIresponse TrailerAPIResponse
+	var trailer_data TemplateData
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
@@ -320,6 +320,21 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	body, _ = io.ReadAll(res.Body)
 	res.Body.Close()
+
+	var streamAPIresponse StreamAPIResponse
+	err = json.Unmarshal(body, &streamAPIresponse)
+	if err != nil {
+		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+		log.Println("Failed to parse response:", err)
+	}
+
+	if len(streamAPIresponse.StreamInfo) > 0 {
+		trailer_data = TemplateData{
+			StreamInfo: streamAPIresponse.StreamInfo,
+		}
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
 
 	fmt.Println(string(body))
 	//ALSO FOR LATER IMPLEMENTATION _________________________-
