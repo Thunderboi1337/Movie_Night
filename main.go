@@ -13,21 +13,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type App struct {
+type App struct { // API KEY
 	APIKey string
 }
 
-type MovieAPIResponse struct {
-	MovieResults []Movie `json:"results"`
-}
-
-type TrailerAPIResponse struct {
-	TrailerResults []Trailer `json:"results"`
-}
-type TemplateData struct {
+type TemplateData struct { // Storing Template information for CLIENT
 	Movies       []Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
+	StreamInfo   []StreamInformation
+}
+
+type MovieAPIResponse struct { // Response from TMDB API
+	MovieResults []Movie `json:"results"`
 }
 
 type Movie struct {
@@ -40,12 +38,39 @@ type Movie struct {
 	Genre       string  `json:"Genre"`
 }
 
+type TrailerAPIResponse struct { // Response from TMDB API
+	TrailerResults []Trailer `json:"results"`
+}
+
 type Trailer struct {
 	Name    string `json:"name"`
 	Type    string `json:"type"`
 	Offical bool   `json:"official"`
 	Key     string `json:"key"`
 	Site    string `json:"site"`
+}
+
+type StreamAPIResponse struct { // Response from TMDB API
+	StreamInfo []StreamInformation `json:"results"`
+}
+
+type Country struct {
+	CountrySE StreamInformation `json:"SE"`
+	CountrySV StreamInformation `json:"SV"`
+}
+
+type StreamInformation struct {
+	StreamLink string                `json:"link"`
+	StreamRent StreamSiteInformation `json:"flatrate"`
+	StreamFlat StreamSiteInformation `json:"rent"`
+	StreamBuy  StreamSiteInformation `json:"buy"`
+	StreamFree StreamSiteInformation `json:"free"`
+}
+type StreamSiteInformation struct {
+	LogoPath     string `json:"logo_path"`
+	ProviderId   string `json:"provider_id"`
+	ProviderName string `json:"provider_name"`
+	DisplayPrio  string `json:"display_priority"`
 }
 
 var tpl *template.Template
@@ -284,19 +309,19 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 	//FOR LATER IMPLEMATION____________________________
-	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
+	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
 
-	   	req, _ = http.NewRequest("GET", url, nil)
+	req, _ = http.NewRequest("GET", url, nil)
 
-	   	req.Header.Add("accept", "application/json")
-	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
-	   	res, _ = http.DefaultClient.Do(req)
+	res, _ = http.DefaultClient.Do(req)
 
-	   	body, _ = io.ReadAll(res.Body)
-	   	res.Body.Close()
+	body, _ = io.ReadAll(res.Body)
+	res.Body.Close()
 
-	   	fmt.Println(string(body)) */
+	fmt.Println(string(body))
 	//ALSO FOR LATER IMPLEMENTATION _________________________-
 	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
 
