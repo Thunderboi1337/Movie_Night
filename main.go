@@ -50,8 +50,8 @@ type Trailer struct {
 	Site    string `json:"site"`
 }
 
-type StreamAPIResponse struct { // Response from TMDB API
-	StreamInfo []StreamInformation `json:"results"`
+type StreamAPIResponse struct {
+	Results map[string]Country `json:"results"`
 }
 
 type Country struct {
@@ -326,31 +326,32 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
+		return
 	}
 
-	if len(streamAPIresponse.StreamInfo) > 0 {
+	country, exists := streamAPIresponse.Results["SE"]
+	if exists {
+		// Process the StreamInformation
 		trailer_data = TemplateData{
-			StreamInfo: streamAPIresponse.StreamInfo,
+			StreamInfo: []StreamInformation{country.CountrySE},
 		}
 	} else {
-		fmt.Println("No movies found in the response.")
+		fmt.Println("No stream information found for the country.")
 	}
 
+	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
+
+	req, _ = http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	res, _ = http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ = io.ReadAll(res.Body)
+
 	fmt.Println(string(body))
-	//ALSO FOR LATER IMPLEMENTATION _________________________-
-	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
-
-	   	req, _ = http.NewRequest("GET", url, nil)
-
-	   	req.Header.Add("accept", "application/json")
-	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
-
-	   	res, _ = http.DefaultClient.Do(req)
-
-	   	defer res.Body.Close()
-	   	body, _ = io.ReadAll(res.Body)
-
-	   	fmt.Println(string(body)) */
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 
