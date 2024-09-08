@@ -48,8 +48,16 @@ type Trailer struct {
 	Site    string `json:"site"`
 }
 
+var tpl *template.Template
+
 var storedMovies TemplateData
 var trailer_data TemplateData
+
+func init() {
+
+	tpl = template.Must(template.ParseGlob("*.html"))
+
+}
 
 func getStoredMovies() {
 
@@ -86,13 +94,9 @@ func storeMovies() {
 		return
 	}
 
-	fmt.Println("Successfully stored movies to m.json")
 }
 
 func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
-
-	log.Print("HTMX request received")
-	log.Print(r.Header.Get("HX-Request"))
 
 	// Parse the form data
 	err := r.ParseForm()
@@ -161,12 +165,7 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.Execute(w, data)
+	tpl.Execute(w, data)
 
 }
 
@@ -227,12 +226,7 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No movies found in the response.")
 		}
 
-		t, err := template.ParseFiles("index.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		t.Execute(w, search_data)
+		tpl.Execute(w, search_data)
 
 	}
 }
@@ -241,21 +235,27 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/main/", http.StatusFound)
 }
 
-func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
+func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
-	log.Print("HTMX request received")
-	log.Print(r.Header.Get("HX-Request"))
-
+	if r.Method != "POST" {
+		log.Println("Not fuckin buzzzin buzzin")
+		log.Println(r.Method)
+	}
 	// Parse the form data
 	err := r.ParseForm()
 	if err != nil {
 		log.Printf("Error parsing form: %v", err)
+		http.Error(w, "Unable to parse form", http.StatusBadRequest)
 		return
 	}
 
 	// Retrieve the movie ID value
-	movieID := r.PostFormValue("movie_id")
-	log.Printf(" Movie ID: %s", movieID)
+	movieID := r.PostFormValue("movie_ids")
+	if movieID == "" {
+		log.Println("Movie ID is missing")
+		http.Error(w, "Movie ID is required", http.StatusBadRequest)
+		return
+	}
 
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
@@ -266,8 +266,8 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 
 	res, _ := http.DefaultClient.Do(req)
 
-	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
+	res.Body.Close()
 
 	var trailerAPIresponse TrailerAPIResponse
 	err = json.Unmarshal(body, &trailerAPIresponse)
@@ -283,25 +283,39 @@ func (app *App) movieDetailHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+	//FOR LATER IMPLEMATION____________________________
+	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
 
-	t, err := template.ParseFiles("movie.html")
-	if err != nil {
-		log.Fatal(err)
-	}
+	   	req, _ = http.NewRequest("GET", url, nil)
 
-	t.ExecuteTemplate(w, "movie.html", nil)
+	   	req.Header.Add("accept", "application/json")
+	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	   	res, _ = http.DefaultClient.Do(req)
+
+	   	body, _ = io.ReadAll(res.Body)
+	   	res.Body.Close()
+
+	   	fmt.Println(string(body)) */
+	//ALSO FOR LATER IMPLEMENTATION _________________________-
+	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
+
+	   	req, _ = http.NewRequest("GET", url, nil)
+
+	   	req.Header.Add("accept", "application/json")
+	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+
+	   	res, _ = http.DefaultClient.Do(req)
+
+	   	defer res.Body.Close()
+	   	body, _ = io.ReadAll(res.Body)
+
+	   	fmt.Println(string(body)) */
+
+	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 
 }
 
-func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
-
-	t, err := template.ParseFiles("movie.html")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	t.ExecuteTemplate(w, "movie.html", trailer_data)
-}
 func main() {
 
 	getStoredMovies()
@@ -322,9 +336,8 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
 
-	http.HandleFunc("/about/", app.movieDetailHandler)
+	http.HandleFunc("/about/", app.AboutHandlers)
 	http.HandleFunc("/search/", app.SearchMoviesHandlers)
-	http.HandleFunc("/info/", app.AboutHandlers)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 

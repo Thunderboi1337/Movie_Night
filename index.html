@@ -17,9 +17,6 @@
             <div class="LOGO">
                 <a class="header_movie" href="/main/">Movie Night</a>
             </div>
-            <div class="LOGO">
-                <a class="header_movie" href="/info/">Info</a>
-            </div>
             <div class="topnav">
                 <form method="get" action="/search/">
                     <input type="text" name="search" placeholder="Search..">
@@ -36,10 +33,12 @@
 
             <li class="grid-item">
                 <span class="Genre">{{.Genre}}</span>
-                <a href="/info/" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
-                    <img src="{{.PosterPath}}" alt="{{.Title}}" class="poster" data-movie-id="{{.Id}}">
-
-                </a>
+                <form method="Post" action="/about/">
+                    <input type="hidden" name="movie_ids" value="{{.Id}}">
+                    <button type="submit" class="hiddenbutton">
+                        <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
+                    </button>
+                </form>
 
                 <span class="title">{{.Title}}</span>
                 <div class="switch-movie-button">
@@ -53,9 +52,12 @@
         {{range .SearchMovies}}
         <div class="grid_background">
             <li class="grid-item">
-                <a href="/info/" hx-post="/about/" hx-vals='{"movie_id": "{{.Id}}"}'>
-                    <img src="{{.PosterPath}}" alt="{{.Title}}" class="poster" data-movie-id="{{.Id}}"></a>
-
+                <form method="Post" action="/about/">
+                    <input type="hidden" name="movie_ids" value="{{.Id}}">
+                    <button type="submit" class="hiddenbutton"> <img src="{{.PosterPath}}" alt="{{.Title}}"
+                            class="poster">
+                    </button>
+                </form>
                 <span class="title">{{.Title}}</span>
                 <var data-movie-id="{{.Id}}"></var>
                 <div class="switch-movie-button">
@@ -92,14 +94,37 @@
         <div class="modal-content">
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Anime", "movie_id" :""}'>Anime</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'>Animation</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'>Action</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'>Drama</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Comedy", "movie_id":""}'>Comedy</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Random", "movie_id":""}'>Random</button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Weird", "movie_id":""}'>Weird</button>
+
+            <button hx-post="/add-movie/" hx-vals='{"category":"Anime", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Anime
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Animation
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Action
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Drama
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Comedy", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Comedy
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Random", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Random
+            </button>
+            <button hx-post="/add-movie/" hx-vals='{"category":"Weird", "movie_id":""}'
+                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
+                Weird
+            </button>
         </div>
+    </div>
     </div>
 
 
@@ -182,7 +207,8 @@
             poster.addEventListener('click', function (event) {
                 event.preventDefault(); // Prevent the default behavior of the link
                 const movieId = poster.getAttribute('data-movie-id');
-                window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
+                // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
+
             });
         });
 

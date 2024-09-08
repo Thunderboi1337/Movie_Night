@@ -60,6 +60,15 @@ header::after {
 
 
 
+.hiddenbutton {
+
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+
 ul.grid {
     list-style-type: none;
     padding: 0;
