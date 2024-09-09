@@ -18,11 +18,10 @@ type App struct { // API KEY
 }
 
 type TemplateData struct { // Storing Template information for CLIENT
-	AboutMovie   Movie
 	Movies       []Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
-	StreamInfo   []StreamInformation
+	AboutMovie   Movie
 }
 
 type MovieAPIResponse struct { // Response from TMDB API
@@ -49,29 +48,6 @@ type Trailer struct {
 	Offical bool   `json:"official"`
 	Key     string `json:"key"`
 	Site    string `json:"site"`
-}
-
-type StreamAPIResponse struct {
-	Results map[string]Country `json:"results"`
-}
-
-type Country struct {
-	CountrySE StreamInformation `json:"SE"`
-	CountrySV StreamInformation `json:"SV"`
-}
-
-type StreamInformation struct {
-	StreamLink string                `json:"link"`
-	StreamRent StreamSiteInformation `json:"flatrate"`
-	StreamFlat StreamSiteInformation `json:"rent"`
-	StreamBuy  StreamSiteInformation `json:"buy"`
-	StreamFree StreamSiteInformation `json:"free"`
-}
-type StreamSiteInformation struct {
-	LogoPath     string `json:"logo_path"`
-	ProviderId   string `json:"provider_id"`
-	ProviderName string `json:"provider_name"`
-	DisplayPrio  string `json:"display_priority"`
 }
 
 var tpl *template.Template
@@ -282,6 +258,8 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Gets Trailer information Section
+
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -309,35 +287,8 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
-	//FOR LATER IMPLEMATION____________________________
-	/* url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
 
-	req, _ = http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+app.APIKey)
-
-	res, _ = http.DefaultClient.Do(req)
-
-	body, _ = io.ReadAll(res.Body)
-	res.Body.Close()
-
-	var streamAPIresponse StreamAPIResponse
-	err = json.Unmarshal(body, &streamAPIresponse)
-	if err != nil {
-		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
-		log.Println("Failed to parse response:", err)
-		return
-	}
-
-	country, exists := streamAPIresponse.Results["SE"]
-	if exists {
-		// Process the StreamInformation
-		trailer_data.StreamInfo = []StreamInformation{country.CountrySE},
-		}
-	} else {
-		fmt.Println("No stream information found for the country.")
-	} */
+	// About Movie DATA Section
 
 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
 

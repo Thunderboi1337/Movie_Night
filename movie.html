@@ -31,21 +31,14 @@
         <div class="aboutdiv">
             <div>
 
-                {{if .AboutMovie}}
-                <img src="{{.AboutMovie.PosterPath}}" alt="Movie Title" class="aboutposter">
-                {{else}}
-                <img src="/static/images/logan.jpg" alt="Movie Title" class="aboutposter">
+                <img src="{{.AboutMovie.PosterPath}}" alt="/static/images/logan.jpg" class="aboutposter">
 
-                {{end}}
+
+
                 <div>
 
-                    {{if .AboutMovie}}
-                    <a class="abouttitle"> {{.AboutMovie.Title}}</a>
+                    <a class="abouttitle" alt="Movie Title"> {{.AboutMovie.Title}} </a>
 
-                    {{else}}
-                    <a class="abouttitle"> Movie Title</a>
-
-                    {{end}}
 
                 </div>
             </div>
@@ -53,13 +46,16 @@
 
                 {{if .AboutMovie}}
                 <h2>About</h2>
-                <p>{{.AboutMovie.Overview}}</p>
+                <p>{{.AboutMovie.Overview}}
+                </p>
                 {{else}}
                 <h2>About</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
                     vestibulum.</p>
 
                 {{end}}
+
+
             </div>
         </div>
 
