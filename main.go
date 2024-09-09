@@ -20,6 +20,7 @@ type App struct { // API KEY
 
 type TemplateData struct { // Storing Template information for CLIENT
 	Movies       []Movie
+	WinnerMovie  Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
 	AboutMovie   Movie
@@ -161,11 +162,13 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(storedMovies.Movies) > 0 {
 		data = TemplateData{
-			Movies: storedMovies.Movies[0:8],
+			Movies: storedMovies.Movies[0:7],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+
+	data.WinnerMovie = storedMovies.Movies[7]
 
 	tpl.Execute(w, data)
 

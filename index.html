@@ -71,6 +71,20 @@
 
         </div>
         {{end}}
+        {{if .WinnerMovie}}
+        <div class="grid_background">
+            <li class="grid-item">
+                <form method="post" action="/about/">
+                    <input type="hidden" name="movie_ids" value="{{.WinnerMovie.Id}}">
+                    <button type="submit" class="hiddenbutton">
+                        <span class="Genre">{{.WinnerMovie.Genre}}</span>
+                        <img src="{{.WinnerMovie.PosterPath}}" alt="{{.WinnerMovie.Title}}">
+                    </button>
+                </form>
+                <span class="grid-title">{{.WinnerMovie.Title}}</span>
+            </li>
+        </div>
+        {{end}}
         {{else if .SearchMovies}}
         {{range .SearchMovies}}
         <div class=" grid_background">
