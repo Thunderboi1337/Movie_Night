@@ -13,21 +13,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type App struct {
+type App struct { // API KEY
 	APIKey string
 }
 
-type MovieAPIResponse struct {
-	MovieResults []Movie `json:"results"`
-}
-
-type TrailerAPIResponse struct {
-	TrailerResults []Trailer `json:"results"`
-}
-type TemplateData struct {
+type TemplateData struct { // Storing Template information for CLIENT
 	Movies       []Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
+	AboutMovie   Movie
+}
+
+type MovieAPIResponse struct { // Response from TMDB API
+	MovieResults []Movie `json:"results"`
 }
 
 type Movie struct {
@@ -38,6 +36,10 @@ type Movie struct {
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
 	Genre       string  `json:"Genre"`
+}
+
+type TrailerAPIResponse struct { // Response from TMDB API
+	TrailerResults []Trailer `json:"results"`
 }
 
 type Trailer struct {
@@ -51,7 +53,6 @@ type Trailer struct {
 var tpl *template.Template
 
 var storedMovies TemplateData
-var trailer_data TemplateData
 
 func init() {
 
@@ -238,7 +239,6 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
-		log.Println("Not fuckin buzzzin buzzin")
 		log.Println(r.Method)
 	}
 	// Parse the form data
@@ -257,6 +257,8 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Gets Trailer information Section
+
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -270,6 +272,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	res.Body.Close()
 
 	var trailerAPIresponse TrailerAPIResponse
+	var trailer_data TemplateData
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
@@ -283,34 +286,39 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
-	//FOR LATER IMPLEMATION____________________________
-	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
 
-	   	req, _ = http.NewRequest("GET", url, nil)
+	// About Movie DATA Section
 
-	   	req.Header.Add("accept", "application/json")
-	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
 
-	   	res, _ = http.DefaultClient.Do(req)
+	req, _ = http.NewRequest("GET", url, nil)
 
-	   	body, _ = io.ReadAll(res.Body)
-	   	res.Body.Close()
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
-	   	fmt.Println(string(body)) */
-	//ALSO FOR LATER IMPLEMENTATION _________________________-
-	/* 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
+	res, _ = http.DefaultClient.Do(req)
 
-	   	req, _ = http.NewRequest("GET", url, nil)
+	defer res.Body.Close()
+	body, _ = io.ReadAll(res.Body)
 
-	   	req.Header.Add("accept", "application/json")
-	   	req.Header.Add("Authorization", "Bearer "+app.APIKey)
+	var movieAPIresponse Movie
+	err = json.Unmarshal(body, &movieAPIresponse)
+	if err != nil {
+		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
+		log.Println("Failed to parse response:", err)
+		return
+	}
 
-	   	res, _ = http.DefaultClient.Do(req)
+	if len(movieAPIresponse.Title) > 0 {
+		trailer_data.AboutMovie = movieAPIresponse
 
-	   	defer res.Body.Close()
-	   	body, _ = io.ReadAll(res.Body)
+		baseImageURL := "https://image.tmdb.org/t/p/w500"
 
-	   	fmt.Println(string(body)) */
+		trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
+
+	} else {
+		fmt.Println("No movies found in the response.")
+	}
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 

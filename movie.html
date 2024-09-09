@@ -18,47 +18,60 @@
             <div class="LOGO">
                 <a class="header_movie" href="/main/">Movie Night</a>
             </div>
-            <div class="topnav">
-                <form method="get" action="/search/">
-                    <input type="text" name="search" placeholder="Search..">
-                </form>
-            </div>
+
         </div>
     </header>
+
+    <div class="topnav">
+        <form method="get" action="/search/">
+            <input type="text" name="search" placeholder="Search..">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
     <div class="aboutgrid">
 
         <div class="aboutdiv">
             <div>
-                <img src="/static/images/logan.jpg" alt="Movie Title" class="aboutposter">
+
+                <img src="{{.AboutMovie.PosterPath}}" alt="/static/images/logan.jpg" class="aboutposter">
+
+
+
                 <div>
-                    {{if .Movies}}
-                    {{range .Movies}}
-                    <a class="abouttitle"> {{.Title}}</a>
-                    {{end}}
 
-                    {{else if .SearchMovies}}
-                    {{range .SearchMovies}}
-                    <a class="abouttitle"> {{.Title}}</a>
+                    <a class="abouttitle" alt="Movie Title"> {{.AboutMovie.Title}} </a>
 
-                    {{end}}
-                    {{else}}
-                    <a class="abouttitle"> Movie Title</a>
-                    {{end}}
+
                 </div>
             </div>
             <div class="aboutabout">
+
+                {{if .AboutMovie}}
+                <h2>About</h2>
+                <p>{{.AboutMovie.Overview}}
+                </p>
+                {{else}}
                 <h2>About</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum
                     vestibulum.</p>
+
+                {{end}}
+
+
             </div>
         </div>
 
         <div class="wrapper-container">
             <a class="abouttrailer"> Trailers</a>
             <div class="wrapper">
+                {{if .Trailer}}
                 {{range .Trailer}}
                 <iframe class="item" src="https://www.youtube.com/embed/{{.Key}}">
+                </iframe>
+                {{end}}
+                {{else}}
+                <iframe class="item" src="https://www.youtube.com/embed/BIufoNGSt9k">
                 </iframe>
                 {{end}}
             </div>
