@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOVIE NIGHT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+
     <script src="https://unpkg.com/htmx.org@2.0.2"
         integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
         crossorigin="anonymous"></script>
@@ -32,21 +34,21 @@
         <div class="grid_background">
 
             <li class="grid-item">
-                <span class="Genre">{{.Genre}}</span>
                 <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
                     <button type="submit" class="hiddenbutton">
+                        <span class="Genre">{{.Genre}}</span>
                         <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
                     </button>
                 </form>
 
-                <span class="title">{{.Title}}</span>
-                <div class="switch-movie-button">
-                    <button class="switch-movie-button" href="#modal">
-                        <a class=" open-modal">Switch</a>
-                    </button>
-                </div>
+                <span class="grid-title">{{.Title}}</span>
             </li>
+            <div class="switch-movie-button">
+                <button class="switch-movie-button" href="#modal">
+                    <a class=" open-modal">Switch</a>
+                </button>
+            </div>
 
         </div>
         {{end}}
@@ -62,12 +64,12 @@
                 </form>
                 <span class="title">{{.Title}}</span>
                 <var data-movie-id="{{.Id}}"></var>
-                <div class="switch-movie-button">
-                    <button class="switch-movie-button" href="#add">
-                        <a class=" open-add">Add</a>
-                    </button>
-                </div>
             </li>
+            <div class="switch-movie-button">
+                <button class="switch-movie-button" href="#add">
+                    <a class=" open-add">Switch</a>
+                </button>
+            </div>
         </div>
         {{end}}
         {{else}}
