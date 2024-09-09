@@ -18,6 +18,7 @@ type App struct { // API KEY
 }
 
 type TemplateData struct { // Storing Template information for CLIENT
+	AboutMovie   Movie
 	Movies       []Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
@@ -309,7 +310,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No movies found in the response.")
 	}
 	//FOR LATER IMPLEMATION____________________________
-	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
+	/* url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/watch/providers", movieID)
 
 	req, _ = http.NewRequest("GET", url, nil)
 
@@ -332,12 +333,11 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	country, exists := streamAPIresponse.Results["SE"]
 	if exists {
 		// Process the StreamInformation
-		trailer_data = TemplateData{
-			StreamInfo: []StreamInformation{country.CountrySE},
+		trailer_data.StreamInfo = []StreamInformation{country.CountrySE},
 		}
 	} else {
 		fmt.Println("No stream information found for the country.")
-	}
+	} */
 
 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
 
@@ -351,21 +351,26 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ = io.ReadAll(res.Body)
 
-	var movieAPIresponse MovieAPIResponse
-	err = json.Unmarshal(body, &movieAPIresponse.MovieResults)
+	var movieAPIresponse Movie
+	err = json.Unmarshal(body, &movieAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
 		return
 	}
 
-	if len(movieAPIresponse.MovieResults) > 0 {
-		trailer_data = TemplateData{
-			Movies: movieAPIresponse.MovieResults,
-		}
+	if len(movieAPIresponse.Title) > 0 {
+		trailer_data.AboutMovie = movieAPIresponse
+
+		baseImageURL := "https://image.tmdb.org/t/p/w500"
+
+		trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
+
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+
+	log.Println(trailer_data.AboutMovie.Title)
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 
