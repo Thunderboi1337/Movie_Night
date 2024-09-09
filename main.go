@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -324,6 +325,40 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Working")
+
+	if r.Method != "POST" {
+		log.Println(r.Method)
+	}
+	// Parse the form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error parsing form: %v", err)
+		http.Error(w, "Unable to parse form", http.StatusBadRequest)
+		return
+	}
+
+	// Retrieve the movie ID value
+	movieID := r.PostFormValue("winner_id")
+	if movieID == "" {
+		log.Println("Movie ID is missing")
+		http.Error(w, "Movie ID is required", http.StatusBadRequest)
+		return
+	}
+
+	for i, movie := range storedMovies.Movies {
+		if strconv.Itoa(movie.Id) == movieID {
+			storedMovies.Movies[7] = storedMovies.Movies[i]
+			break
+		}
+	}
+
+	storeMovies()
+
+}
+
 func main() {
 
 	getStoredMovies()
@@ -343,9 +378,9 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
-
 	http.HandleFunc("/about/", app.AboutHandlers)
 	http.HandleFunc("/search/", app.SearchMoviesHandlers)
+	http.HandleFunc("/winner/", app.WinnerHandler)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 

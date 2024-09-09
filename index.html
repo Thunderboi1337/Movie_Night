@@ -62,8 +62,10 @@
                     </button>
                 </div>
                 <div class="switch-movie-button">
-                    <button href="#modal" class=" open-modal">Winner</button>
-                    </button>
+                    <form method="Post" action="/winner/">
+                        <input type="hidden" name="winner_id" value="{{.Id}}">
+                        <button type="submit" href="#main">Winner</button>
+                    </form>
                 </div>
             </li>
 
@@ -71,7 +73,7 @@
         {{end}}
         {{else if .SearchMovies}}
         {{range .SearchMovies}}
-        <div class="grid_background">
+        <div class=" grid_background">
             <li class="grid-item">
                 <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
