@@ -239,7 +239,6 @@ func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
-		log.Println("Not fuckin buzzzin buzzin")
 		log.Println(r.Method)
 	}
 	// Parse the form data
@@ -320,8 +319,6 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
-
-	log.Println(trailer_data.AboutMovie.Title)
 
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
 

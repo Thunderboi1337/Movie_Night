@@ -126,14 +126,12 @@ ul.grid {
 
     background-color: #d65571;
     color: #ffffff;
-    padding: 5px 110px;
     border-radius: 30px;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
-
     cursor: pointer;
 
 
