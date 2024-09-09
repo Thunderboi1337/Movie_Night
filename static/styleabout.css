@@ -1,14 +1,10 @@
 body {
     margin: 0;
-    background: #141414;
-    /* 
-    background: rgb(38, 38, 38);
-    background: linear-gradient(90deg, rgba(38, 38, 38, 1) 4%, rgba(214, 85, 113, 1) 41%, rgba(93, 67, 136, 1) 53%, rgba(38, 38, 38, 1) 98%); */
-    font-family: 'OCR A Extended', monospace;
+    background: #121212;
+    /* Dark background to match the main theme */
+    font-family: 'Poppins', sans-serif;
     font-weight: 300;
-    color: #ffffff;
-
-
+    color: #E0E0E0;
 }
 
 .container {
@@ -17,34 +13,61 @@ body {
 }
 
 header {
-    background: rgb(214, 85, 113);
-    background: linear-gradient(90deg, rgba(214, 85, 113, 1) 0%, rgba(93, 67, 136, 1) 100%);
-    padding-top: 200;
-    margin-top: 200;
+    background: rgb(30, 30, 30);
+    background: linear-gradient(90deg, rgba(30, 30, 30, 1) 0%, rgba(60, 60, 60, 1) 100%);
+    padding: 50px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .LOGO {
     padding-top: 50px;
-    margin-bottom: -40px;
+    margin-bottom: -20px;
 }
 
 .header_movie {
-    color: #ffffff;
+    color: #E91E63;
+    /* Consistent header color */
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 100px;
-}
-
-.topnav input[type="text"] {
-    padding: 6px;
-    border: none;
-    margin-top: 8px;
-    font-size: 17px;
-    float: right;
+    font-size: 48px;
+    letter-spacing: 4px;
 }
 
 .header-container {
     text-align: center;
+}
+
+.topnav {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.topnav input[type="text"] {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 20px 0 0 20px;
+    background: #333;
+    color: #E0E0E0;
+    transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
+    width: 300px;
+}
+
+.topnav input[type="text"]:focus {
+    background: #444;
+    border-color: #E91E63;
+}
+
+.topnav button[type="submit"] {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #7C4DFF, #FF4081);
+    color: #ffffff;
+    border: none;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    outline: none;
 }
 
 /* Main Content */
@@ -53,61 +76,60 @@ header {
     margin: 50px auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 1fr;
     gap: 30px;
-
 }
 
 .aboutdiv {
     display: flex;
+    flex-wrap: wrap;
+    /* Ensures items wrap to the next line if needed */
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
-    background-color: rgba(27, 27, 27, 1);
-    border-radius: 10px;
+    background-color: #1E1E1E;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .aboutposter {
     max-width: 300px;
     border-radius: 15px;
+    /* Consistent border-radius */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .abouttitle {
     font-size: 2rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #E0E0E0;
     margin-top: 10px;
-
 }
 
 .aboutabout h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #ffffff;
+    color: #E0E0E0;
 }
 
 .aboutabout p {
     font-size: 1rem;
     line-height: 1.6;
-
-
 }
 
 /* Trailer Section */
 .wrapper-container {
     padding: 20px;
-    overflow-x: auto;
-    background-color: rgba(27, 27, 27, 1);
+    background-color: #1E1E1E;
     border-radius: 10px;
+    overflow: hidden;
+    /* Prevents content from overflowing */
 }
 
 .abouttrailer {
     font-size: 1.8rem;
-    color: #ffffff;
+    color: #E0E0E0;
     margin-bottom: 15px;
     display: block;
-
 }
 
 .wrapper {
@@ -115,7 +137,10 @@ header {
     gap: 15px;
     overflow-x: auto;
     scroll-behavior: smooth;
-
+    white-space: nowrap;
+    /* Prevents items from wrapping to the next line */
+    padding-bottom: 10px;
+    /* Prevents vertical overflow */
 }
 
 .wrapper::-webkit-scrollbar {
@@ -128,7 +153,9 @@ header {
 }
 
 .item {
-    min-width: 300px;
+    flex: 0 0 auto;
+    /* Ensures items don't shrink or grow */
+    width: 300px;
     height: 200px;
     border-radius: 10px;
     overflow: hidden;
@@ -155,7 +182,7 @@ header {
 
 @media (max-width: 480px) {
     .header_movie {
-        font-size: 2rem;
+        font-size: 36px;
     }
 
     .abouttitle {

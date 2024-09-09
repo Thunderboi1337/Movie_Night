@@ -19,13 +19,23 @@
             <div class="LOGO">
                 <a class="header_movie" href="/main/">Movie Night</a>
             </div>
-            <div class="topnav">
-                <form method="get" action="/search/">
-                    <input type="text" name="search" placeholder="Search..">
-                </form>
-            </div>
         </div>
     </header>
+
+
+    <ul class="search-bar">
+
+        <div class="topnav">
+            <form method="get" action="/search/">
+                <input type="text" name="search" placeholder="Search..">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+
+        </div>
+    </ul>
+
 
     <ul class="grid">
 
@@ -44,11 +54,18 @@
 
                 <span class="grid-title">{{.Title}}</span>
             </li>
-            <div class="switch-movie-button">
-                <button class="switch-movie-button" href="#modal">
-                    <a class=" open-modal">Switch</a>
-                </button>
-            </div>
+            <li class="gird-buttons">
+
+                <div class="switch-movie-button">
+                    <button class="switch-movie-button" href="#modal">
+                        <a class=" open-modal">Switch</a>
+                    </button>
+                </div>
+                <div class="switch-movie-button">
+                    <button href="#modal" class=" open-modal">Winner</button>
+                    </button>
+                </div>
+            </li>
 
         </div>
         {{end}}
@@ -58,8 +75,8 @@
             <li class="grid-item">
                 <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
-                    <button type="submit" class="hiddenbutton"> <img src="{{.PosterPath}}" alt="{{.Title}}"
-                            class="poster">
+                    <button type="submit" class="hiddenbutton">
+                        <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
                     </button>
                 </form>
                 <span class="title">{{.Title}}</span>
@@ -69,6 +86,7 @@
                 <button class="switch-movie-button" href="#add">
                     <a class=" open-add">Switch</a>
                 </button>
+
             </div>
         </div>
         {{end}}
@@ -84,10 +102,12 @@
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
             <!-- Modal Search Form -->
-            <form method="get" action="/modal-search">
+            <form method="get" action="/search/">
                 <input type="text" name="search" placeholder="Search..">
                 <button type="submit">Search</button>
             </form>
+
+
         </div>
     </div>
 

@@ -6,9 +6,8 @@ body {
     color: #E0E0E0;
 }
 
-.container {
-    width: 90%;
-    margin: 0 auto;
+.header-container {
+    text-align: center;
 }
 
 header {
@@ -30,22 +29,44 @@ header {
     letter-spacing: 4px;
 }
 
-.topnav input[type=text] {
-    float: right;
+.search-bar {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    margin-top: 30px;
+}
+
+.topnav input[type="text"] {
     padding: 10px;
     border: 1px solid #444;
-    margin-top: 16px;
-    margin-right: 16px;
-    font-size: 16px;
-    border-radius: 20px;
+    border-radius: 20px 0 0 20px;
     background: #333;
     color: #E0E0E0;
     transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
+    width: 300px;
+
 }
 
-.topnav input[type=text]:focus {
+.topnav input[type="text"]:focus {
     background: #444;
     border-color: #E91E63;
+}
+
+.topnav button[type="submit"] {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #7C4DFF, #FF4081);
+    color: #ffffff;
+    border: none;
+    border-radius: 0 20px 20px 0;
+
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    outline: none;
+
 }
 
 .hiddenbutton {
@@ -98,7 +119,41 @@ ul.grid {
 
 .grid-title {
     margin-left: 10px;
+    margin-top: 40px;
 
+
+}
+
+.grid-buttons {
+    list-style-type: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+
+}
+
+.switch-movie-button {
+    display: inline-flex;
+
+}
+
+.switch-movie-button button {
+    background: linear-gradient(135deg, #7C4DFF, #FF4081);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.switch-movie-button button:hover {
+    background: linear-gradient(135deg, #FF4081, #7C4DFF);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .Genre {
