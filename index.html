@@ -62,16 +62,32 @@
                     </button>
                 </div>
                 <div class="switch-movie-button">
-                    <button href="#modal" class=" open-modal">Winner</button>
-                    </button>
+                    <form method="Post" action="/winner/">
+                        <input type="hidden" name="winner_id" value="{{.Id}}">
+                        <button type="submit" href="#main">Winner</button>
+                    </form>
                 </div>
             </li>
 
         </div>
         {{end}}
+        {{if .WinnerMovie}}
+        <div class="grid_background">
+            <li class="grid-item">
+                <form method="post" action="/about/">
+                    <input type="hidden" name="movie_ids" value="{{.WinnerMovie.Id}}">
+                    <button type="submit" class="hiddenbutton">
+                        <span class="Genre">{{.WinnerMovie.Genre}}</span>
+                        <img src="{{.WinnerMovie.PosterPath}}" alt="{{.WinnerMovie.Title}}">
+                    </button>
+                </form>
+                <span class="grid-title">{{.WinnerMovie.Title}}</span>
+            </li>
+        </div>
+        {{end}}
         {{else if .SearchMovies}}
         {{range .SearchMovies}}
-        <div class="grid_background">
+        <div class=" grid_background">
             <li class="grid-item">
                 <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
@@ -80,12 +96,15 @@
                     </button>
                 </form>
                 <span class="title">{{.Title}}</span>
-                <var data-movie-id="{{.Id}}"></var>
             </li>
             <div class="switch-movie-button">
-                <button class="switch-movie-button" href="#add">
-                    <a class=" open-add">Switch</a>
-                </button>
+                <form method="Post" action="/add-movie/">
+                    <input type="hidden" name="mov_id" value="{{.Id}}">
+
+                    <button class="switch-movie-button" href="#add">
+                        <a class=" open-add">Switch</a>
+                    </button>
+                </form>
 
             </div>
         </div>
@@ -105,6 +124,7 @@
             <form method="get" action="/search/">
                 <input type="text" name="search" placeholder="Search..">
                 <button type="submit">Search</button>
+
             </form>
 
 
@@ -112,8 +132,7 @@
     </div>
 
 
-    </div>
-    </div>
+
 
     <!-- The Modal for Adding Movies -->
     <div id="add" class="modal">
@@ -121,37 +140,45 @@
             <!-- Close the modal with a link -->
             <a href="#" class="close">&times;</a>
 
-            <button hx-post="/add-movie/" hx-vals='{"category":"Anime", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Anime
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Animation", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Animation
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Action", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Action
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Drama", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Drama
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Comedy", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Comedy
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Random", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Random
-            </button>
-            <button hx-post="/add-movie/" hx-vals='{"category":"Weird", "movie_id":""}'
-                hx-on="htmx:afterRequest: document.querySelector('close').style.display='none'">
-                Weird
-            </button>
+            <!--  <form action="/add-movie/" method="Post"> -->
+            <!-- Hidden input for movie_id -->
+            <!--  <input type="hidden" name="mov_id" id="movieIdVar"> -->
+
+            <!-- Button for Anime -->
+            <button type="submit" name="category" value="Anime">Anime</button>
+
+            <!-- Button for Animation -->
+            <button type="submit" name="category" value="Animation">Animation</button>
+
+            <!-- Button for Action -->
+            <button type="submit" name="category" value="Action">Action</button>
+
+            <!-- Button for Drama -->
+            <button type="submit" name="category" value="Drama">Drama</button>
+
+            <!-- Button for Comedy -->
+            <button type="submit" name="category" value="Comedy">Comedy</button>
+
+            <!-- Button for Random -->
+            <button type="submit" name="category" value="Random">Random</button>
+
+            <!-- Button for Weird -->
+            <button type="submit" name="category" value="Weird">Weird</button>
+            <!--     </form> -->
+
+            <script>
+
+                // Get the movie ID from the element
+                var movieId = document.getElementById('movieIdVar').getAttribute('value');
+                // Set the value of the hidden input field to the movie ID
+                document.getElementById('mov_id').value = movieId;
+
+            </script>
         </div>
     </div>
-    </div>
+
+
+
 
 
     <script>
@@ -168,27 +195,9 @@
         var spanCloseModal = modal.querySelector(".close");
         var spanCloseAdd = addModal.querySelector(".close");
 
-        function setMovieId(element) {
-            // Find the closest var element with the data-movie-id attribute
-            var movieId = element.closest('.grid-item').querySelector('var').getAttribute('data-movie-id');
-
-            // Update the hx-vals attribute of all buttons in the add modal
-            var buttons = document.querySelectorAll('#add button');
-            buttons.forEach(function (button) {
-                var hxVals = JSON.parse(button.getAttribute('hx-vals'));
-                hxVals.movie_id = movieId;
-                button.setAttribute('hx-vals', JSON.stringify(hxVals));
-            });
-
-            // Show the add modal
-            var addModal = document.getElementById("add");
-            addModal.style.display = "block";
-        }
-
         document.querySelectorAll('.open-add').forEach(function (btn) {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();  // Prevent the default anchor behavior
-                setMovieId(btn);     // Set the movie ID and open the modal
             });
         });
 

@@ -70,5 +70,14 @@
     "release_date": "2024-07-10",
     "vote_average": 6.992,
     "Genre": "Last Weeks Winner"
+  },
+  {
+    "title": "Mamma Mia! Here We Go Again",
+    "id": 458423,
+    "overview": "Five years after meeting her three fathers, Sophie Sheridan prepares to open her mother’s hotel. In 1979, young Donna Sheridan meets the men who each could be Sophie’s biological father.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/aWicerX4Y7n7tUwRAVHsVcBBpj2.jpg",
+    "release_date": "2018-07-09",
+    "vote_average": 7.108,
+    "Genre": ""
   }
 ]

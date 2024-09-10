@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -19,6 +20,7 @@ type App struct { // API KEY
 
 type TemplateData struct { // Storing Template information for CLIENT
 	Movies       []Movie
+	WinnerMovie  Movie
 	SearchMovies []Movie
 	Trailer      []Trailer
 	AboutMovie   Movie
@@ -108,7 +110,7 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	// Retrieve the category value
 	category := r.PostFormValue("category")
-	movieID := r.PostFormValue("movie_id")
+	movieID := r.PostFormValue("mov_id")
 	log.Printf("Category: %s, Movie ID: %s", category, movieID)
 
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
@@ -152,6 +154,8 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	// Store the updated movies list
 	storeMovies()
 
+	http.Redirect(w, r, "/main/", http.StatusFound)
+
 }
 
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -160,11 +164,13 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(storedMovies.Movies) > 0 {
 		data = TemplateData{
-			Movies: storedMovies.Movies[0:8],
+			Movies: storedMovies.Movies[0:7],
 		}
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
+
+	data.WinnerMovie = storedMovies.Movies[7]
 
 	tpl.Execute(w, data)
 
@@ -241,6 +247,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		log.Println(r.Method)
 	}
+
 	// Parse the form data
 	err := r.ParseForm()
 	if err != nil {
@@ -257,48 +264,55 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Gets Trailer information Section
-
+	// Get Trailer information Section
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
 	req, _ := http.NewRequest("GET", url, nil)
-
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
 	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
 
 	body, _ := io.ReadAll(res.Body)
-	res.Body.Close()
 
-	var trailerAPIresponse TrailerAPIResponse
-	var trailer_data TemplateData
+	var trailerAPIresponse struct {
+		TrailerResults []Trailer `json:"results"`
+	}
+
 	err = json.Unmarshal(body, &trailerAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
+		return
 	}
 
-	if len(trailerAPIresponse.TrailerResults) > 0 {
-		trailer_data = TemplateData{
-			Trailer: trailerAPIresponse.TrailerResults,
+	// Filter trailers to include only those with "type": "Trailer"
+	var filteredTrailers []Trailer
+	for _, trailer := range trailerAPIresponse.TrailerResults {
+		if trailer.Type == "Trailer" {
+			filteredTrailers = append(filteredTrailers, trailer)
 		}
+	}
+
+	// Prepare template data
+	var trailer_data TemplateData
+	if len(filteredTrailers) > 0 {
+		trailer_data.Trailer = filteredTrailers
 	} else {
-		fmt.Println("No movies found in the response.")
+		fmt.Println("No trailers found with type 'Trailer'.")
 	}
 
 	// About Movie DATA Section
-
 	url = fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?append_to_response=SE&language=en-US", movieID)
 
 	req, _ = http.NewRequest("GET", url, nil)
-
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
 	res, _ = http.DefaultClient.Do(req)
-
 	defer res.Body.Close()
+
 	body, _ = io.ReadAll(res.Body)
 
 	var movieAPIresponse Movie
@@ -313,14 +327,47 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		trailer_data.AboutMovie = movieAPIresponse
 
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
-
 		trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
 
 	} else {
 		fmt.Println("No movies found in the response.")
 	}
 
+	// Render the template with the filtered trailer data
 	tpl.ExecuteTemplate(w, "movie.html", trailer_data)
+}
+
+func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("Working")
+
+	if r.Method != "POST" {
+		log.Println(r.Method)
+	}
+	// Parse the form data
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("Error parsing form: %v", err)
+		http.Error(w, "Unable to parse form", http.StatusBadRequest)
+		return
+	}
+
+	// Retrieve the movie ID value
+	movieID := r.PostFormValue("winner_id")
+	if movieID == "" {
+		log.Println("Movie ID is missing")
+		http.Error(w, "Movie ID is required", http.StatusBadRequest)
+		return
+	}
+
+	for i, movie := range storedMovies.Movies {
+		if strconv.Itoa(movie.Id) == movieID {
+			storedMovies.Movies[7] = storedMovies.Movies[i]
+			break
+		}
+	}
+
+	storeMovies()
 
 }
 
@@ -343,9 +390,9 @@ func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
-
 	http.HandleFunc("/about/", app.AboutHandlers)
 	http.HandleFunc("/search/", app.SearchMoviesHandlers)
+	http.HandleFunc("/winner/", app.WinnerHandler)
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 

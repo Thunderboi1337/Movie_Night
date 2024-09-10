@@ -1,15 +1,13 @@
 body {
     margin: 0;
     background: #121212;
-    /* Dark background to match the main theme */
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
     color: #E0E0E0;
 }
 
 .container {
-    width: 90%;
-    margin: 0 auto;
+    text-align: center;
 }
 
 header {
@@ -20,13 +18,11 @@ header {
 }
 
 .LOGO {
-    padding-top: 50px;
     margin-bottom: -20px;
 }
 
 .header_movie {
     color: #E91E63;
-    /* Consistent header color */
     text-decoration: none;
     text-transform: uppercase;
     font-size: 48px;
