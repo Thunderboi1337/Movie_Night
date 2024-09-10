@@ -110,7 +110,7 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	// Retrieve the category value
 	category := r.PostFormValue("category")
-	movieID := r.PostFormValue("movie_id")
+	movieID := r.PostFormValue("mov_id")
 	log.Printf("Category: %s, Movie ID: %s", category, movieID)
 
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
@@ -153,6 +153,8 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	// Store the updated movies list
 	storeMovies()
+
+	http.Redirect(w, r, "/main/", http.StatusFound)
 
 }
 
