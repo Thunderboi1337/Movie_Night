@@ -136,7 +136,11 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	movie.Genre = category
-	movie.PosterPath = baseImageURL + movie.PosterPath
+
+	if movie.PosterPath != "/static/images/No-Picture-Found.png" {
+
+		movie.PosterPath = baseImageURL + movie.PosterPath
+	}
 
 	updated := false
 	for i, m := range storedMovies.Movies {
@@ -329,12 +333,16 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 		log.Println("Failed to parse response:", err)
 		return
 	}
-
+	NoImageFound := "/static/images/No-Picture-Found.png"
+	baseImageURL := "https://image.tmdb.org/t/p/w500"
 	if len(movieAPIresponse.Title) > 0 {
 		trailer_data.AboutMovie = movieAPIresponse
 		if trailer_data.AboutMovie.PosterPath != "" {
-			baseImageURL := "https://image.tmdb.org/t/p/w500"
+
 			trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
+		} else {
+
+			trailer_data.AboutMovie.PosterPath = NoImageFound
 		}
 
 	} else {
