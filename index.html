@@ -78,7 +78,7 @@
                     <input type="hidden" name="movie_ids" value="{{.WinnerMovie.Id}}">
                     <button type="submit" class="hiddenbutton">
                         <span class="Genre">{{.WinnerMovie.Genre}}</span>
-                        <img src="{{.WinnerMovie.PosterPath}}" alt="/static/images/No-Picture-Found.png">
+                        <img src="{{.WinnerMovie.PosterPath}}" alt="/static/images/No.Picture-Found.png">
                     </button>
                 </form>
                 <span class="grid-title">{{.WinnerMovie.Title}}</span>
@@ -92,7 +92,7 @@
                 <form method="Post" action="/about/">
                     <input type="hidden" name="movie_ids" value="{{.Id}}">
                     <button type="submit" class="hiddenbutton">
-                        <img type="submit" src="{{.PosterPath}}" alt="/static/images/No-Picture-Found.png">
+                        <img src="{{.PosterPath}}" alt="/static/images/No-Picture-Found.png">
                     </button>
                 </form>
                 <span class="title">{{.Title}}</span>

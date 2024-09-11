@@ -221,8 +221,15 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 		}
 
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
+		NoImageFound := "/static/images/No-Picture-Found.png"
 		for i := range apiResponse.MovieResults {
-			apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
+
+			if apiResponse.MovieResults[i].PosterPath != "" {
+
+				apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
+			} else {
+				apiResponse.MovieResults[i].PosterPath = NoImageFound
+			}
 		}
 
 		if len(apiResponse.MovieResults) > 0 {
@@ -325,9 +332,10 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	if len(movieAPIresponse.Title) > 0 {
 		trailer_data.AboutMovie = movieAPIresponse
-
-		baseImageURL := "https://image.tmdb.org/t/p/w500"
-		trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
+		if trailer_data.AboutMovie.PosterPath != "" {
+			baseImageURL := "https://image.tmdb.org/t/p/w500"
+			trailer_data.AboutMovie.PosterPath = baseImageURL + trailer_data.AboutMovie.PosterPath
+		}
 
 	} else {
 		fmt.Println("No movies found in the response.")
