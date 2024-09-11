@@ -35,19 +35,14 @@
         <div class="aboutdiv">
             <div>
 
-                <img src="{{.AboutMovie.PosterPath}}" alt="/static/images/logan.jpg" class="aboutposter">
+                <img src="{{.AboutMovie.PosterPath}}" class="aboutposter">
 
-
-
-                <div>
-
-                    <a class="abouttitle" alt="Movie Title"> {{.AboutMovie.Title}} </a>
-
-
-                </div>
             </div>
+
+
             <div class="aboutabout">
 
+                <a class="abouttitle" alt="Movie Title"> {{.AboutMovie.Title}} </a>
                 {{if .AboutMovie}}
                 <h2>About</h2>
                 <p>{{.AboutMovie.Overview}}
@@ -72,8 +67,8 @@
                 </iframe>
                 {{end}}
                 {{else}}
-                <iframe class="item" src="https://www.youtube.com/embed/BIufoNGSt9k">
-                </iframe>
+                <img class="item" src="/static/images/No-Trailer-Found.png">
+                </img>
                 {{end}}
             </div>
         </div>
