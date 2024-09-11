@@ -57,14 +57,9 @@
             <li class="gird-buttons">
 
                 <div class="switch-movie-button">
-                    <button class="switch-movie-button" href="#modal">
-                        <a class=" open-modal">Switch</a>
-                    </button>
-                </div>
-                <div class="switch-movie-button">
                     <form method="Post" action="/winner/">
                         <input type="hidden" name="winner_id" value="{{.Id}}">
-                        <button type="submit" href="#main">Winner</button>
+                        <button type="submit" href="#main">Winner?</button>
                     </form>
                 </div>
             </li>
@@ -114,22 +109,6 @@
         {{end}}
     </ul>
 
-    <!-- The Modal for Switching Movies -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-
-            <!-- Close the modal with a link -->
-            <a href="#" class="close">&times;</a>
-            <!-- Modal Search Form -->
-            <form method="get" action="/search/">
-                <input type="text" name="search" placeholder="Search..">
-                <button type="submit">Search</button>
-
-            </form>
-
-
-        </div>
-    </div>
 
 
 
