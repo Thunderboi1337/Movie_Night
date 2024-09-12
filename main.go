@@ -62,7 +62,8 @@ func init() {
 
 }
 
-func getStoredMovies() { // Get json moviedata from root folder for main pag
+// Get json moviedata from root folder for main pag
+func getStoredMovies() {
 
 	// Open the JSON file
 	jsonFile, err := os.ReadFile("m.json")
@@ -355,9 +356,7 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
-
-	log.Println("Working")
-
+	// Checks for Post Method
 	if r.Method != "POST" {
 		log.Println(r.Method)
 	}
@@ -377,6 +376,7 @@ func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Places selcted winner in winner postion.
 	for i, movie := range storedMovies.Movies {
 		if strconv.Itoa(movie.Id) == movieID {
 			storedMovies.Movies[7] = storedMovies.Movies[i]
@@ -384,27 +384,29 @@ func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	storeMovies()
+	storeMovies() // Stores Movies in json
 
 }
 
 func main() {
 
-	getStoredMovies()
+	getStoredMovies() // Gets current movie data from stored in json
 
-	err := godotenv.Load()
+	err := godotenv.Load() // Loads ENV files
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	apiKey := os.Getenv("API_KEY")
+	apiKey := os.Getenv("API_KEY") // Get API KEY from ENV format
 	if apiKey == "" {
 		log.Fatal("API_KEY is not set")
 	}
 
-	app := &App{APIKey: apiKey}
+	app := &App{APIKey: apiKey} // Stores API in KEY
 
+	// Finds needed files in static directory
 	fs := http.FileServer(http.Dir("static"))
+	//Handle functions
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/add-movie/", app.getMovie)
 	http.HandleFunc("/about/", app.AboutHandlers)
@@ -413,6 +415,7 @@ func main() {
 	http.HandleFunc("/main/", app.indexHandler)
 	http.HandleFunc("/", app.hostHandler)
 
+	// Runs Local Server at port 8080
 	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }
