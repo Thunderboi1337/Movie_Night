@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Setting up html document -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +24,7 @@
         </div>
     </header>
 
-
+    <!-- Searchbar  -->
     <ul class="search-bar">
 
         <div class="topnav">
@@ -36,7 +38,7 @@
         </div>
     </ul>
 
-
+    <!-- Main grid for handeling movies -->
     <ul class="grid">
 
         {{if .Movies}}
@@ -162,16 +164,13 @@
 
     <script>
         // Get the modals
-        var modal = document.getElementById("modal");
         var addModal = document.getElementById("add");
 
         // Get the buttons that open the modals
-        var btnOpenModal = document.querySelectorAll(".open-modal");
         var btnOpenAdd = document.querySelectorAll(".open-add");
 
 
         // Get the <span> element that closes the modals
-        var spanCloseModal = modal.querySelector(".close");
         var spanCloseAdd = addModal.querySelector(".close");
 
         document.querySelectorAll('.open-add').forEach(function (btn) {
@@ -180,13 +179,6 @@
             });
         });
 
-        // Set up the event listeners for opening modals
-        btnOpenModal.forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();  // Prevent the default anchor behavior
-                modal.style.display = "block";
-            });
-        });
 
         btnOpenAdd.forEach(function (btn) {
             btn.addEventListener('click', function (e) {
@@ -196,35 +188,17 @@
         });
 
         // When the user clicks on <span> (x), close the modals
-        spanCloseModal.onclick = function () {
-            modal.style.display = "none";
-        }
-
         spanCloseAdd.onclick = function () {
             addModal.style.display = "none";
         }
 
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
             if (event.target == addModal) {
                 addModal.style.display = "none";
             }
 
         }
-
-
-        document.querySelectorAll('.poster').forEach(function (poster) {
-            poster.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default behavior of the link
-                const movieId = poster.getAttribute('data-movie-id');
-                // window.location.href = `/info/?movie_id=${movieId}`; // Redirect with movie_id as a query parameter
-
-            });
-        });
 
     </script>
 

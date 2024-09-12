@@ -14,11 +14,13 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type App struct { // API KEY
+// API KEY
+type App struct {
 	APIKey string
 }
 
-type TemplateData struct { // Storing Template information for CLIENT
+// Storing Template information for CLIENT
+type TemplateData struct {
 	Movies       []Movie
 	WinnerMovie  Movie
 	SearchMovies []Movie
@@ -26,10 +28,17 @@ type TemplateData struct { // Storing Template information for CLIENT
 	AboutMovie   Movie
 }
 
-type MovieAPIResponse struct { // Response from TMDB API
+// Storing response from TMDB API
+type MovieAPIResponse struct {
 	MovieResults []Movie `json:"results"`
 }
 
+// Storing response from TMDB API
+type TrailerAPIResponse struct {
+	TrailerResults []Trailer `json:"results"`
+}
+
+// Movie Template
 type Movie struct {
 	Title       string  `json:"title"`
 	Id          int     `json:"id"`
@@ -40,10 +49,7 @@ type Movie struct {
 	Genre       string  `json:"Genre"`
 }
 
-type TrailerAPIResponse struct { // Response from TMDB API
-	TrailerResults []Trailer `json:"results"`
-}
-
+// Trailer Template
 type Trailer struct {
 	Name    string `json:"name"`
 	Type    string `json:"type"`
@@ -386,6 +392,7 @@ func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
 
 	storeMovies() // Stores Movies in json
 
+	http.Redirect(w, r, "/main/", http.StatusFound) // Send you back to main page again
 }
 
 func main() {
