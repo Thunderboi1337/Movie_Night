@@ -52,17 +52,17 @@ type Trailer struct {
 	Site    string `json:"site"`
 }
 
-var tpl *template.Template
+var tpl *template.Template    // Templete variable
+var storedMovies TemplateData // Stored movies from local jsonfile. For main page
 
-var storedMovies TemplateData
-
+// Initzilation for template var and Selects which all html to parse data to.
 func init() {
 
 	tpl = template.Must(template.ParseGlob("*.html"))
 
 }
 
-func getStoredMovies() {
+func getStoredMovies() { // Get json moviedata from root folder for main pag
 
 	// Open the JSON file
 	jsonFile, err := os.ReadFile("m.json")
@@ -71,18 +71,15 @@ func getStoredMovies() {
 
 	}
 
-	fmt.Println("Successfully opened m.json")
-
 	// Unmarshal JSON data into the storedMovies variable
 	err = json.Unmarshal(jsonFile, &storedMovies.Movies)
 	if err != nil {
 		fmt.Println("Error unmarshaling JSON:", err)
-
 	}
 
 }
 
-func storeMovies() {
+func storeMovies() { // Stores current StoredMovied data into json-file.
 
 	file, err := json.MarshalIndent(storedMovies.Movies, "", "  ")
 	if err != nil {
@@ -99,6 +96,7 @@ func storeMovies() {
 
 }
 
+// Get selected movie Id and stores it in right Category
 func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	// Parse the form data
@@ -111,8 +109,9 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the category value
 	category := r.PostFormValue("category")
 	movieID := r.PostFormValue("mov_id")
-	log.Printf("Category: %s, Movie ID: %s", category, movieID)
+	//log.Printf("Category: %s, Movie ID: %s", category, movieID)
 
+	//Gets movie data from api
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)
 
 	req, _ := http.NewRequest("GET", url, nil)
@@ -125,23 +124,24 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	body, _ := io.ReadAll(res.Body)
 
-	var movie Movie
-
 	baseImageURL := "https://image.tmdb.org/t/p/w500"
 
-	err = json.Unmarshal(body, &movie)
+	var movie Movie
+	err = json.Unmarshal(body, &movie) //Stores data collected from API into movie struct
 	if err != nil {
 		fmt.Println("Error:", err)
 
 	}
 
-	movie.Genre = category
+	movie.Genre = category // Add genre to movie for easy management
 
+	// If find a poster add path to poster.
 	if movie.PosterPath != "/static/images/No-Picture-Found.png" {
 
 		movie.PosterPath = baseImageURL + movie.PosterPath
 	}
 
+	// if movies find a matching genre it's replaced with current movie data.
 	updated := false
 	for i, m := range storedMovies.Movies {
 		if m.Genre == category {
@@ -150,18 +150,18 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-
 	if !updated {
 		storedMovies.Movies = append(storedMovies.Movies, movie)
 	}
 
 	// Store the updated movies list
 	storeMovies()
-
+	// redirects back to main page after selection.
 	http.Redirect(w, r, "/main/", http.StatusFound)
 
 }
 
+// Takes the stored movie-data and executes it to the main page
 func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	var data TemplateData
@@ -180,12 +180,11 @@ func (app *App) indexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Searches for inputed movie and calls api for inputed movie data
 func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 
 	var search_data TemplateData
-
 	var url string
-
 	searchQuery := r.URL.Query().Get("search")
 
 	if searchQuery != "" {
@@ -197,25 +196,26 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 		req.Header.Add("accept", "application/json")
 		req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
+		// Calls api for moviedata.
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
 			fmt.Println("failed")
 		}
 		defer res.Body.Close()
-
+		//Checks if status is okay
 		if res.StatusCode != http.StatusOK {
 			http.Error(w, "Failed to fetch movies", http.StatusInternalServerError)
 			fmt.Println("failed")
 		}
-
+		// Reads Api movie data and stores it in body
 		body, err := io.ReadAll(res.Body)
 		if err != nil {
 			http.Error(w, "Failed to read response", http.StatusInternalServerError)
 			fmt.Println("failed")
 
 		}
-
+		// Stores data in template format
 		var apiResponse MovieAPIResponse
 		err = json.Unmarshal(body, &apiResponse)
 		if err != nil {
@@ -223,7 +223,7 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("failed")
 
 		}
-
+		// Appends url link for posters else loads local alternitive
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
 		NoImageFound := "/static/images/No-Picture-Found.png"
 		for i := range apiResponse.MovieResults {
@@ -235,7 +235,7 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 				apiResponse.MovieResults[i].PosterPath = NoImageFound
 			}
 		}
-
+		// Inserts Movie results into Templete
 		if len(apiResponse.MovieResults) > 0 {
 			search_data = TemplateData{
 				SearchMovies: apiResponse.MovieResults,
@@ -249,10 +249,12 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Redirects to main page if attempting to connect to root adress
 func (app *App) hostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/main/", http.StatusFound)
 }
 
+// Handles about page data, retrevies trailer data and movie information
 func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != "POST" {
@@ -278,20 +280,18 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	// Get Trailer information Section
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s/videos?language=en-US", movieID)
 
+	// Handles Request to API
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
 	res, _ := http.DefaultClient.Do(req)
-	defer res.Body.Close()
+	defer res.Body.Close() // Closes body when function ends
 
 	body, _ := io.ReadAll(res.Body)
 
-	var trailerAPIresponse struct {
-		TrailerResults []Trailer `json:"results"`
-	}
-
-	err = json.Unmarshal(body, &trailerAPIresponse)
+	var trailerAPIresponse TrailerAPIResponse
+	err = json.Unmarshal(body, &trailerAPIresponse) // Stores data into Trailer Api template
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
@@ -322,17 +322,18 @@ func (app *App) AboutHandlers(w http.ResponseWriter, r *http.Request) {
 	req.Header.Add("Authorization", "Bearer "+app.APIKey)
 
 	res, _ = http.DefaultClient.Do(req)
-	defer res.Body.Close()
-
-	body, _ = io.ReadAll(res.Body)
+	body, _ = io.ReadAll(res.Body) // Stores Request in body
 
 	var movieAPIresponse Movie
+	//Stores Body data into Movie template
 	err = json.Unmarshal(body, &movieAPIresponse)
 	if err != nil {
 		http.Error(w, "Failed to parse response", http.StatusInternalServerError)
 		log.Println("Failed to parse response:", err)
 		return
 	}
+
+	// Appends url link for posters else loads local alternitive
 	NoImageFound := "/static/images/No-Picture-Found.png"
 	baseImageURL := "https://image.tmdb.org/t/p/w500"
 	if len(movieAPIresponse.Title) > 0 {
