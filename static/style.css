@@ -133,11 +133,6 @@ ul.grid {
 
 }
 
-.switch-movie-button {
-    display: inline-flex;
-
-}
-
 .switch-movie-button button {
     background: linear-gradient(135deg, #7C4DFF, #FF4081);
     color: #ffffff;
@@ -151,9 +146,61 @@ ul.grid {
     transition: background 0.3s, box-shadow 0.3s;
 }
 
-.switch-movie-button button:hover {
-    background: linear-gradient(135deg, #FF4081, #7C4DFF);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+.switch-movie-button select {
+    padding: 10px;
+    background: #333;
+    /* Dark background matching the site theme */
+    color: #E0E0E0;
+    /* Light text color for readability */
+    border: 1px solid #444;
+    /* Subtle border */
+    border-radius: 20px;
+    /* Rounded corners to match buttons */
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    max-width: 300px;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-top: 15px;
+    /* Add spacing */
+    cursor: pointer;
+}
+
+.switch-movie-button select:hover {
+    background: #444;
+    /* Slightly lighter background on hover */
+    border-color: #E91E63;
+    /* Accent color from theme */
+}
+
+.switch-movie-button select:focus {
+    outline: none;
+    border-color: #FF4081;
+    /* Brighter accent on focus */
+    background: #555;
+}
+
+/* Style for the select dropdown options */
+.switch-movie-button option {
+    background: #333;
+    /* Match the select box background */
+    color: #E0E0E0;
+    /* Light text for visibility */
+    padding: 10px;
+    /* Padding inside options */
+}
+
+/* Optional: Add a subtle arrow indicator to the dropdown */
+.switch-movie-button select {
+    appearance: none;
+    /* Remove default arrow */
+    background-image: linear-gradient(135deg, #7C4DFF, #FF4081), url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23E0E0E0" d="M2 0L0 2h4z"/></svg>');
+    /* Custom arrow with gradient */
+    background-position: right 10px center;
+    /* Position the arrow */
+    background-repeat: no-repeat;
+    background-size: 12px;
+    /* Size of the arrow */
 }
 
 .Genre {
@@ -173,24 +220,6 @@ ul.grid {
 
 }
 
-.switch-movie-button button {
-    background: linear-gradient(135deg, #7C4DFF, #FF4081);
-    color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 10px 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 15px;
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-.switch-movie-button button:hover {
-    background: linear-gradient(135deg, #FF4081, #7C4DFF);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
 
 .modal {
     display: none;
@@ -269,6 +298,14 @@ ul.grid {
 
 .modal-content button[type="submit"]:hover {
     background: linear-gradient(135deg, #FF4081, #7C4DFF);
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .switch-movie-button select {
+        max-width: 100%;
+        /* Ensure it scales down for smaller screens */
+    }
 }
 
 @media (max-width: 768px) {
