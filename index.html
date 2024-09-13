@@ -94,6 +94,8 @@
             </li>
             <div class="switch-movie-button">
                 <form method="Post" action="/add-movie/">
+
+                    <input type="hidden" name="mov_id" value="{{.Id}}">
                     <select id="movies" name="category" onchange="this.form.submit()">
                         <option type="" name="" value="">Genre</option>
 
