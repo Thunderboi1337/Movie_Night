@@ -9,21 +9,21 @@
     "Genre": "Anime"
   },
   {
-    "title": "Puss in Boots: The Last Wish",
-    "id": 315162,
-    "overview": "Puss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/kuf6dutpsT0vSVehic3EZIqkOBt.jpg",
-    "release_date": "2022-12-07",
-    "vote_average": 8.226,
+    "title": "Spider-Man: Into the Spider-Verse",
+    "id": 324857,
+    "overview": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg",
+    "release_date": "2018-12-06",
+    "vote_average": 8.401,
     "Genre": "Animation"
   },
   {
-    "title": "Deadpool \u0026 Wolverine",
-    "id": 533535,
-    "overview": "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-    "release_date": "2024-07-24",
-    "vote_average": 7.757,
+    "title": "John Wick",
+    "id": 245891,
+    "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
+    "release_date": "2014-10-22",
+    "vote_average": 7.436,
     "Genre": "Action"
   },
   {
@@ -36,12 +36,12 @@
     "Genre": "Drama"
   },
   {
-    "title": "Dude, Where's My Car?",
-    "id": 8859,
-    "overview": "Two stoners wake up after a night of partying and cannot remember where they parked their car.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/tc6sLnnaOZk08YndHd53aPlUast.jpg",
-    "release_date": "2000-12-15",
-    "vote_average": 5.539,
+    "title": "Tropic Thunder",
+    "id": 7446,
+    "overview": "A group of self-absorbed actors set out to make the most expensive war film ever. After ballooning costs force the studio to cancel the movie, the frustrated director refuses to stop shooting, leading his cast into the jungles of Southeast Asia, where they encounter real bad guys.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/zAurB9mNxfYRoVrVjAJJwGV3sPg.jpg",
+    "release_date": "2008-08-09",
+    "vote_average": 6.678,
     "Genre": "Comedy"
   },
   {
@@ -54,21 +54,21 @@
     "Genre": "Random"
   },
   {
-    "title": "The Room",
-    "id": 17473,
-    "overview": "Johnny is a successful banker with great respect for and dedication to the people in his life, especially his future wife Lisa. The happy-go-lucky guy sees his world being torn apart when his friends begin to betray him one-by-one.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/9QscHN4pXj6Ja1k7e1ZT4vWDGnr.jpg",
-    "release_date": "2003-06-27",
-    "vote_average": 4,
+    "title": "Weird: The Al Yankovic Story",
+    "id": 928344,
+    "overview": "Exploring every facet of ‘Weird Al’ Yankovic’s life, from his meteoric rise to fame with early hits like ‘Eat It’ and ‘Like a Surgeon’ to his torrid celebrity love affairs and famously depraved lifestyle, this biopic takes audiences on a truly unbelievable journey through Yankovic’s life and career, from gifted child prodigy to the greatest musical legend of all time.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/qcj2z13G0KjaIgc01ifiUKu7W07.jpg",
+    "release_date": "2022-09-08",
+    "vote_average": 6.678,
     "Genre": "Weird"
   },
   {
-    "title": "Fly Me to the Moon",
-    "id": 956842,
-    "overview": "Sparks fly in all directions as marketing maven Kelly Jones, brought in to fix NASA's public image, wreaks havoc on Apollo 11 launch director Cole Davis' already difficult task of putting a man on the moon. When the White House deems the mission too important to fail, Jones is directed to stage a fake moon landing as backup, and the countdown truly begins.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/gjk8YdXpItoC1in53FCrZMFIuBx.jpg",
-    "release_date": "2024-07-10",
-    "vote_average": 6.992,
-    "Genre": "Last Weeks Winner"
+    "title": "The Nice Guys",
+    "id": 290250,
+    "overview": "A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and uncovers a conspiracy.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/clq4So9spa9cXk3MZy2iMdqkxP2.jpg",
+    "release_date": "2016-05-15",
+    "vote_average": 7.118,
+    "Genre": "Comedy"
   }
 ]
