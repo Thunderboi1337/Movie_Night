@@ -53,11 +53,9 @@
                         <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
                     </button>
                 </form>
-
                 <span class="grid-title">{{.Title}}</span>
             </li>
-            <li class="gird-buttons">
-
+            <li class="winner-list">
                 <div class="switch-movie-button">
                     <form method="Post" action="/winner/">
                         <input type="hidden" name="winner_id" value="{{.Id}}">
@@ -92,11 +90,10 @@
                         <img src="{{.PosterPath}}" alt="/static/images/No-Picture-Found.png">
                     </button>
                 </form>
-                <span class="title">{{.Title}}</span>
+                <span class="grid-title">{{.Title}}</span>
             </li>
             <div class="switch-movie-button">
                 <form method="Post" action="/add-movie/">
-
                     <select id="movies" name="category" onchange="this.form.submit()">
                         <option type="" name="" value="">Genre</option>
 
