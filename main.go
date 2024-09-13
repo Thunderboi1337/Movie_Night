@@ -116,7 +116,7 @@ func (app *App) getMovie(w http.ResponseWriter, r *http.Request) {
 	// Retrieve the category value
 	category := r.PostFormValue("category")
 	movieID := r.PostFormValue("mov_id")
-	//log.Printf("Category: %s, Movie ID: %s", category, movieID)
+	log.Printf("Category: %s, Movie ID: %s", category, movieID)
 
 	//Gets movie data from api
 	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US", movieID)

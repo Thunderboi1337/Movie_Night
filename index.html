@@ -53,11 +53,9 @@
                         <img type="submit" src="{{.PosterPath}}" alt="{{.Title}}">
                     </button>
                 </form>
-
                 <span class="grid-title">{{.Title}}</span>
             </li>
-            <li class="gird-buttons">
-
+            <li class="winner-list">
                 <div class="switch-movie-button">
                     <form method="Post" action="/winner/">
                         <input type="hidden" name="winner_id" value="{{.Id}}">
@@ -92,15 +90,27 @@
                         <img src="{{.PosterPath}}" alt="/static/images/No-Picture-Found.png">
                     </button>
                 </form>
-                <span class="title">{{.Title}}</span>
+                <span class="grid-title">{{.Title}}</span>
             </li>
             <div class="switch-movie-button">
                 <form method="Post" action="/add-movie/">
-                    <input type="hidden" name="mov_id" value="{{.Id}}">
+                    <select id="movies" name="category" onchange="this.form.submit()">
+                        <option type="" name="" value="">Genre</option>
 
-                    <button class="switch-movie-button" href="#add">
-                        <a class=" open-add">Switch</a>
-                    </button>
+                        <option type="submit" name="category" value="Anime">Anime</option>
+
+                        <option type="submit" name="category" value="Animation">Animation</option>
+
+                        <option type="submit" name="category" value="Action">Action</option>
+
+                        <option type="submit" name="category" value="Drama">Drama</option>
+
+                        <option type="submit" name="category" value="Comedy">Comedy</option>
+
+                        <option type="submit" name="category" value="Random">Random</option>
+
+                        <option type="submit" name="category" value="Weird">Weird</option>
+                    </select>
                 </form>
 
             </div>
@@ -111,95 +121,5 @@
         {{end}}
     </ul>
 
-
-
-
-
-    <!-- The Modal for Adding Movies -->
-    <div id="add" class="modal">
-        <div class="modal-content">
-            <!-- Close the modal with a link -->
-            <a href="#" class="close">&times;</a>
-
-            <!--  <form action="/add-movie/" method="Post"> -->
-            <!-- Hidden input for movie_id -->
-            <!--  <input type="hidden" name="mov_id" id="movieIdVar"> -->
-
-            <!-- Button for Anime -->
-            <button type="submit" name="category" value="Anime">Anime</button>
-
-            <!-- Button for Animation -->
-            <button type="submit" name="category" value="Animation">Animation</button>
-
-            <!-- Button for Action -->
-            <button type="submit" name="category" value="Action">Action</button>
-
-            <!-- Button for Drama -->
-            <button type="submit" name="category" value="Drama">Drama</button>
-
-            <!-- Button for Comedy -->
-            <button type="submit" name="category" value="Comedy">Comedy</button>
-
-            <!-- Button for Random -->
-            <button type="submit" name="category" value="Random">Random</button>
-
-            <!-- Button for Weird -->
-            <button type="submit" name="category" value="Weird">Weird</button>
-            <!--     </form> -->
-
-            <script>
-
-                // Get the movie ID from the element
-                var movieId = document.getElementById('movieIdVar').getAttribute('value');
-                // Set the value of the hidden input field to the movie ID
-                document.getElementById('mov_id').value = movieId;
-
-            </script>
-        </div>
-    </div>
-
-
-
-
-
-    <script>
-        // Get the modals
-        var addModal = document.getElementById("add");
-
-        // Get the buttons that open the modals
-        var btnOpenAdd = document.querySelectorAll(".open-add");
-
-
-        // Get the <span> element that closes the modals
-        var spanCloseAdd = addModal.querySelector(".close");
-
-        document.querySelectorAll('.open-add').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();  // Prevent the default anchor behavior
-            });
-        });
-
-
-        btnOpenAdd.forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();  // Prevent the default anchor behavior
-                addModal.style.display = "block";
-            });
-        });
-
-        // When the user clicks on <span> (x), close the modals
-        spanCloseAdd.onclick = function () {
-            addModal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == addModal) {
-                addModal.style.display = "none";
-            }
-
-        }
-
-    </script>
 
 </html>
