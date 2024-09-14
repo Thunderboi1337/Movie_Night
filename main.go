@@ -384,7 +384,9 @@ func (app *App) WinnerHandler(w http.ResponseWriter, r *http.Request) {
 	//Places selcted winner in winner postion.
 	for i, movie := range storedMovies.Movies {
 		if strconv.Itoa(movie.Id) == movieID {
+
 			storedMovies.Movies[7] = storedMovies.Movies[i]
+			storedMovies.Movies[7].Genre = "Last Weeks Winner"
 			break
 		}
 	}

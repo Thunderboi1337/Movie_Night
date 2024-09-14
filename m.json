@@ -18,12 +18,12 @@
     "Genre": "Animation"
   },
   {
-    "title": "John Wick",
-    "id": 245891,
-    "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
-    "release_date": "2014-10-22",
-    "vote_average": 7.436,
+    "title": "John Wick: Chapter 2",
+    "id": 324552,
+    "overview": "John Wick is forced out of retirement by a former associate looking to seize control of a shadowy international assassins’ guild. Bound by a blood oath to aid him, Wick travels to Rome and does battle against some of the world’s most dangerous killers.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/hXWBc0ioZP3cN4zCu6SN3YHXZVO.jpg",
+    "release_date": "2017-02-08",
+    "vote_average": 7.334,
     "Genre": "Action"
   },
   {
@@ -45,13 +45,13 @@
     "Genre": "Comedy"
   },
   {
-    "title": "The Disaster Artist",
-    "id": 371638,
-    "overview": "An aspiring actor in Hollywood meets an enigmatic stranger by the name of Tommy Wiseau, the meeting leads the actor down a path nobody could have predicted; creating the worst movie ever made.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/jj84nF5vYRD0HUTowBKcrKk8hZP.jpg",
-    "release_date": "2017-03-12",
-    "vote_average": 7.113,
-    "Genre": "Random"
+    "title": "Star Trek",
+    "id": 13475,
+    "overview": "The fate of the galaxy rests in the hands of bitter rivals. One, James Kirk, is a delinquent, thrill-seeking Iowa farm boy. The other, Spock, a Vulcan, was raised in a logic-based society that rejects all emotion. As fiery instinct clashes with calm reason, their unlikely but powerful partnership is the only thing capable of leading their crew through unimaginable danger, boldly going where no one has gone before. The human adventure has begun again.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/lV5OpzAss1z06YNagOVap1I35mH.jpg",
+    "release_date": "2009-05-06",
+    "vote_average": 7.429,
+    "Genre": "Fantasy||Sci-fi"
   },
   {
     "title": "Weird: The Al Yankovic Story",
@@ -60,15 +60,15 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/qcj2z13G0KjaIgc01ifiUKu7W07.jpg",
     "release_date": "2022-09-08",
     "vote_average": 6.678,
-    "Genre": "Weird"
+    "Genre": "Special"
   },
   {
-    "title": "The Nice Guys",
-    "id": 290250,
-    "overview": "A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and uncovers a conspiracy.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/clq4So9spa9cXk3MZy2iMdqkxP2.jpg",
-    "release_date": "2016-05-15",
-    "vote_average": 7.118,
-    "Genre": "Comedy"
+    "title": "John Wick",
+    "id": 245891,
+    "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
+    "release_date": "2014-10-22",
+    "vote_average": 7.436,
+    "Genre": "Last Weeks Winner"
   }
 ]
