@@ -42,7 +42,15 @@ Golang - for server management and api data colletions.
 Html & Css - for interaction and apperance.
 JavaScript for enhanced functionaltiy.
 
+## Previous version
+https://github.com/Thunderboi1337/Old_Movie_Night_Project
 
+
+- **Original Photoship html**:  
+  ![Old project](static/images/No-Picture-Found.png)
+
+- **Bad basuc html version**:  
+  ![Older project html](static/images/No-Picture-Found.png)
 
 ## License
 
