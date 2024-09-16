@@ -21,14 +21,18 @@ Once the web application is running, you can use the following functions:
 
 Here are some GIFs demonstrating how to use the application:
 
-- **Switching a Movie**:  
-  ![Add and Complete Task](static/images/No-Picture-Found.png)
+- **Movies**:  
+  ![Movies](Documentation/Movie_Night_mainpg.png)
 
 - **About Movie**:  
-  ![Display Task](static/images/No-Picture-Found.png)
+  ![Display Task](Documentation/Moive_NightAbout.GIF)
 
-- **Movies**:  
-  ![Movies](static/images/No-Picture-Found.png)
+- **Searching for Movies**:  
+  ![Movies](Documentation/Movie_NightSearchpge.GIF)
+
+- **Switching a Movie**:  
+  ![Add and Complete Task](Documentation/Movie_Nightaddfunc.GIF.png)
+
 
 ## Code Structure
 
