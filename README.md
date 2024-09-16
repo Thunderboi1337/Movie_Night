@@ -19,19 +19,19 @@ Once the web application is running, you can use the following functions:
 
 ### Example Usage
 
-Here are some GIFs demonstrating how to use the application:
+Here are some Pictures demonstrating the application:
 
 - **Movies**:  
   ![Movies](Documentation/Movie_Night_mainpg.png)
 
 - **About Movie**:  
-  ![Display Task](Documentation/Moive_NightAbout.GIF)
+  ![Display Task](Documentation/Movie_Nightaboutpg.png)
 
 - **Searching for Movies**:  
-  ![Movies](Documentation/Movie_NightSearchpge.GIF)
+  ![Movies](Documentation/Movie_NightSearchFunc.png)
 
 - **Switching a Movie**:  
-  ![Add and Complete Task](Documentation/Movie_Nightaddfunc.GIF.png)
+  ![Add and Complete Task](Documentation/Movie_Night_add.png)
 
 
 ## Code Structure
