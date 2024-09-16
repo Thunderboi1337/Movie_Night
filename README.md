@@ -51,10 +51,15 @@ https://github.com/Thunderboi1337/Old_Movie_Night_Project
 
 
 - **Original Photoship html**:  
-  ![Old project](static/images/No-Picture-Found.png)
+  ![First Version](Documentation/Movie_Night_First_version.png)
 
-- **Bad basuc html version**:  
-  ![Older project html](static/images/No-Picture-Found.png)
+- **Original Photoship html**:  
+  ![Second Version](Documentation/Movie_Night_Second_Version.png)
+
+### Going from photoshop to html
+
+- **First bad basic html version**:  
+  ![First html](Documentation/Movie_Night_Third_Version.png)
 
 ## License
 
