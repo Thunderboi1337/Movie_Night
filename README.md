@@ -15,7 +15,7 @@ To sum up, I’ve successfully automated a tedious process and made it more stre
 
 ## Features
 
-- **Easy Movie selection**: Find the movie you want to add by simply searching for it and add it
+- **Easy Movie selection**: Find the movie you want to add by simply searching for it and adding it to the specific genre
 
 ## Usage
 
@@ -28,7 +28,7 @@ Once the web application is running, you can use the following functions:
 
 ### Example Usage
 
-Here are some Pictures demonstrating the application:
+Here are some pictures demonstrating the application:
 
 - **Movies**:  
   ![Movies](Documentation/Movie_Night_mainpg.png)
@@ -42,12 +42,6 @@ Here are some Pictures demonstrating the application:
 - **Switching a Movie**:  
   ![Add Movie](Documentation/Movie_Night_add.png)
 
-
-## Code Structure
-
-- **Json File**: The server reads from and writes to a json file located in the root folder to get acesses to current or previously selected movies.
-- **In-Memory Management**: Movies are managed in memory during the session and saved during switch.
-- **UI States**: The user interface supports different states: main page inlcudes selcted movies for current movie night and previous movie night winner. About page that presents all movie information, name, about, trailers.
 
 ## Tools
 
