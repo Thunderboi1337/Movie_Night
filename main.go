@@ -252,8 +252,6 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 		// Replace the original MovieResults with the filtered slice
 		apiResponse.MovieResults = filteredMovies
 
-		fmt.Println(apiResponse.MovieResults)
-
 		// Inserts Movie results into Templete
 		if len(apiResponse.MovieResults) > 0 {
 			search_data = TemplateData{
