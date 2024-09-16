@@ -6,6 +6,7 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/vfJFJPepRKapMd5G2ro7klIRysq.jpg",
     "release_date": "2016-08-26",
     "vote_average": 8.488,
+    "adult": false,
     "Genre": "Animation"
   },
   {
@@ -15,6 +16,7 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/hXWBc0ioZP3cN4zCu6SN3YHXZVO.jpg",
     "release_date": "2017-02-08",
     "vote_average": 7.334,
+    "adult": false,
     "Genre": "Action"
   },
   {
@@ -24,6 +26,7 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/xdANQijuNrJaw1HA61rDccME4Tm.jpg",
     "release_date": "2013-10-18",
     "vote_average": 7.942,
+    "adult": false,
     "Genre": "Drama"
   },
   {
@@ -33,15 +36,17 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/zAurB9mNxfYRoVrVjAJJwGV3sPg.jpg",
     "release_date": "2008-08-09",
     "vote_average": 6.678,
+    "adult": false,
     "Genre": "Comedy"
   },
   {
-    "title": "The Hobbit: An Unexpected Journey",
-    "id": 49051,
-    "overview": "Bilbo Baggins, a hobbit enjoying his quiet life, is swept into an epic quest by Gandalf the Grey and thirteen dwarves who seek to reclaim their mountain home from Smaug, the dragon.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/yHA9Fc37VmpUA5UncTxxo3rTGVA.jpg",
-    "release_date": "2012-12-12",
-    "vote_average": 7.357,
+    "title": "Warcraft",
+    "id": 68735,
+    "overview": "The peaceful realm of Azeroth stands on the brink of war as its civilization faces a fearsome race of invaders: orc warriors fleeing their dying home to colonize another. As a portal opens to connect the two worlds, one army faces destruction and the other faces extinction. From opposing sides, two heroes are set on a collision course that will decide the fate of their family, their people, and their home.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/nZIIOs06YigBnvmlJ2hxZeA8eTO.jpg",
+    "release_date": "2016-05-25",
+    "vote_average": 6.379,
+    "adult": false,
     "Genre": "Fantasy"
   },
   {
@@ -51,6 +56,7 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/lV5OpzAss1z06YNagOVap1I35mH.jpg",
     "release_date": "2009-05-06",
     "vote_average": 7.429,
+    "adult": false,
     "Genre": "Sci-fi"
   },
   {
@@ -60,15 +66,17 @@
     "poster_path": "https://image.tmdb.org/t/p/w500/qcj2z13G0KjaIgc01ifiUKu7W07.jpg",
     "release_date": "2022-09-08",
     "vote_average": 6.678,
+    "adult": false,
     "Genre": "Special"
   },
   {
-    "title": "John Wick",
-    "id": 245891,
-    "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
-    "poster_path": "https://image.tmdb.org/t/p/w500/fZPSd91yGE9fCcCe6OoQr6E3Bev.jpg",
-    "release_date": "2014-10-22",
-    "vote_average": 7.436,
+    "title": "Star Wars",
+    "id": 11,
+    "overview": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg",
+    "release_date": "1977-05-25",
+    "vote_average": 8.2,
+    "adult": false,
     "Genre": "Last Weeks Winner"
   }
 ]
