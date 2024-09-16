@@ -46,6 +46,7 @@ type Movie struct {
 	PosterPath  string  `json:"poster_path"`
 	ReleaseDate string  `json:"release_date"`
 	VoteAverage float64 `json:"vote_average"`
+	Adult       bool    `json:"adult"`
 	Genre       string  `json:"Genre"`
 }
 
@@ -230,17 +231,29 @@ func (app *App) SearchMoviesHandlers(w http.ResponseWriter, r *http.Request) {
 
 		}
 		// Appends url link for posters else loads local alternitive
+		filteredMovies := []Movie{}
 		baseImageURL := "https://image.tmdb.org/t/p/w500"
 		NoImageFound := "/static/images/No-Picture-Found.png"
+
 		for i := range apiResponse.MovieResults {
-
+			// Handle poster path logic
 			if apiResponse.MovieResults[i].PosterPath != "" {
-
 				apiResponse.MovieResults[i].PosterPath = baseImageURL + apiResponse.MovieResults[i].PosterPath
 			} else {
 				apiResponse.MovieResults[i].PosterPath = NoImageFound
 			}
+
+			// Append only non-adult movies to the filteredMovies slice
+			if !apiResponse.MovieResults[i].Adult {
+				filteredMovies = append(filteredMovies, apiResponse.MovieResults[i])
+			}
 		}
+
+		// Replace the original MovieResults with the filtered slice
+		apiResponse.MovieResults = filteredMovies
+
+		fmt.Println(apiResponse.MovieResults)
+
 		// Inserts Movie results into Templete
 		if len(apiResponse.MovieResults) > 0 {
 			search_data = TemplateData{
