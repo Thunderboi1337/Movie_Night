@@ -1,3 +1,10 @@
+/*
+* @Author: Marcus Robertsson
+* @Email : Marcus.asberg.98@gmail.com
+* @Date:   2024-09-17
+* @Last Modified by:   Your Name
+* @Last Modified time: 2024-09-17
+ */
 package main
 
 import (
