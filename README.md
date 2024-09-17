@@ -15,16 +15,54 @@ To sum up, I’ve successfully automated a tedious process and made it more stre
 
 ## Features
 
-- **Easy Movie selection**: Find the movie you want to add by simply searching for it and adding it to the specific genre
+- **Easy Movie Selection**: Find the movie you want to add by simply searching for it and adding it to the specific genre
+
+## Prerequisites 
+- if you feel like testing this code or using it, you will first need to go to TMDB and get an API KEY. In order to be able to request data from the database.
+- Just simply place the key in the .env file.
+
+## Install
+
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/Thunderboi1337/Movie_Night.git
+    cd Movie_Night
+    ```
+    This command clones the project repository to your local machine and navigates into the project directory.
+
+2. **Install dependencies**:
+    ```sh
+    go mod tidy
+    ```
+    This command installs and manages all required project dependencies..
+
+3. **Build the project**:
+    ```sh
+    go build -o server main.go
+    ```
+    This command compiles the Go code into an executable named `Server`.
+
+4. **Run the application**:
+    ```sh
+    ./server
+    ```
+    This command runs the compiled application directly from the terminal.
+
+4. **Use the web Application**:
+    ```webbrowser
+    localhost:8080
+    ```
+    Enter this into the webbrowser to find the application
+
 
 ## Usage
 
 Once the web application is running, you can use the following functions:
 
 - **Search**: A Search function to easily find the movie you want to add to your movies night.
-- **Display Movie aboutpage**: By simply clicking on the poster for any of your selected or searched movies, you will display the AboutPage, where you can learn more about your selected movie.
-- **Search and Switch**: Simply search for a movie you are thinking about adding and search for it, When you found the movie you want to add, select the switch button and hit the genre that the movies is going to represent for your Movie Night.
-- **Select a Winner**: TO remember what movie won and what movies you watched last week, you can selet a winner by hitting the winner button.
+- **Display Movie About Page**: By simply clicking on the poster for any of your selected or searched movies, you will display the AboutPage, where you can learn more about your selected movie.
+- **Search and Switch**: Simply search for a movie you want to add, select the genre button and hit the genre that the movie is going to represent for your Movie Night.
+- **Select a Winner**: To remember which movie won and what movies you watched last week, you can select a winner. by hitting the winner button.
 
 ### Example Usage
 
@@ -45,28 +83,28 @@ Here are some pictures demonstrating the application:
 
 ## Tools
 
-- Golang for server management and api data colletions.
-- Html & Css for interaction and apperance.
-- JavaScript for enhanced functionaltiy.
+- Golang for server management and api data collections.
+- Html & Css for interaction and appearance.
+- JavaScript for enhanced functionality.
 - API TMDB for Movie data https://developer.themoviedb.org/reference/intro/getting-started
 
 ## Previous version
 https://github.com/Thunderboi1337/Old_Movie_Night_Project
 
 
-- **Original Photoship html version**:
+- **Original Photoshop html version**:
 
   ![First Version](Documentation/Movie_Night_First_version.png)
 
-- **Second version Photoship html version**:  
+- **Second version Photoshop html version**:  
 
   ![Second Version](Documentation/Movie_Night_Second_Version.png)
 
 ### Going from photoshop to html
 
-- **First bad basic html version**:  
+- **First bad basic HTML version**:  
 
-  ![First html](Documentation/Movie_Night_Third_Version.png)
+  ![First HTML](Documentation/Movie_Night_Third_Version.png)
 
 ## License
 
